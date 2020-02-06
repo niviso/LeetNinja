@@ -8,14 +8,12 @@
 }
 
 .btnLeft{
-  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 
 }
 .btnRight{
-  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,8 +23,6 @@
 .character{
   position: absolute;
   top: 0%;
-  padding: 50px;
-  background: forestgreen;
 }
 
 .stats{
