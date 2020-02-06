@@ -8,7 +8,7 @@ export default function App() {
   const screenHeight = Math.round(Dimensions.get('window').height);
   return (
     <GameProvider>
-      <Index screenHeight={screenHeight}/> 
+      <Index screenHeight={screenHeight} screenWidth={screenWidth}/> 
     </GameProvider>
   );
 }
