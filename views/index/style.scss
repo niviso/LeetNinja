@@ -11,7 +11,41 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 100%;
+  overflow: hidden;
+  background: rgba(0,0,0,0.5);
+  border: 2px solid black;
+  width: 80px;
+  height: 80px;
+  margin: 5px;
 }
+
+.btnB{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  overflow: hidden;
+  background: rgba(182, 52, 52, 0.5);
+  border: 2px solid red;
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+}
+
+.btnA{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  overflow: hidden;
+  background: rgba(85, 182, 52, 0.5);
+  border: 2px solid green;
+  width: 80px;
+  height: 80px;
+  margin: 5px;
+}
+
 .moveBtnWrapper{
   position: absolute;
   bottom: 0%;
@@ -44,14 +78,16 @@
   top:0%;
   right: 0%;
   padding: 20px;
+  width: 100%;;
 }
 
 .headline{
-  font-size: 20px;
+  font-size: 14px;
   text-align: right;
-  color: white;
+  color: black;
 }
 
 .playButtons{
-  font-size: 75px;
+  font-size: 50px;
+  color: white;
 }

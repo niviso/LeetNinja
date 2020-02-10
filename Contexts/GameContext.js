@@ -4,12 +4,22 @@ const GameContext = React.createContext([{}, () => {}]);
 
 const GameProvider = (props) => {
   const [state, setState] = useState({
-    currentColor: null,
-    timeToNextColor: 0,
-    player:{
-      name: 0,
-      class: null,
-      points: 0
+    FPS: 30,
+    gravity: 5,
+    player:{ 
+
+      directionVector: {
+        x: 0,
+        y: 0,
+        direction: "left"
+      },
+      name: "",
+      position: {
+        x: 0,
+        y: 0
+      },
+      isGrounded: false,
+      speed: 20
     }
   });
   return (
