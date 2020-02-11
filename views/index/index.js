@@ -23,9 +23,9 @@ export default function Index(props) {
       tmpState.player.directionVector.y = -40;
       tmpState.player.isGrounded = false;
       setState(tmpState);
-      
+
     } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
-      tmpState.player.directionVector.y = -10;
+      tmpState.player.directionVector.y = -40;
       tmpState.player.directionVector.x = 2.4;
       tmpState.player.directionVector.direction = "left"
       tmpState.player.activeDrag = true;
@@ -70,11 +70,20 @@ export default function Index(props) {
        direction: tmpState.player.directionVector.direction
      }
 
-     if(tmpState.player.activeDrag){
+     if(tmpState.player.activeDrag && tmpState.player.directionVector.direction == "left"){
       tmpState.player.directionVector.x = tmpState.player.directionVector.x - tmpState.player.drag;
      }
 
-     if(tmpState.player.directionVector.x <= 0 && tmpState.player.activeDrag){
+     if(tmpState.player.activeDrag && tmpState.player.directionVector.direction == "right"){
+      tmpState.player.directionVector.x = tmpState.player.directionVector.x + tmpState.player.drag;
+     }
+
+     if(tmpState.player.directionVector.x <= 0 && tmpState.player.activeDrag && tmpState.player.directionVector.direction == "left"){
+       tmpState.player.activeDrag = false;
+       tmpState.player.directionVector.x = 0;
+     }
+
+     if(tmpState.player.directionVector.x >= 0 && tmpState.player.activeDrag && tmpState.player.directionVector.direction == "right"){
        tmpState.player.activeDrag = false;
        tmpState.player.directionVector.x = 0;
      }

@@ -6,10 +6,10 @@ const GameProvider = (props) => {
   const [state, setState] = useState({
     FPS: 60,
     gravity: 5,
-    player:{ 
+    player:{
       directionVector: {
         x: 0,
-        y: 0, 
+        y: 0,
         direction: "left"
       },
       size: {
@@ -22,7 +22,7 @@ const GameProvider = (props) => {
         y: 0
       },
       isGrounded: false,
-      isTouchingWall: false, 
+      isTouchingWall: false,
       activeDrag: false,
       isWalking: false,
       drag: 0.2,
