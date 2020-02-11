@@ -48,8 +48,12 @@
 
 .block{
   position: absolute;
-  background: red;
+  background: #80c565;
   opacity: 0.5;
+  border: 2px solid #012851;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .moveBtnWrapper{
@@ -78,22 +82,7 @@
   position: absolute;
   top: 0%;
 }
-.charImg{
-}
 
-.stats{
-  position: absolute;
-  top:0%;
-  right: 0%;
-  padding: 20px;
-  width: 100%;;
-}
-
-.headline{
-  font-size: 14px;
-  text-align: right;
-  color: black;
-}
 
 .playButtons{
   font-size: 50px;

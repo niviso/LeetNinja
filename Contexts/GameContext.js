@@ -13,7 +13,7 @@ const GameProvider = (props) => {
         direction: "left"
       },
       size: {
-        x: 40,
+        x: 70,
         y: 100
       },
       name: "",

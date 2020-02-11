@@ -14,45 +14,48 @@ export default function Index(props) {
   const [holdingInput,setHoldingInput] = useState(false);
   const speed = 20;
   const World = [
+
     {
     name: 'block',
     size: {
-      x: 100,
-      y: 50
-    },
-    position:{
       x: 200,
       y: 100
-    }},
-    {
-    name: 'block',
-    size: {
-      x: 200,
-      y: 50
     },
     position:{
-      x: 400,
-      y: 200
+      x: 500,
+      y: 150
     }
-  }];
+  },
+  {
+  name: 'block',
+  size: {
+    x: 20,
+    y: 20
+  },
+  position:{
+    x: 200,
+    y: 100
+  }
+  }
+];
 
 
   const Jump = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
 
     if(state.player.isGrounded){
-      tmpState.player.directionVector.y = -50;
+      tmpState.player.directionVector.y = -40;
       tmpState.player.isGrounded = false;
       setState(tmpState);
 
     } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
       if(tmpState.player.directionVector.direction == "right"){
       tmpState.player.directionVector.y = -40;
-      tmpState.player.directionVector.x = 2.4;
+      tmpState.player.directionVector.x = 3;
       tmpState.player.directionVector.direction = "left";
     } else {
       tmpState.player.directionVector.y = -40;
-      tmpState.player.directionVector.x = -2.4;
+      tmpState.player.directionVector.x = -3;
       tmpState.player.directionVector.direction = "right";
     }
       tmpState.player.activeDrag = true;
@@ -143,6 +146,9 @@ export default function Index(props) {
      const PlayerTop = tmpState.player.position.y;
      const PlayerBottom = PlayerTop + tmpState.player.size.y;
 
+     const PlayerWidth = tmpState.player.size.x;
+     const PlayerHeight = tmpState.player.size.y;
+
     for(var i = 0;i!=World.length;i++){
 
       const ObjLeft = World[i].position.x;
@@ -150,30 +156,31 @@ export default function Index(props) {
       const ObjTop = World[i].position.y;
       const ObjBottom = ObjTop + World[i].size.y;
 
-      if(PlayerLeft > ObjLeft && PlayerLeft < ObjRight && PlayerTop <= ObjBottom && PlayerTop >= ObjTop){
-        console.log("CHAR COLLISION TOP");
-        tmpState.player.position.y = ObjBottom;
-        tmpState.player.directionVector.y = 0;
-      }
-      else if(PlayerLeft > ObjLeft && PlayerLeft < ObjRight && PlayerBottom >= ObjTop && PlayerTop <= ObjTop){
-        console.log("CHAR COLLISION BOTTOM");
-        tmpState.player.position.y = ObjTop - tmpState.player.size.y;
-        tmpState.player.directionVector.y = 0;
-        tmpState.player.isGrounded = true;
+      const ObjWidth = World[i].size.x;
+      const ObjHeight = World[i].size.y;
 
+      if(PlayerRight > ObjLeft && PlayerLeft < ObjRight && PlayerTop >= ObjTop && !tmpState.player.isGrounded){
+        console.log("CHAR COLLISION TOP");
+        tmpState.player.directionVector.y = tmpState.gravity;
+      } else if(PlayerLeft < ObjRight && PlayerBottom <= ObjBottom){
+        console.log("CHAR COLLISION LEFT");
+        tmpState.player.position.x = ObjRight;
+        tmpState.player.directionVector.x = 0;
+        tmpState.player.isTouchingWall = true;
       }
+
     }
 
      if(JSON.stringify(tmpState) !== JSON.stringify(state)){
       setState(tmpState);
-      console.log(JSON.stringify(tmpState));
+      console.log(JSON.stringify(tmpState.player));
     }
    }, (1000/state.FPS));
   return () => clearInterval(interval);
 }, [state]);
 
 
-  const CharacterStyle = {backgroundColor: 'blue',overflow: 'hidden',height: state.player.size.y,width: state.player.size.x,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
+  const CharacterStyle = {backgroundColor: 'rgba(0,0,0,0.1)',overflow: 'hidden',height: state.player.size.y,width: state.player.size.x,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
 
 
   return (
@@ -213,13 +220,13 @@ export default function Index(props) {
         </TouchableOpacity>
       </View>
 
-      <View style={{...styles.character,left: state.player.position.x,top: state.player.position.y,transform : [{scale: 2 }]}} pointerEvents="none">
+      <View style={{...styles.character,left: state.player.position.x,top: state.player.position.y}} pointerEvents="none">
         {(state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
         {(!state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
         {(!state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
       </View>
       {
-        World.map((item,i) => <View key={i} style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}></View>)
+        World.map((item,i) => <View key={i} style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}><Text>1337</Text></View>)
       }
     </View>
   );
