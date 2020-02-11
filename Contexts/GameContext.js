@@ -24,7 +24,8 @@ const GameProvider = (props) => {
       isGrounded: false,
       isTouchingWall: false, 
       activeDrag: false,
-      drag: 1,
+      isWalking: false,
+      drag: 0.2,
       speed: 20
     }
   });

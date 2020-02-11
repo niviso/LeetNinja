@@ -1,10 +1,12 @@
 import React,{useState,useEffect,useContext} from 'react';
 import {View,Image,TouchableOpacity,Text} from 'react-native';
 import styles from "./style.scss";
-import Ninja from '../../assets/ninja.png';
+import Idle from '../../assets/idle.png';
+import Jumping from '../../assets/jumping.png';
+import Walking from '../../assets/walking.gif';
 import Background from '../../assets/bg2.png';
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
-import Player from '../../components/player/player';
+
 export default function Index(props) {
 
   const {screenHeight,screenWidth} = props;
@@ -23,7 +25,7 @@ export default function Index(props) {
       setState(tmpState);
       
     } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
-      tmpState.player.directionVector.y = -2;
+      tmpState.player.directionVector.y = -10;
       tmpState.player.directionVector.x = 2.4;
       tmpState.player.directionVector.direction = "left"
       tmpState.player.activeDrag = true;
@@ -37,6 +39,7 @@ export default function Index(props) {
     tmpState.player.activeDrag = false;
     tmpState.player.directionVector.x = 1;
     tmpState.player.directionVector.direction = "left";
+    tmpState.player.isWalking = true;
     setState(tmpState);
 
   }
@@ -46,6 +49,7 @@ export default function Index(props) {
     tmpState.player.activeDrag = false;
     tmpState.player.directionVector.x = -1;
     tmpState.player.directionVector.direction = "right";
+    tmpState.player.isWalking = true;
     setState(tmpState);
 
   }
@@ -53,6 +57,7 @@ export default function Index(props) {
   const stopWalking = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     tmpState.player.activeDrag = true;
+    tmpState.player.isWalking = false;
     setState(tmpState);
   }
  useEffect(() => {
@@ -66,7 +71,7 @@ export default function Index(props) {
      }
 
      if(tmpState.player.activeDrag){
-      tmpState.player.directionVector.x = tmpState.player.directionVector.x - 0.2;
+      tmpState.player.directionVector.x = tmpState.player.directionVector.x - tmpState.player.drag;
      }
 
      if(tmpState.player.directionVector.x <= 0 && tmpState.player.activeDrag){
@@ -93,7 +98,6 @@ export default function Index(props) {
       tmpState.player.directionVector.x = 0;
       tmpState.player.position.x = 0;
       tmpState.player.isTouchingWall = true;
-
      }
      if(JSON.stringify(tmpState) !== JSON.stringify(state)){
       setState(tmpState);
@@ -104,7 +108,7 @@ export default function Index(props) {
 }, [state]);
 
 
-
+  const CharacterStyle = { width: 100, height: 100,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
   return (
     <View style={styles.container}>
       <Image style={{ width: screenWidth, height: screenHeight,position: 'absolute',opacity: 0.2 }} source={Background} resizeMode="repeat" />
@@ -148,7 +152,11 @@ export default function Index(props) {
 
       </View>
       <View style={{...styles.character,left: state.player.position.x,top: state.player.position.y}} pointerEvents="none">
-        <Image style={{ width: 100, height: 100,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] }} source={Ninja} />
+        {(state.player.isWalking && state.player.isGrounded && <Image style={CharacterStyle} source={Walking} />)}
+        {(!state.player.isWalking && !state.player.isTouchingWall && state.player.isGrounded && <Image style={CharacterStyle} source={Idle} />)}
+        {(!state.player.isGrounded && <Image style={CharacterStyle} source={Jumping} />)}
+
+
       </View>
     </View>
   );
