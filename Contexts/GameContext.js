@@ -14,7 +14,7 @@ const GameProvider = (props) => {
       },
       size: {
         x: 50,
-        y: 50
+        y: 120
       },
       name: "",
       position: {

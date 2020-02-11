@@ -1,9 +1,9 @@
 import React,{useState,useEffect,useContext} from 'react';
 import {View,Image,TouchableOpacity,Text} from 'react-native';
 import styles from "./style.scss";
-import Idle from '../../assets/idle.png';
-import Jumping from '../../assets/jumping.png';
-import Walking from '../../assets/walking.gif';
+import Idle from '../../assets/idle.gif';
+import Jumping from '../../assets/jump.png';
+import Run from '../../assets/run.gif';
 import Background from '../../assets/bg2.png';
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
 
@@ -98,9 +98,9 @@ export default function Index(props) {
 
 
      //COLLISION DETECTION
-     if(tmpState.player.position.y > (screenHeight-100)){
+     if(tmpState.player.position.y > (screenHeight-tmpState.player.size.y)){
       tmpState.player.directionVector.y = 0;
-      tmpState.player.position.y = screenHeight - 100;
+      tmpState.player.position.y = screenHeight - tmpState.player.size.y;
       tmpState.player.isGrounded = true;
      }
      if(tmpState.player.position.x <= 0 ){
@@ -117,10 +117,10 @@ export default function Index(props) {
 }, [state]);
 
 
-  const CharacterStyle = { width: 100, height: 100,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
+  const CharacterStyle = {height: 100,width: 40,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
   return (
     <View style={styles.container}>
-      <Image style={{ width: screenWidth, height: screenHeight,position: 'absolute',opacity: 0.2 }} source={Background} resizeMode="repeat" />
+      <Image style={{ width: screenWidth, height: screenHeight,position: 'absolute',opacity: 0.1 }} source={Background} resizeMode="repeat" />
       <View style={styles.moveBtnWrapper}>
 
         <View onTouchStart={()=> goRight() } onTouchEnd={() => stopWalking()}>
@@ -154,16 +154,11 @@ export default function Index(props) {
           </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.stats}>
-        <Text style={styles.headline}>State: {JSON.stringify(state)}</Text>
 
-
-
-      </View>
-      <View style={{...styles.character,left: state.player.position.x,top: state.player.position.y}} pointerEvents="none">
-        {(state.player.isWalking && state.player.isGrounded && <Image style={CharacterStyle} source={Walking} />)}
-        {(!state.player.isWalking && !state.player.isTouchingWall && state.player.isGrounded && <Image style={CharacterStyle} source={Idle} />)}
-        {(!state.player.isGrounded && <Image style={CharacterStyle} source={Jumping} />)}
+      <View style={{...styles.character,left: state.player.position.x,top: state.player.position.y,transform : [{scale: 2 }]}} pointerEvents="none">
+        {(state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
+        {(!state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
+        {(!state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
 
 
       </View>
