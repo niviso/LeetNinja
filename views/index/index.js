@@ -9,23 +9,32 @@ export default function Index(props) {
 
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
+  const [holdingInput,setHoldingInput] = useState(false);
   const speed = 20;
 
 
 
   const Jump = () => {
-    if(state.player.isGrounded){
-           var tmpState = JSON.parse(JSON.stringify(state));
+    var tmpState = JSON.parse(JSON.stringify(state));
 
+    if(state.player.isGrounded){
       tmpState.player.directionVector.y = -40;
+      tmpState.player.isGrounded = false;
+      setState(tmpState);
+      
+    } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
+      tmpState.player.directionVector.y = -2;
+      tmpState.player.directionVector.x = 2.4;
+      tmpState.player.directionVector.direction = "left"
+      tmpState.player.activeDrag = true;
       tmpState.player.isGrounded = false;
       setState(tmpState);
     }
   }
 
   const goLeft = () => {
-         var tmpState = JSON.parse(JSON.stringify(state));
-
+    var tmpState = JSON.parse(JSON.stringify(state));
+    tmpState.player.activeDrag = false;
     tmpState.player.directionVector.x = 1;
     tmpState.player.directionVector.direction = "left";
     setState(tmpState);
@@ -34,6 +43,7 @@ export default function Index(props) {
 
   const goRight = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
+    tmpState.player.activeDrag = false;
     tmpState.player.directionVector.x = -1;
     tmpState.player.directionVector.direction = "right";
     setState(tmpState);
@@ -42,27 +52,48 @@ export default function Index(props) {
 
   const stopWalking = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
-    tmpState.player.directionVector.x = 0;
+    tmpState.player.activeDrag = true;
     setState(tmpState);
   }
  useEffect(() => {
   const interval = setInterval(() => {
-     var charPos = [0,0]; // We need to calculate position before setting it
      var tmpState = JSON.parse(JSON.stringify(state));
 
      tmpState.player.directionVector = {
        x: tmpState.player.directionVector.x,
-       y: tmpState.player.directionVector.y + state.gravity
+       y: tmpState.player.directionVector.y + state.gravity,
+       direction: tmpState.player.directionVector.direction
      }
+
+     if(tmpState.player.activeDrag){
+      tmpState.player.directionVector.x = tmpState.player.directionVector.x - 0.2;
+     }
+
+     if(tmpState.player.directionVector.x <= 0 && tmpState.player.activeDrag){
+       tmpState.player.activeDrag = false;
+       tmpState.player.directionVector.x = 0;
+     }
+
      tmpState.player.position = {
        x: tmpState.player.position.x + (tmpState.player.directionVector.x * speed),
        y: tmpState.player.position.y + tmpState.player.directionVector.y
      }
+
+     tmpState.player.isTouchingWall = false;
+
+
+
+     //COLLISION DETECTION
      if(tmpState.player.position.y > (screenHeight-100)){
-      charPos[screenHeight - 100];
       tmpState.player.directionVector.y = 0;
       tmpState.player.position.y = screenHeight - 100;
       tmpState.player.isGrounded = true;
+     }
+     if(tmpState.player.position.x <= 0 ){
+      tmpState.player.directionVector.x = 0;
+      tmpState.player.position.x = 0;
+      tmpState.player.isTouchingWall = true;
+
      }
      if(JSON.stringify(tmpState) !== JSON.stringify(state)){
       setState(tmpState);
