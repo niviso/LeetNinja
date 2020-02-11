@@ -9,15 +9,14 @@ export default function Index(props) {
 
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
-  const [update,doUpdate] = useState(false);
-
   const speed = 20;
 
 
 
   const Jump = () => {
     if(state.player.isGrounded){
-      var tmpState = state;
+           var tmpState = JSON.parse(JSON.stringify(state));
+
       tmpState.player.directionVector.y = -40;
       tmpState.player.isGrounded = false;
       setState(tmpState);
@@ -25,32 +24,32 @@ export default function Index(props) {
   }
 
   const goLeft = () => {
-    var tmpState = state;
+         var tmpState = JSON.parse(JSON.stringify(state));
+
     tmpState.player.directionVector.x = 1;
     tmpState.player.directionVector.direction = "left";
     setState(tmpState);
-    doUpdate(true);
 
   }
 
   const goRight = () => {
-    var tmpState = state;
+    var tmpState = JSON.parse(JSON.stringify(state));
     tmpState.player.directionVector.x = -1;
     tmpState.player.directionVector.direction = "right";
     setState(tmpState);
-    doUpdate(true);
 
   }
 
   const stopWalking = () => {
-    var tmpState = state;
+    var tmpState = JSON.parse(JSON.stringify(state));
     tmpState.player.directionVector.x = 0;
     setState(tmpState);
   }
  useEffect(() => {
   const interval = setInterval(() => {
      var charPos = [0,0]; // We need to calculate position before setting it
-     var tmpState = state;
+     var tmpState = JSON.parse(JSON.stringify(state));
+
      tmpState.player.directionVector = {
        x: tmpState.player.directionVector.x,
        y: tmpState.player.directionVector.y + state.gravity
@@ -65,11 +64,13 @@ export default function Index(props) {
       tmpState.player.position.y = screenHeight - 100;
       tmpState.player.isGrounded = true;
      }
-     setState(tmpState);
-      console.log(JSON.stringify(state.player))     
+     if(JSON.stringify(tmpState) !== JSON.stringify(state)){
+      setState(tmpState);
+      console.log(JSON.stringify(tmpState));
+    }
    }, (1000/state.FPS));
   return () => clearInterval(interval);
-}, [setState]);
+}, [state]);
 
 
 
