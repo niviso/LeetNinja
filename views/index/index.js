@@ -13,21 +13,48 @@ export default function Index(props) {
   const [state,setState] = useContext(GameContext);
   const [holdingInput,setHoldingInput] = useState(false);
   const speed = 20;
-
+  const World = [
+    {
+    name: 'block',
+    size: {
+      x: 100,
+      y: 50
+    },
+    position:{
+      x: 200,
+      y: 100
+    }},
+    {
+    name: 'block',
+    size: {
+      x: 200,
+      y: 50
+    },
+    position:{
+      x: 400,
+      y: 200
+    }
+  }];
 
 
   const Jump = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
 
     if(state.player.isGrounded){
-      tmpState.player.directionVector.y = -40;
+      tmpState.player.directionVector.y = -50;
       tmpState.player.isGrounded = false;
       setState(tmpState);
 
     } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
+      if(tmpState.player.directionVector.direction == "right"){
       tmpState.player.directionVector.y = -40;
       tmpState.player.directionVector.x = 2.4;
-      tmpState.player.directionVector.direction = "left"
+      tmpState.player.directionVector.direction = "left";
+    } else {
+      tmpState.player.directionVector.y = -40;
+      tmpState.player.directionVector.x = -2.4;
+      tmpState.player.directionVector.direction = "right";
+    }
       tmpState.player.activeDrag = true;
       tmpState.player.isGrounded = false;
       setState(tmpState);
@@ -97,7 +124,7 @@ export default function Index(props) {
 
 
 
-     //COLLISION DETECTION
+     //COLLISION DETECTION DEFAULT
      if(tmpState.player.position.y > (screenHeight-tmpState.player.size.y)){
       tmpState.player.directionVector.y = 0;
       tmpState.player.position.y = screenHeight - tmpState.player.size.y;
@@ -108,6 +135,35 @@ export default function Index(props) {
       tmpState.player.position.x = 0;
       tmpState.player.isTouchingWall = true;
      }
+
+     //COLLISION DETECTION World
+
+     const PlayerLeft = tmpState.player.position.x;
+     const PlayerRight = PlayerLeft + tmpState.player.size.x;
+     const PlayerTop = tmpState.player.position.y;
+     const PlayerBottom = PlayerTop + tmpState.player.size.y;
+
+    for(var i = 0;i!=World.length;i++){
+
+      const ObjLeft = World[i].position.x;
+      const ObjRight = ObjLeft + World[i].size.x;
+      const ObjTop = World[i].position.y;
+      const ObjBottom = ObjTop + World[i].size.y;
+
+      if(PlayerLeft > ObjLeft && PlayerLeft < ObjRight && PlayerTop <= ObjBottom && PlayerTop >= ObjTop){
+        console.log("CHAR COLLISION TOP");
+        tmpState.player.position.y = ObjBottom;
+        tmpState.player.directionVector.y = 0;
+      }
+      else if(PlayerLeft > ObjLeft && PlayerLeft < ObjRight && PlayerBottom >= ObjTop && PlayerTop <= ObjTop){
+        console.log("CHAR COLLISION BOTTOM");
+        tmpState.player.position.y = ObjTop - tmpState.player.size.y;
+        tmpState.player.directionVector.y = 0;
+        tmpState.player.isGrounded = true;
+
+      }
+    }
+
      if(JSON.stringify(tmpState) !== JSON.stringify(state)){
       setState(tmpState);
       console.log(JSON.stringify(tmpState));
@@ -117,7 +173,9 @@ export default function Index(props) {
 }, [state]);
 
 
-  const CharacterStyle = {height: 100,width: 40,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
+  const CharacterStyle = {backgroundColor: 'red',height: state.player.size.y,width: state.player.size.x,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
+
+
   return (
     <View style={styles.container}>
       <Image style={{ width: screenWidth, height: screenHeight,position: 'absolute',opacity: 0.1 }} source={Background} resizeMode="repeat" />
@@ -159,9 +217,10 @@ export default function Index(props) {
         {(state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
         {(!state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
         {(!state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
-
-
       </View>
+      {
+        World.map((item,i) => <View key={i} style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}></View>)
+      }
     </View>
   );
 }
