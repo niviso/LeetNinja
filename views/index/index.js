@@ -173,7 +173,7 @@ export default function Index(props) {
 }, [state]);
 
 
-  const CharacterStyle = {backgroundColor: 'red',height: state.player.size.y,width: state.player.size.x,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
+  const CharacterStyle = {backgroundColor: 'blue',overflow: 'hidden',height: state.player.size.y,width: state.player.size.x,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
 
 
   return (
