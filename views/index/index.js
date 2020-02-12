@@ -62,12 +62,12 @@ export default function Index(props) {
 
     } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
       if(tmpState.player.directionVector.direction == "right"){
-      tmpState.player.directionVector.y = -40;
-      tmpState.player.directionVector.x = 2.1;
+      tmpState.player.directionVector.y = -30;
+      tmpState.player.directionVector.x = 1.6;
       tmpState.player.directionVector.direction = "left";
     } else {
-      tmpState.player.directionVector.y = -40;
-      tmpState.player.directionVector.x = -2.1;
+      tmpState.player.directionVector.y = -30;
+      tmpState.player.directionVector.x = -1.6;
       tmpState.player.directionVector.direction = "right";
     }
       tmpState.player.activeDrag = true;
@@ -79,7 +79,7 @@ export default function Index(props) {
   const goLeft = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     tmpState.player.activeDrag = false;
-    tmpState.player.directionVector.x = 1;
+    tmpState.player.directionVector.x = 0.6;
     tmpState.player.directionVector.direction = "left";
     tmpState.player.isWalking = true;
     setState(tmpState);
@@ -89,7 +89,7 @@ export default function Index(props) {
   const goRight = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     tmpState.player.activeDrag = false;
-    tmpState.player.directionVector.x = -1;
+    tmpState.player.directionVector.x = -0.6;
     tmpState.player.directionVector.direction = "right";
     tmpState.player.isWalking = true;
     setState(tmpState);
