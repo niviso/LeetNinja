@@ -5,84 +5,27 @@
   overflow: hidden;
 
 }
-.GuiWrapper{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-}
-.btn{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100%;
-  overflow: hidden;
-  background: rgba(0,0,0,0.5);
-  border: 2px solid black;
-  width: 80px;
-  height: 80px;
-  margin: 5px;
-}
-
-.btnB{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100%;
-  overflow: hidden;
-  background: rgba(182, 52, 52, 0.5);
-  border: 2px solid red;
-  width: 80px;
-  height: 80px;
-  margin: 5px;
-}
-
-.btnA{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100%;
-  overflow: hidden;
-  background: rgba(85, 182, 52, 0.5);
-  border: 2px solid green;
-  width: 80px;
-  height: 80px;
-  margin: 5px;
-}
 
 .block{
   position: absolute;
-  background: rgba(0,200,0,0.5);
+  background: rgba(50,150,50,0.9);
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 2px solid transparent;
+}
+.overlay{
+  opacity: 0.4;
 }
 
 .blockTxt{
-  font-size: 25px;
-}
-.moveBtnWrapper{
-  position: absolute;
-  bottom: 0%;
-  right: 0%;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  opacity: 0.8;
-  z-index: 999;
-}
-
-.actionBtnWrapper{
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-  opacity: 0.8;
-  z-index: 999;
+  font-size: 40px;
+  color: white;
+  text-decoration: underline;
+  text-decoration-color: white;
 
 }
+
 .character{
   position: absolute;
   top: 0%;

@@ -4,83 +4,23 @@ import styles from "./style.scss";
 import Idle from '../../assets/idle.gif';
 import Jumping from '../../assets/jump.png';
 import Run from '../../assets/run.gif';
-import Background from '../../assets/bg2.png';
-import Floor from '../../assets/floor_01.png';
+import Background from '../../assets/plx-1.png';
+import Background1 from '../../assets/plx-2.png';
+import Background2 from '../../assets/plx-3.png';
+import Background3 from '../../assets/plx-4.png';
+import Overlay from '../../assets/overlay.png';
+
 import GUI from '../../components/GUI/GUI';
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
-
+import World from '../../data/world';
+import Loading from '../loading/loading';
 export default function Index(props) {
 
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
   const [holdingInput,setHoldingInput] = useState(false);
   const speed = 20;
-  const World = [
 
-    {
-      name: 'block',
-      text: 'Act 1',
-      size: {
-        x: screenWidth/2,
-        y: screenHeight
-      },
-      position:{
-        x: -(screenWidth/2),
-        y: 0
-      }
-    },
-    {
-      name: 'block',
-      size: {
-        x: screenWidth/2,
-        y: screenHeight
-      },
-      position:{
-        x: -(screenWidth/2),
-        y: -screenHeight
-      }
-    },
-    {
-      name: 'block',
-      text: null,
-      texture: Floor,
-      size: {
-        x: 100,
-        y: 100
-      },
-      position:{
-        x: 0,
-        y: screenHeight - 100
-      }
-    },
-    {
-      name: 'block',
-      text: null,
-      texture: Floor,
-      size: {
-        x: 100,
-        y: 100
-      },
-      position:{
-        x: 100,
-        y: screenHeight - 100
-      }
-    },
-    {
-      name: 'block',
-      text: null,
-      texture: Floor,
-      size: {
-        x: 100,
-        y: 100
-      },
-      position:{
-        x: 100,
-        y: screenHeight - 100
-      }
-    }
-
-];
 
 
  useEffect(() => {
@@ -150,7 +90,7 @@ export default function Index(props) {
       const collision = detectX && detectY;
 
 
-      const player_bottom = PlayerTop + tmpState.player.size.y;
+      const player_bottom = PlayerTop + tmpState.player.size.y - 2;
       const tiles_bottom = ObjTop + World[i].size.y;
       const player_right = PlayerLeft + tmpState.player.size.x;
       const tiles_right = ObjLeft + World[i].size.x;
@@ -181,7 +121,8 @@ export default function Index(props) {
       if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)
       {
         //Left collision
-        tmpState.player.position.x = ObjLeft - PlayerWidth;
+        tmpState.player.position.x = state.player.position.x;//ObjLeft - PlayerWidth;
+        console.log("left",World[i].name);
         tmpState.player.isTouchingWall = true;
 
 
@@ -189,8 +130,9 @@ export default function Index(props) {
       if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision )
       {
         //Right collision
-        tmpState.player.position.x = ObjRight;
+        tmpState.player.position.x = state.player.position.x;//ObjRight;
         tmpState.player.isTouchingWall = true;
+        console.log("right");
       }
     }
 
@@ -214,7 +156,10 @@ export default function Index(props) {
 
 
     <View  style={styles.container}>
-      <Image style={{ width: screenWidth*2, height: screenHeight,position: 'absolute',opacity: 0.1 }} source={Background} resizeMode="repeat" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute' }} source={Background} resizeMode="stretch" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:(state.player.position.x*0.1)-100,top:(state.player.position.y*0.01) - 50 }} source={Background1} resizeMode="stretch" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:state.player.position.x*0.05,top:(state.player.position.y*0.01) - 50 }} source={Background2} resizeMode="stretch" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:state.player.position.x*0.02,top:(state.player.position.y*0.01) - 50 }} source={Background3} resizeMode="stretch" />
 
         <GUI/>
 
@@ -230,6 +175,9 @@ export default function Index(props) {
       {item.texture && <Image style={{width: '100%',height: '100%'}}  resizeMode="repeat" source={item.texture}/>}
       </View>)}
     </ScrollView>
+    <Loading/>
+    <Image style={{ width: screenWidth, height: screenHeight,position: 'absolute',...styles.overlay}} source={Overlay} resizeMode="stretch" />
+
     </View>
   );
 }
