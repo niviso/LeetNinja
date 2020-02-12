@@ -4,8 +4,8 @@ const GameContext = React.createContext([{}, () => {}]);
 
 const GameProvider = (props) => {
   const [state, setState] = useState({
-    FPS: 60,
-    gravity: 5,
+    FPS: 50,
+    gravity: 4,
     player:{
       directionVector: {
         x: 0,
@@ -13,7 +13,7 @@ const GameProvider = (props) => {
         direction: "left"
       },
       size: {
-        x: 70,
+        x: 66,
         y: 100
       },
       name: "",

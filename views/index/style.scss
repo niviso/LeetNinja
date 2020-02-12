@@ -1,10 +1,9 @@
 .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+
   width: 100%;
   height: 100%;
+  overflow: hidden;
+
 }
 
 .btn{
@@ -49,7 +48,7 @@
 .block{
   position: absolute;
   background: #80c565;
-  opacity: 0.5;
+  opacity: 0.8;
   border: 2px solid #012851;
   display: flex;
   justify-content: center;
