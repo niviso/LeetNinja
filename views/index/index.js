@@ -9,6 +9,7 @@ import Background1 from '../../assets/plx-2.png';
 import Background2 from '../../assets/plx-3.png';
 import Background3 from '../../assets/plx-4.png';
 import Overlay from '../../assets/overlay.png';
+import { Audio } from 'expo-av';
 
 import GUI from '../../components/GUI/GUI';
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
@@ -20,7 +21,6 @@ export default function Index(props) {
   const [state,setState] = useContext(GameContext);
   const [holdingInput,setHoldingInput] = useState(false);
   const speed = 20;
-
 
 
  useEffect(() => {
@@ -90,7 +90,7 @@ export default function Index(props) {
       const collision = detectX && detectY;
 
 
-      const player_bottom = PlayerTop + tmpState.player.size.y - 2;
+      const player_bottom = PlayerTop + tmpState.player.size.y - 4;
       const tiles_bottom = ObjTop + World[i].size.y;
       const player_right = PlayerLeft + tmpState.player.size.x;
       const tiles_right = ObjLeft + World[i].size.x;

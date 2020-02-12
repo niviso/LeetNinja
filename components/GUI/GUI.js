@@ -2,27 +2,55 @@ import React,{useState,useEffect,useContext} from 'react';
 import {View,Image,TouchableOpacity,Text,ScrollView  } from 'react-native';
 import styles from "./style.scss";
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
+import { Audio } from 'expo-av';
 
 export default function GUI() {
   const [state,setState] = useContext(GameContext);
+  async function JumpSound() {
+  const soundObject = new Audio.Sound();
+  try {
+    await soundObject.loadAsync(require('../../assets/sound/jump.wav'));
 
+    await soundObject.playAsync();
+    // Your sound is playing!
+  } catch (error) {
+    // An error occurred!
+  }
+  }
+
+  async function JumpSound_02() {
+  const soundObject = new Audio.Sound();
+  try {
+    await soundObject.loadAsync(require('../../assets/sound/jump_02.wav'));
+
+    await soundObject.playAsync();
+    // Your sound is playing!
+  } catch (error) {
+    // An error occurred!
+  }
+  }
   const Jump = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
-
     if(state.player.isGrounded){
       tmpState.player.directionVector.y = -30;
       tmpState.player.isGrounded = false;
       setState(tmpState);
+      JumpSound();
+
 
     } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
       if(tmpState.player.directionVector.direction == "right"){
       tmpState.player.directionVector.y = -30;
       tmpState.player.directionVector.x = 1.6;
       tmpState.player.directionVector.direction = "left";
+      JumpSound_02();
+
     } else {
       tmpState.player.directionVector.y = -30;
       tmpState.player.directionVector.x = -1.6;
       tmpState.player.directionVector.direction = "right";
+      JumpSound_02();
+
     }
       tmpState.player.activeDrag = true;
       tmpState.player.isGrounded = false;
