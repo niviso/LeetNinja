@@ -22,6 +22,18 @@ export default function Index(props) {
   const [holdingInput,setHoldingInput] = useState(false);
   const speed = 20;
 
+  async function Test() {
+  const soundObject = new Audio.Sound();
+  try {
+    await soundObject.loadAsync(require('../../assets/sound/hit_ground_02.wav'));
+    soundObject.setVolumeAsync(0.3);
+
+    await soundObject.playAsync();
+    // Your sound is playing!
+  } catch (error) {
+    // An error occurred!
+  }
+  }
 
  useEffect(() => {
   const interval = setInterval(() => {
@@ -111,11 +123,15 @@ export default function Index(props) {
         tmpState.player.directionVector.y = 0;
         tmpState.player.position.y = ObjTop - PlayerHeight;
         tmpState.player.isGrounded = true;
+        if(!state.player.isGrounded){
+          Test();
+        }
       }
       if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
       {
         tmpState.player.position.y = ObjBottom;
         tmpState.player.directionVector.y += state.gravity;
+
         //bottom collsion
       }
       if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)

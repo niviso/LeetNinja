@@ -2,13 +2,12 @@ import React from 'react';
 import Index from './views/index/index';
 import { GameProvider } from "./Contexts/GameContext";
 import {View,Dimensions,TouchableWithoutFeedback,Text} from 'react-native';
-import BgSound from './assets/sound/bg.wav';
 import { Audio } from 'expo-av';
 
 async function Test() {
 const soundObject = new Audio.Sound();
 try {
-  await soundObject.loadAsync(require('./assets/sound/bg.wav'));
+  await soundObject.loadAsync(require('./assets/sound/bg2.wav'));
   soundObject.setIsLoopingAsync(true);
 
   await soundObject.playAsync();
