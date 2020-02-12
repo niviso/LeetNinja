@@ -1,10 +1,12 @@
 import React,{useState,useEffect,useContext} from 'react';
-import {View,Image,TouchableOpacity,Text} from 'react-native';
+import {View,Image,TouchableOpacity,Text,ScrollView,NativeModules  } from 'react-native';
 import styles from "./style.scss";
 import Idle from '../../assets/idle.gif';
 import Jumping from '../../assets/jump.png';
 import Run from '../../assets/run.gif';
 import Background from '../../assets/bg2.png';
+import Floor from '../../assets/floor_01.png';
+
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
 
 export default function Index(props) {
@@ -17,38 +19,67 @@ export default function Index(props) {
 
     {
       name: 'block',
+      text: 'Act 1',
       size: {
-        x: 200,
-        y: 50
+        x: screenWidth/2,
+        y: screenHeight
       },
       position:{
-        x: 600,
-        y: 150
+        x: -(screenWidth/2),
+        y: 0
       }
     },
     {
       name: 'block',
       size: {
-        x: 200,
-        y: 400
+        x: screenWidth/2,
+        y: screenHeight
       },
       position:{
-        x: 250,
-        y: 100
-      }},
-      {
+        x: -(screenWidth/2),
+        y: -screenHeight
+      }
+    },
+    {
       name: 'block',
-      texture: null,
+      text: null,
+      texture: Floor,
       size: {
-        x: 50,
-        y: 50
+        x: 100,
+        y: 100
       },
       position:{
         x: 0,
-        y: 200
+        y: screenHeight - 100
+      }
+    },
+    {
+      name: 'block',
+      text: null,
+      texture: Floor,
+      size: {
+        x: 100,
+        y: 100
+      },
+      position:{
+        x: 100,
+        y: screenHeight - 100
+      }
+    },
+    {
+      name: 'block',
+      text: null,
+      texture: Floor,
+      size: {
+        x: 100,
+        y: 100
+      },
+      position:{
+        x: 100,
+        y: screenHeight - 100
       }
     }
-    
+
 ];
 
 
@@ -139,17 +170,7 @@ export default function Index(props) {
 
 
 
-     //COLLISION DETECTION DEFAULT
-     if(tmpState.player.position.y > (screenHeight-tmpState.player.size.y)){
-      tmpState.player.directionVector.y = 0;
-      tmpState.player.position.y = screenHeight - tmpState.player.size.y;
-      tmpState.player.isGrounded = true;
-     }
-     if(tmpState.player.position.x <= 0 ){
-      tmpState.player.directionVector.x = 0;
-      tmpState.player.position.x = 0;
-      tmpState.player.isTouchingWall = true;
-     }
+
 
      //COLLISION DETECTION World
 
@@ -183,22 +204,25 @@ export default function Index(props) {
       const tiles_bottom = ObjTop + World[i].size.y;
       const player_right = PlayerLeft + tmpState.player.size.x;
       const tiles_right = ObjLeft + World[i].size.x;
-      
+
       const b_collision = tiles_bottom - PlayerTop;
       const t_collision = player_bottom - ObjTop;
       const l_collision = player_right - ObjLeft;
       const r_collision = tiles_right - PlayerLeft;
 
+      if(PlayerTop > screenHeight) {
+        NativeModules.DevSettings.reload();
+      }
       if(collision){
-      
+
       if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision )
-      {                           
+      {
         //Top collision
         tmpState.player.directionVector.y = 0;
         tmpState.player.position.y = ObjTop - PlayerHeight;
-        tmpState.player.isGrounded = true;    
+        tmpState.player.isGrounded = true;
       }
-      if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)                        
+      if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
       {
         tmpState.player.position.y = ObjBottom;
         tmpState.player.directionVector.y += state.gravity;
@@ -237,7 +261,9 @@ export default function Index(props) {
 
 
   return (
-    <View style={styles.container}>
+
+
+    <View  style={styles.container}>
       <Image style={{ width: screenWidth, height: screenHeight,position: 'absolute',opacity: 0.1 }} source={Background} resizeMode="repeat" />
       <View style={styles.moveBtnWrapper}>
 
@@ -273,17 +299,18 @@ export default function Index(props) {
         </TouchableOpacity>
       </View>
 
+      <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.player.position.x - (screenWidth/2),y: state.player.position.y <= (screenHeight - state.player.size.y*2) && state.player.position.y + (state.player.size.y*2) - screenHeight}} horizontal={true}>
+
       <View style={{...styles.character,left: state.player.position.x,top: state.player.position.y}} pointerEvents="none">
         {(state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
         {(!state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
         {(!state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
       </View>
-      {
-        World.map((item,i) => <View key={i} style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}>
-      {item.texture && <Image style={{width: '100%',height: '100%'}}source={{uri: item.texture}}
- />}
-        </View>)
-      }
+      { World.map((item,i) => <View key={i} style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}>
+      {item.text && <Text style={styles.blockTxt}>{item.text}</Text>}
+      {item.texture && <Image style={{width: '100%',height: '100%'}}  resizeMode="repeat" source={item.texture}/>}
+      </View>)}
+    </ScrollView>
     </View>
   );
 }

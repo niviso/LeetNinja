@@ -47,14 +47,15 @@
 
 .block{
   position: absolute;
-  background: #80c565;
-  opacity: 0.8;
-  border: 2px solid #012851;
+  background: rgba(0,200,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.blockTxt{
+  font-size: 25px;
+}
 .moveBtnWrapper{
   position: absolute;
   bottom: 0%;
