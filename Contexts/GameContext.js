@@ -26,7 +26,7 @@ const GameProvider = (props) => {
       activeDrag: false,
       isWalking: false,
       drag: 0.2,
-      speed: 2
+      speed: 20
     }
   });
   return (

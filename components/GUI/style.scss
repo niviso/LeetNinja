@@ -5,12 +5,7 @@
   overflow: hidden;
 
 }
-.GuiWrapper{
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-}
+
 .btn{
   display: flex;
   justify-content: center;
@@ -60,6 +55,13 @@
 
 .blockTxt{
   font-size: 25px;
+}
+
+.BtnWrapper{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
 }
 .moveBtnWrapper{
   position: absolute;
