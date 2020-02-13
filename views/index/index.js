@@ -9,7 +9,7 @@ import Background1 from '../../assets/plx-2.png';
 import Background2 from '../../assets/plx-3.png';
 import Background3 from '../../assets/plx-4.png';
 import Overlay from '../../assets/overlay.png';
-import { Audio } from 'expo-av';
+import AudioHelper from '../../helpers/AudioHelper'
 
 import GUI from '../../components/GUI/GUI';
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
@@ -19,21 +19,8 @@ export default function Index(props) {
 
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
-  const [holdingInput,setHoldingInput] = useState(false);
-  const speed = 20;
 
-  async function Test() {
-  const soundObject = new Audio.Sound();
-  try {
-    await soundObject.loadAsync(require('../../assets/sound/hit_ground_02.wav'));
-    soundObject.setVolumeAsync(0.3);
 
-    await soundObject.playAsync();
-    // Your sound is playing!
-  } catch (error) {
-    // An error occurred!
-  }
-  }
 
  useEffect(() => {
   const interval = setInterval(() => {
@@ -124,7 +111,7 @@ export default function Index(props) {
         tmpState.player.position.y = ObjTop - PlayerHeight;
         tmpState.player.isGrounded = true;
         if(!state.player.isGrounded){
-          Test();
+          AudioHelper.init(require('../../assets/sound/hit_ground_01.wav'),0.3);
         }
       }
       if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
@@ -138,7 +125,6 @@ export default function Index(props) {
       {
         //Left collision
         tmpState.player.position.x = state.player.position.x;//ObjLeft - PlayerWidth;
-        console.log("left",World[i].name);
         tmpState.player.isTouchingWall = true;
 
 
@@ -148,7 +134,6 @@ export default function Index(props) {
         //Right collision
         tmpState.player.position.x = state.player.position.x;//ObjRight;
         tmpState.player.isTouchingWall = true;
-        console.log("right");
       }
     }
 
@@ -175,7 +160,7 @@ export default function Index(props) {
       <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute' }} source={Background} resizeMode="stretch" />
       <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:(state.player.position.x*0.1)-100,top:(state.player.position.y*0.01) - 50 }} source={Background1} resizeMode="stretch" />
       <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:state.player.position.x*0.05,top:(state.player.position.y*0.01) - 50 }} source={Background2} resizeMode="stretch" />
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:state.player.position.x*0.02,top:(state.player.position.y*0.01) - 50 }} source={Background3} resizeMode="stretch" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:-state.player.position.x*0.02,top:(state.player.position.y*0.01) - 50 }} source={Background3} resizeMode="stretch" />
 
         <GUI/>
 

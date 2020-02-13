@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 89796,
-  "expoServerNgrokUrl": "https://ms-2bc.niviso.leetninja.exp.direct",
-  "packagerNgrokUrl": "https://packager.ms-2bc.niviso.leetninja.exp.direct",
-  "ngrokPid": 70636
+  "packagerPort": 19003,
+  "packagerPid": 30782,
+  "expoServerNgrokUrl": "https://ms-2bc.anonymous.leetninja.exp.direct",
+  "packagerNgrokUrl": "https://packager.ms-2bc.anonymous.leetninja.exp.direct",
+  "ngrokPid": 30792
 }
