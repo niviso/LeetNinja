@@ -2,14 +2,14 @@ import React,{useEffect,useContext} from 'react';
 import {View,Image,Text,ScrollView,NativeModules  } from 'react-native';
 import styles from "./style.scss";
 
-import Overlay from '../../assets/overlay.png';
 import AudioHelper from '../../helpers/AudioHelper'
 import Player from '../../components/player/player';
 import GUI from '../../components/GUI/GUI';
 import { GameContext } from "../../Contexts/GameContext";
 import World from '../../data/world';
-import Loading from '../loading/loading';
 import Background from '../../components/background/background';
+import Overlay from '../../components/overlay/overlay';
+
 import settings from '../../settings';
 export default function Index(props) {
 
@@ -159,8 +159,7 @@ export default function Index(props) {
       {item.texture && <Image style={{width: '100%',height: '100%'}}  resizeMode="repeat" source={item.texture}/>}
       </View>)}
     </ScrollView>
-    <Image style={{ width: screenWidth, height: screenHeight,position: 'absolute',...styles.overlay}} source={Overlay} resizeMode="stretch" />
-
+      <Overlay/>
     </View>
   );
 }
