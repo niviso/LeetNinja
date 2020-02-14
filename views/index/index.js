@@ -1,20 +1,16 @@
-import React,{useState,useEffect,useContext} from 'react';
-import {View,Image,TouchableOpacity,Text,ScrollView,NativeModules  } from 'react-native';
+import React,{useEffect,useContext} from 'react';
+import {View,Image,Text,ScrollView,NativeModules  } from 'react-native';
 import styles from "./style.scss";
-import Idle from '../../assets/idle.gif';
-import Jumping from '../../assets/jump.png';
-import Run from '../../assets/run.gif';
-import Background from '../../assets/plx-1.png';
-import Background1 from '../../assets/plx-2.png';
-import Background2 from '../../assets/plx-3.png';
-import Background3 from '../../assets/plx-4.png';
+
 import Overlay from '../../assets/overlay.png';
 import AudioHelper from '../../helpers/AudioHelper'
-
+import Player from '../../components/player/player';
 import GUI from '../../components/GUI/GUI';
-import { GameContext,GameProvider } from "../../Contexts/GameContext";
+import { GameContext } from "../../Contexts/GameContext";
 import World from '../../data/world';
 import Loading from '../loading/loading';
+import Background from '../../components/background/background';
+import settings from '../../settings';
 export default function Index(props) {
 
   const {screenHeight,screenWidth} = props;
@@ -116,7 +112,7 @@ export default function Index(props) {
       }
       if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
       {
-        tmpState.player.position.y = ObjBottom;
+        tmpState.player.position.y = state.player.position.y;
         tmpState.player.directionVector.y += state.gravity;
 
         //bottom collsion
@@ -143,34 +139,23 @@ export default function Index(props) {
      if(JSON.stringify(tmpState) !== JSON.stringify(state)){
       setState(tmpState);
     }
-    //console.log(JSON.stringify(tmpState.player));
 
-   }, (1000/state.FPS));
+   }, (1000/settings.FPS));
   return () => clearInterval(interval);
 }, [state]);
 
 
-  const CharacterStyle = {overflow: 'hidden',height: state.player.size.y,width: state.player.size.x,transform : [{scaleX: state.player.directionVector.direction=='right' ? -1 : 1 }] };
 
 
   return (
 
 
     <View  style={styles.container}>
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute' }} source={Background} resizeMode="stretch" />
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:(state.player.position.x*0.1)-100,top:(state.player.position.y*0.01) - 50 }} source={Background1} resizeMode="stretch" />
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:state.player.position.x*0.05,top:(state.player.position.y*0.01) - 50 }} source={Background2} resizeMode="stretch" />
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:-state.player.position.x*0.02,top:(state.player.position.y*0.01) - 50 }} source={Background3} resizeMode="stretch" />
-
-        <GUI/>
-
+      <Background/>
+      <GUI/>
       <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.player.position.x - (screenWidth/2),y: state.player.position.y <= (screenHeight - state.player.size.y*2) && state.player.position.y + (state.player.size.y*2) - screenHeight}} horizontal={true}>
 
-      <View style={{...styles.character,left: state.player.position.x,top: state.player.position.y}} pointerEvents="none">
-        {(state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
-        {(!state.player.isWalking && state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
-        {(!state.player.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
-      </View>
+      <Player/>
       { World.map((item,i) => <View key={i} style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}>
       {item.text && <Text style={styles.blockTxt}>{item.text}</Text>}
       {item.texture && <Image style={{width: '100%',height: '100%'}}  resizeMode="repeat" source={item.texture}/>}

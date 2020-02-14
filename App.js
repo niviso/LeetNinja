@@ -1,7 +1,7 @@
 import React from 'react';
 import Index from './views/index/index';
 import { GameProvider } from "./Contexts/GameContext";
-import {View,Dimensions,TouchableWithoutFeedback,Text} from 'react-native';
+import {Dimensions} from 'react-native';
 import AudioHelper from './helpers/AudioHelper'
 
 
