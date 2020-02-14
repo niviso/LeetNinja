@@ -60,9 +60,21 @@ const World = [
       },
       position:{
         x: 100,
-        y: 0
-      }
-    },
+        y: -50
+      }},
+      {
+        name: 'block',
+        text: null,
+        texture: Floor,
+        size: {
+          x: 100,
+          y: 100
+        },
+        position:{
+          x: 100,
+          y: 50
+        }
+      },
   ...Arr
 
 ];
