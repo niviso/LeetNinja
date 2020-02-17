@@ -1,4 +1,5 @@
 import World from '../data/world';
+import settings from '../settings';
 
 
 
