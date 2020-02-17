@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useContext} from 'react';
-import {View,Image,TouchableOpacity,Text,ScrollView  } from 'react-native';
+import {View,Image,TouchableOpacity,Text,NativeModules  } from 'react-native';
 import styles from "./style.scss";
 import { GameContext,GameProvider } from "../../Contexts/GameContext";
 import AudioHelper from '../../helpers/AudioHelper'
@@ -38,6 +38,11 @@ export default function GUI() {
       tmpState.player.isGrounded = false;
       setState(tmpState);
     }
+  }
+
+  const reset = () => {
+      NativeModules.DevSettings.reload();
+
   }
 
   const goLeft = () => {
@@ -95,7 +100,7 @@ export default function GUI() {
           </View>
         </TouchableOpacity>
       </View>
-        <TouchableOpacity activeOpacity={0.5} onPressIn={()=> Jump()}>
+        <TouchableOpacity activeOpacity={0.5} onPressIn={()=> reset()}>
           <View style={styles.btnB}>
             <Text style={styles.playButtons}>B</Text>
           </View>
