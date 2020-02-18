@@ -5,7 +5,7 @@ import {Dimensions} from 'react-native';
 import AudioHelper from './helpers/AudioHelper'
 
 
-AudioHelper.play(require('./assets/sound/bg2.wav'),true);
+AudioHelper.play(require('./assets/sound/bg.mp3'),true);
 
 
 export default function App() {
