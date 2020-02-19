@@ -1,32 +1,7 @@
 import World from '../data/world';
-import settings from '../settings';
 
 const gravity = 5;
 
-export function NewPosObj(){
-  return {
-    directionVector: {
-      x: 0,
-      y: 0,
-      direction: "right"
-    },
-    size: {
-      x: 60,
-      y: 60
-    },
-    name: "",
-    position: {
-      x: 260,
-      y: 100
-    },
-    isGrounded: false,
-    isTouchingWall: false,
-    activeDrag: false,
-    isWalking: false,
-    drag: 0.2,
-    speed: 10
-  }
-}
 
 export function Engine(state){
     var tmpPositionObj = JSON.parse(JSON.stringify(state));
