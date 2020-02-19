@@ -6,7 +6,7 @@ import Idle from '../../assets/idle.gif';
 import Jumping from '../../assets/jump.png';
 import Run from '../../assets/run.gif';
 import settings from '../../settings';
-import {Engine} from '../../engine/engine';
+import Engine from '../../engine/engine';
 import { PlayerContext } from "../../Contexts/PlayerContext";
 
 export default function Player() {
@@ -18,13 +18,13 @@ export default function Player() {
      var tmpState = JSON.parse(JSON.stringify(state));
      var tmpplayerState = JSON.parse(JSON.stringify(playerState));
 
-     tmpplayerState = Engine(tmpplayerState);
+     tmpplayerState = Engine.Update(tmpplayerState);
       tmpState.camera = tmpplayerState.position;
 
      if(JSON.stringify(tmpState) !== JSON.stringify(playerState)){
       setState(tmpState);
       setPlayerState(tmpplayerState);
-    }    
+    }
    }, (1000/settings.FPS));
   return () => clearInterval(interval);
 }, [playerState]);

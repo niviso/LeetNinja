@@ -1,5 +1,5 @@
 const settings = {
-    FPS: 50,
+    FPS: 20,
 }
 
 export default settings

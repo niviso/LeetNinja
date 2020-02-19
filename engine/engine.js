@@ -1,9 +1,15 @@
 import World from '../data/world';
+import React from 'react';
 
 const gravity = 5;
 
 
-export function Engine(state){
+class Engine extends React.Component{
+    constructor(props){
+      super(props);
+    }
+
+    Update = (state) =>{
     var tmpPositionObj = JSON.parse(JSON.stringify(state));
 
     tmpPositionObj.directionVector = {
@@ -115,3 +121,5 @@ export function Engine(state){
    }
     return tmpPositionObj;
     }
+    }
+export default new Engine();

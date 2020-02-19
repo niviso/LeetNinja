@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
-import {Engine} from '../../engine/engine';
 import settings from '../../settings';
 import {View } from 'react-native';
 import styles from "./style.scss";
+import Engine from '../../engine/engine';
 
 export default function Enemy(){
     const [state,setState] = useState({
@@ -34,14 +34,14 @@ export default function Enemy(){
       useEffect(() => {
         const interval = setInterval(() => {
            var tmpState = JSON.parse(JSON.stringify(state));
-          tmpState.player = Engine(state.player);
+          tmpState.player = Engine.Update(state.player);
           tmpState.player.activeDrag = true;
 
-            
-            
+
+
          if(JSON.stringify(tmpState) !== JSON.stringify(state)){
             setState(tmpState);
-          }  
+          }
          }, (1000/settings.FPS));
         return () => clearInterval(interval);
       }, [state]);
