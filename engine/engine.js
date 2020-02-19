@@ -7,47 +7,75 @@ const gravity = 5;
 class Engine extends React.Component{
     constructor(props){
       super(props);
+      this.state = {
+        world: World, //Shard later 100,200,300,400,500,600 etc
+        shards: null
+      }
+
+      this.ShardWorld();
     }
 
+    AddObjToWorld = (obj) => {
+      this.state.world.push(obj);
+    }
+
+    ShardWorld = () => {
+      //This function optimizes the collision detection by sharding the world blocks into positions from 0-100,100-200 etc this is based on x pos
+      let tmpWorld = new Array();
+      for(let i = 0; i != this.state.world.length;i++){
+        let shard = (Math.ceil(this.state.world[i].position.x/100)*100).toString();
+        console.log(shard);
+        if(!tmpWorld[shard]){
+          tmpWorld[shard] = new Array();
+        }
+        tmpWorld[shard].push(this.state.world[i]);
+
+      }
+      this.state.shards = tmpWorld;
+      //tmpWorld.forEach((element,index) => console.log(index,element));
+    }
+    Gravity = (state) => {
+      var tmpPositionObj = JSON.parse(JSON.stringify(state));
+
+      tmpPositionObj.directionVector = {
+        x: tmpPositionObj.directionVector.x,
+        y: tmpPositionObj.directionVector.y + gravity,
+        direction: tmpPositionObj.directionVector.direction
+      }
+
+      if(tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "left"){
+       tmpPositionObj.directionVector.x = tmpPositionObj.directionVector.x - tmpPositionObj.drag;
+      }
+
+      if(tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "right"){
+       tmpPositionObj.directionVector.x = tmpPositionObj.directionVector.x + tmpPositionObj.drag;
+      }
+
+      if(tmpPositionObj.directionVector.x <= 0 && tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "left"){
+        tmpPositionObj.activeDrag = false;
+        tmpPositionObj.directionVector.x = 0;
+      }
+
+      if(tmpPositionObj.directionVector.x >= 0 && tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "right"){
+        tmpPositionObj.activeDrag = false;
+        tmpPositionObj.directionVector.x = 0;
+      }
+
+      tmpPositionObj.position = {
+        x: tmpPositionObj.position.x + (tmpPositionObj.directionVector.x * state.speed),
+        y: tmpPositionObj.position.y + tmpPositionObj.directionVector.y
+      }
+
+      tmpPositionObj.isTouchingWall = false;
+
+      return tmpPositionObj;
+    }
     Update = (state) =>{
-    var tmpPositionObj = JSON.parse(JSON.stringify(state));
-
-    tmpPositionObj.directionVector = {
-      x: tmpPositionObj.directionVector.x,
-      y: tmpPositionObj.directionVector.y + gravity,
-      direction: tmpPositionObj.directionVector.direction
-    }
-
-    if(tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "left"){
-     tmpPositionObj.directionVector.x = tmpPositionObj.directionVector.x - tmpPositionObj.drag;
-    }
-
-    if(tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "right"){
-     tmpPositionObj.directionVector.x = tmpPositionObj.directionVector.x + tmpPositionObj.drag;
-    }
-
-    if(tmpPositionObj.directionVector.x <= 0 && tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "left"){
-      tmpPositionObj.activeDrag = false;
-      tmpPositionObj.directionVector.x = 0;
-    }
-
-    if(tmpPositionObj.directionVector.x >= 0 && tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "right"){
-      tmpPositionObj.activeDrag = false;
-      tmpPositionObj.directionVector.x = 0;
-    }
-
-    tmpPositionObj.position = {
-      x: tmpPositionObj.position.x + (tmpPositionObj.directionVector.x * state.speed),
-      y: tmpPositionObj.position.y + tmpPositionObj.directionVector.y
-    }
-
-    tmpPositionObj.isTouchingWall = false;
-
-
-
-
+    var tmpPositionObj = this.Gravity(state);
 
     //COLLISION DETECTION World
+    const shard = (Math.ceil(tmpPositionObj.position.x/100)*100).toString();
+    const WorldShard = this.state.shards[shard];
 
     const PlayerLeft = tmpPositionObj.position.x;
     const PlayerRight = PlayerLeft + tmpPositionObj.size.x;
@@ -56,13 +84,12 @@ class Engine extends React.Component{
 
     const PlayerWidth = tmpPositionObj.size.x;
     const PlayerHeight = tmpPositionObj.size.y;
-
    for(var i = 0;i!=World.length;i++){
 
-     const ObjLeft = World[i].position.x;
-     const ObjRight = ObjLeft + World[i].size.x;
-     const ObjTop = World[i].position.y;
-     const ObjBottom = ObjTop + World[i].size.y;
+     const ObjLeft = this.state.world[i].position.x;
+     const ObjRight = ObjLeft + this.state.world[i].size.x;
+     const ObjTop = this.state.world[i].position.y;
+     const ObjBottom = ObjTop + this.state.world[i].size.y;
 
      const rightOfX = PlayerLeft >= ObjRight;
      const leftOfX = PlayerRight <= ObjLeft;
@@ -76,9 +103,9 @@ class Engine extends React.Component{
 
 
      const player_bottom = PlayerTop + tmpPositionObj.size.y - 4;
-     const tiles_bottom = ObjTop + World[i].size.y;
+     const tiles_bottom = ObjTop + this.state.world[i].size.y;
      const player_right = PlayerLeft + tmpPositionObj.size.x;
-     const tiles_right = ObjLeft + World[i].size.x;
+     const tiles_right = ObjLeft + this.state.world[i].size.x;
 
      const b_collision = tiles_bottom - PlayerTop;
      const t_collision = player_bottom - ObjTop;
