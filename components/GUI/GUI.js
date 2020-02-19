@@ -19,15 +19,15 @@ export default function GUI() {
 
     } else if(state.isTouchingWall && !tmpState.isGrounded){
       if(tmpState.directionVector.direction == "right"){
-      tmpState.directionVector.y = -30;
-      tmpState.directionVector.x = 1.6;
+      tmpState.directionVector.y = -40;
+      tmpState.directionVector.x = 1.7;
       tmpState.directionVector.direction = "left";
       AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
 
 
     } else {
-      tmpState.directionVector.y = -30;
-      tmpState.directionVector.x = -1.6;
+      tmpState.directionVector.y = -40;
+      tmpState.directionVector.x = -1.7;
       tmpState.directionVector.direction = "right";
       AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
 
