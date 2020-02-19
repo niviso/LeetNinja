@@ -21,7 +21,7 @@ export default function Player() {
      tmpplayerState = Engine(tmpplayerState);
       tmpState.camera = tmpplayerState.position;
 
-     if(JSON.stringify(tmpState) !== JSON.stringify(state)){
+     if(JSON.stringify(tmpState) !== JSON.stringify(playerState)){
       setState(tmpState);
       setPlayerState(tmpplayerState);
     }    
