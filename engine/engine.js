@@ -1,41 +1,41 @@
 import World from '../data/world';
 import settings from '../settings';
 
-
+const gravity = 5;
 
 export default function Engine(state){
-    var tmpState = JSON.parse(JSON.stringify(state));
+    var tmpPositionObj = JSON.parse(JSON.stringify(state));
 
-    tmpState.player.directionVector = {
-      x: tmpState.player.directionVector.x,
-      y: tmpState.player.directionVector.y + state.gravity,
-      direction: tmpState.player.directionVector.direction
+    tmpPositionObj.directionVector = {
+      x: tmpPositionObj.directionVector.x,
+      y: tmpPositionObj.directionVector.y + gravity,
+      direction: tmpPositionObj.directionVector.direction
     }
 
-    if(tmpState.player.activeDrag && tmpState.player.directionVector.direction == "left"){
-     tmpState.player.directionVector.x = tmpState.player.directionVector.x - tmpState.player.drag;
+    if(tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "left"){
+     tmpPositionObj.directionVector.x = tmpPositionObj.directionVector.x - tmpPositionObj.drag;
     }
 
-    if(tmpState.player.activeDrag && tmpState.player.directionVector.direction == "right"){
-     tmpState.player.directionVector.x = tmpState.player.directionVector.x + tmpState.player.drag;
+    if(tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "right"){
+     tmpPositionObj.directionVector.x = tmpPositionObj.directionVector.x + tmpPositionObj.drag;
     }
 
-    if(tmpState.player.directionVector.x <= 0 && tmpState.player.activeDrag && tmpState.player.directionVector.direction == "left"){
-      tmpState.player.activeDrag = false;
-      tmpState.player.directionVector.x = 0;
+    if(tmpPositionObj.directionVector.x <= 0 && tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "left"){
+      tmpPositionObj.activeDrag = false;
+      tmpPositionObj.directionVector.x = 0;
     }
 
-    if(tmpState.player.directionVector.x >= 0 && tmpState.player.activeDrag && tmpState.player.directionVector.direction == "right"){
-      tmpState.player.activeDrag = false;
-      tmpState.player.directionVector.x = 0;
+    if(tmpPositionObj.directionVector.x >= 0 && tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "right"){
+      tmpPositionObj.activeDrag = false;
+      tmpPositionObj.directionVector.x = 0;
     }
 
-    tmpState.player.position = {
-      x: tmpState.player.position.x + (tmpState.player.directionVector.x * state.player.speed),
-      y: tmpState.player.position.y + tmpState.player.directionVector.y
+    tmpPositionObj.position = {
+      x: tmpPositionObj.position.x + (tmpPositionObj.directionVector.x * state.speed),
+      y: tmpPositionObj.position.y + tmpPositionObj.directionVector.y
     }
 
-    tmpState.player.isTouchingWall = false;
+    tmpPositionObj.isTouchingWall = false;
 
 
 
@@ -43,13 +43,13 @@ export default function Engine(state){
 
     //COLLISION DETECTION World
 
-    const PlayerLeft = tmpState.player.position.x;
-    const PlayerRight = PlayerLeft + tmpState.player.size.x;
-    const PlayerTop = tmpState.player.position.y;
-    const PlayerBottom = PlayerTop + tmpState.player.size.y;
+    const PlayerLeft = tmpPositionObj.position.x;
+    const PlayerRight = PlayerLeft + tmpPositionObj.size.x;
+    const PlayerTop = tmpPositionObj.position.y;
+    const PlayerBottom = PlayerTop + tmpPositionObj.size.y;
 
-    const PlayerWidth = tmpState.player.size.x;
-    const PlayerHeight = tmpState.player.size.y;
+    const PlayerWidth = tmpPositionObj.size.x;
+    const PlayerHeight = tmpPositionObj.size.y;
 
    for(var i = 0;i!=World.length;i++){
 
@@ -69,9 +69,9 @@ export default function Engine(state){
      const collision = detectX && detectY;
 
 
-     const player_bottom = PlayerTop + tmpState.player.size.y - 4;
+     const player_bottom = PlayerTop + tmpPositionObj.size.y - 4;
      const tiles_bottom = ObjTop + World[i].size.y;
-     const player_right = PlayerLeft + tmpState.player.size.x;
+     const player_right = PlayerLeft + tmpPositionObj.size.x;
      const tiles_right = ObjLeft + World[i].size.x;
 
      const b_collision = tiles_bottom - PlayerTop;
@@ -84,34 +84,34 @@ export default function Engine(state){
      if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision )
      {
        //Top collision
-       tmpState.player.directionVector.y = 0;
-       tmpState.player.position.y = ObjTop - PlayerHeight;
-       tmpState.player.isGrounded = true;
+       tmpPositionObj.directionVector.y = 0;
+       tmpPositionObj.position.y = ObjTop - PlayerHeight;
+       tmpPositionObj.isGrounded = true;
      }
      if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision)
      {
-       tmpState.player.position.y = state.player.position.y;
-       tmpState.player.directionVector.y += state.gravity;
+       tmpPositionObj.position.y = state.position.y;
+       tmpPositionObj.directionVector.y += state.gravity;
 
        //bottom collsion
      }
      if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision)
      {
        //Left collision
-       tmpState.player.position.x = state.player.position.x;//ObjLeft - PlayerWidth;
-       tmpState.player.isTouchingWall = true;
+       tmpPositionObj.position.x = state.position.x;//ObjLeft - PlayerWidth;
+       tmpPositionObj.isTouchingWall = true;
 
 
      }
      if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision )
      {
        //Right collision
-       tmpState.player.position.x = state.player.position.x;//ObjRight;
-       tmpState.player.isTouchingWall = true;
+       tmpPositionObj.position.x = state.position.x;//ObjRight;
+       tmpPositionObj.isTouchingWall = true;
      }
    }
 
 
    }
-    return tmpState;
+    return tmpPositionObj;
     }

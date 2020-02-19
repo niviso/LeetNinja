@@ -37,7 +37,7 @@ export default function Enemy(){
       useEffect(() => {
         const interval = setInterval(() => {
            var tmpState = JSON.parse(JSON.stringify(state));
-          tmpState = Engine(state);
+          tmpState.player = Engine(state.player);
           tmpState.player.activeDrag = true;
 
             

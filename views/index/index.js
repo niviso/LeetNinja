@@ -1,4 +1,4 @@
-import React,{useEffect,useContext} from 'react';
+import React,{useContext} from 'react';
 import {View,Image,Text,ScrollView  } from 'react-native';
 import styles from "./style.scss";
 import Player from '../../components/player/player';
@@ -7,30 +7,11 @@ import { GameContext } from "../../Contexts/GameContext";
 import World from '../../data/world';
 import Background from '../../components/background/background';
 import Overlay from '../../components/overlay/overlay';
-import Engine from '../../engine/engine';
-import settings from '../../settings';
 import Enemy from '../../components/enemy/enemy';
 export default function Index(props) {
 
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
-
-
-
- useEffect(() => {
-  const interval = setInterval(() => {
-     var tmpState = JSON.parse(JSON.stringify(state));
-    tmpState = Engine(state);
-
-     if(JSON.stringify(tmpState) !== JSON.stringify(state)){
-      setState(tmpState);
-    }    
-   }, (1000/settings.FPS));
-  return () => clearInterval(interval);
-}, [state]);
-
-
-
 
   return (
 
