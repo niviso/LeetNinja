@@ -4,6 +4,8 @@ import styles from "./style.scss";
 import Player from '../../components/player/player';
 import GUI from '../../components/GUI/GUI';
 import { GameContext } from "../../Contexts/GameContext";
+import { PlayerProvider } from "../../Contexts/PlayerContext";
+
 import World from '../../data/world';
 import Background from '../../components/background/background';
 import Overlay from '../../components/overlay/overlay';
@@ -15,11 +17,11 @@ export default function Index(props) {
 
   return (
 
+    <PlayerProvider>
 
     <View  style={styles.container}>
       <Background/>
-      <GUI/>
-      <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.player.position.x - (screenWidth/2),y: state.player.position.y <= (screenHeight - state.player.size.y*2) && state.player.position.y + (state.player.size.y*2) - screenHeight}} horizontal={true}>
+      <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.camera.x - (screenWidth/2),y: state.camera.y <= (screenHeight - 200) && state.camera.y + 200 - screenHeight}} horizontal={true}>
       <Player/>
       <Enemy/>
       { World.map((item,i) => <View key={i} style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}>
@@ -28,6 +30,10 @@ export default function Index(props) {
       </View>)}
     </ScrollView>
       <Overlay/>
+      <GUI/>
+
     </View>
+    </PlayerProvider>
+
   );
 }

@@ -1,10 +1,7 @@
 import React,{useState,useEffect} from 'react';
-import Engine from '../../engine/engine';
+import {Engine} from '../../engine/engine';
 import settings from '../../settings';
-import Idle from '../../assets/ninja.png';
-import Jumping from '../../assets/jump.png';
-import Run from '../../assets/run.gif';
-import {View,Image,Text,ScrollView  } from 'react-native';
+import {View } from 'react-native';
 import styles from "./style.scss";
 
 export default function Enemy(){

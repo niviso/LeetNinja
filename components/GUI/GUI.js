@@ -1,41 +1,40 @@
 import React,{useState,useEffect,useContext} from 'react';
 import {View,Image,TouchableOpacity,Text,NativeModules  } from 'react-native';
 import styles from "./style.scss";
-import { GameContext,GameProvider } from "../../Contexts/GameContext";
 import AudioHelper from '../../helpers/AudioHelper'
-
+import { PlayerContext } from "../../Contexts/PlayerContext";
 
 
 export default function GUI() {
-  const [state,setState] = useContext(GameContext);
+  const [state,setState] = useContext(PlayerContext);
 
   const Jump = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
-    if(state.player.isGrounded){
-      tmpState.player.directionVector.y = -30;
-      tmpState.player.isGrounded = false;
+    if(state.isGrounded){
+      tmpState.directionVector.y = -30;
+      tmpState.isGrounded = false;
       setState(tmpState);
       AudioHelper.init(require('../..//assets/sound/jump.wav'));
 
 
-    } else if(state.player.isTouchingWall && !tmpState.player.isGrounded){
-      if(tmpState.player.directionVector.direction == "right"){
-      tmpState.player.directionVector.y = -30;
-      tmpState.player.directionVector.x = 1.6;
-      tmpState.player.directionVector.direction = "left";
+    } else if(state.isTouchingWall && !tmpState.isGrounded){
+      if(tmpState.directionVector.direction == "right"){
+      tmpState.directionVector.y = -30;
+      tmpState.directionVector.x = 1.6;
+      tmpState.directionVector.direction = "left";
       AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
 
 
     } else {
-      tmpState.player.directionVector.y = -30;
-      tmpState.player.directionVector.x = -1.6;
-      tmpState.player.directionVector.direction = "right";
+      tmpState.directionVector.y = -30;
+      tmpState.directionVector.x = -1.6;
+      tmpState.directionVector.direction = "right";
       AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
 
 
     }
-      tmpState.player.activeDrag = true;
-      tmpState.player.isGrounded = false;
+      tmpState.activeDrag = true;
+      tmpState.isGrounded = false;
       setState(tmpState);
     }
   }
@@ -47,27 +46,27 @@ export default function GUI() {
 
   const goLeft = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
-    tmpState.player.activeDrag = false;
-    tmpState.player.directionVector.x = 0.6;
-    tmpState.player.directionVector.direction = "left";
-    tmpState.player.isWalking = true;
+    tmpState.activeDrag = false;
+    tmpState.directionVector.x = 0.6;
+    tmpState.directionVector.direction = "left";
+    tmpState.isWalking = true;
     setState(tmpState);
 
   }
   const goRight = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
-    tmpState.player.activeDrag = false;
-    tmpState.player.directionVector.x = -0.6;
-    tmpState.player.directionVector.direction = "right";
-    tmpState.player.isWalking = true;
+    tmpState.activeDrag = false;
+    tmpState.directionVector.x = -0.6;
+    tmpState.directionVector.direction = "right";
+    tmpState.isWalking = true;
     setState(tmpState);
 
   }
 
   const stopWalking = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
-    tmpState.player.activeDrag = true;
-    tmpState.player.isWalking = false;
+    tmpState.activeDrag = true;
+    tmpState.isWalking = false;
     setState(tmpState);
   }
   return (

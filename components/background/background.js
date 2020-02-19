@@ -12,9 +12,9 @@ export default function Player() {
   return (
     <View>
       <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute' }} source={Background} resizeMode="stretch" />
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:(state.player.position.x*0.1)-100,top:(state.player.position.y*0.01) - 50 }} source={Background1} resizeMode="stretch" />
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:state.player.position.x*0.05,top:(state.player.position.y*0.01) - 50 }} source={Background2} resizeMode="stretch" />
-      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:-state.player.position.x*0.02,top:(state.player.position.y*0.01) - 50 }} source={Background3} resizeMode="stretch" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:(state.camera.x*0.1)-100,top:(state.camera.y*0.01) - 50 }} source={Background1} resizeMode="stretch" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:state.camera.x*0.05,top:(state.camera.y*0.01) - 50 }} source={Background2} resizeMode="stretch" />
+      <Image style={{ width: screenWidth*1.25, height: screenHeight*1.25,position: 'absolute',left:-state.camera.x*0.02,top:(state.camera.y*0.01) - 50 }} source={Background3} resizeMode="stretch" />
     </View>
   );
 }

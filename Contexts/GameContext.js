@@ -5,28 +5,10 @@ const GameContext = React.createContext([{}, () => {}]);
 const GameProvider = (props) => {
   const [state, setState] = useState({
     gravity: 4,
-    player:{
-      directionVector: {
-        x: 0,
-        y: 0,
-        direction: "left"
-      },
-      size: {
-        x: 66,
-        y: 100
-      },
-      name: "",
-      position: {
-        x: 0,
-        y: 0
-      },
-      isGrounded: false,
-      isTouchingWall: false,
-      activeDrag: false,
-      isWalking: false,
-      drag: 0.2,
-      speed: 20
-    }
+    camera:{
+      x: 0,
+      y: 0
+    },
   });
   return (
     <GameContext.Provider value={[state, setState]}>
