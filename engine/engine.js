@@ -8,11 +8,23 @@ class Engine extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      world: World, //Shard later 100,200,300,400,500,600 etc
-      shards: null
+      init: false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
+      world: World,//props.gameState.world, //Shard later 100,200,300,400,500,600 etc
+      shards: null,
+      setGameState: null,
+      gameState: null
     }
+  }
 
+  Init(props){
+    if(!props){
+      return;
+    }
+    this.state.setGameState = props.setGameState;
+    this.state.gameState = props.gameState;
+    this.state.init = true;
     this.Optimize();
+    console.log("Engine initialized");
   }
 
   AddObjToWorld = (obj) => {
@@ -32,6 +44,10 @@ class Engine extends React.Component {
     }
     this.state.shards = tmpWorld;
     //tmpWorld.forEach((element,index) => console.log(index,element));
+  }
+
+  FetchShard = (shard) => {
+
   }
   Gravity = (state) => {
     var tmpPositionObj = JSON.parse(JSON.stringify(state));
@@ -74,7 +90,7 @@ class Engine extends React.Component {
 
     //COLLISION DETECTION World
     const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
-    const WorldShard = this.state.shards[shard]; //IF x right pos > shard fetch shard + 1
+    //const WorldShard = this.state.shards[shard]; //IF x right pos > shard fetch shard + 1
 
     const PlayerLeft = tmpPositionObj.position.x;
     const PlayerRight = PlayerLeft + tmpPositionObj.size.x;
