@@ -9,7 +9,7 @@ export default function Block(props){
 
         <View style={{...styles.block,width: item.size.x,height:item.size.y,top: item.position.y,left: item.position.x}}>
           {item.text && <Text style={styles.blockTxt}>{item.text}</Text>}
-          {item.texture && <Image style={{width: '100%',height: '100%'}}  resizeMode="repeat" source={item.texture}/>}
+          {item.texture && <Image style={{width: '100%',height: '100%'}}  resizeMode="contain" source={item.texture}/>}
         </View>
     
       );
