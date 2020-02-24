@@ -1,5 +1,7 @@
 import {Dimensions} from 'react-native';
-import Floor from '../assets/floor_01.png';
+import Block from '../assets/floor_01.png';
+import Floor from '../assets/tiles/ground_01.png';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
@@ -53,7 +55,7 @@ const World = [
   {
       name: 'block',
       text: null,
-      texture: Floor,
+      texture: Block,
       size: {
         x: 100,
         y: 100
@@ -65,7 +67,7 @@ const World = [
       {
         name: 'block',
         text: null,
-        texture: Floor,
+        texture: Block,
         size: {
           x: 100,
           y: 100
