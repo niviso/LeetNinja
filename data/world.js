@@ -1,5 +1,5 @@
 import {Dimensions} from 'react-native';
-import Block from '../assets/floor_01.png';
+import Block from '../assets/tiles/ground_01.png';
 import Floor from '../assets/tiles/ground_01.png';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
