@@ -24,8 +24,6 @@ export default function Player() {
      if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
       setState(tmpState);
       setPlayerState(tmpPlayerState);
-      console.log(Engine.GetWorld());
-
     }
     
    }, (1000/settings.FPS));

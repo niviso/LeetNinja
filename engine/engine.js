@@ -11,8 +11,6 @@ class Engine extends React.Component {
       init: false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
       world: World,//props.gameState.world, //Shard later 100,200,300,400,500,600 etc
       shards: null,
-      setGameState: null,
-      gameState: null
     }
   }
 
@@ -20,15 +18,9 @@ class Engine extends React.Component {
     if(!props){
       return;
     }
-    this.SetWorld(props.World);
+    this.SetWorld(props.world);
     this.state.init = true;
-    this.Optimize();
     console.log("Engine initialized");
-  }
-
-  UpdateX = () => {
-    console.log("Update init");
-    console.log(JSON.stringify(this.state.gameState.world));
   }
 
   hasStarted = () => {
@@ -36,11 +28,12 @@ class Engine extends React.Component {
   }
   
   GetWorld = () => {
-    return this.state.World;
+    return this.state.world;
   }
 
-  SetWorld = (World) => {
-    this.state.World = World;
+  SetWorld = (world) => {
+    this.state.world = world;
+    this.Optimize();
   }
 
   AddObjToWorld = (obj) => {
@@ -48,6 +41,9 @@ class Engine extends React.Component {
   }
 
   Optimize = () => {
+    if(this.state.world == null){
+      return;
+    }
     //This function optimizes the collision detection by sharding the world blocks into positions from 0-100,100-200 etc this is based on x pos
     let tmpWorld = new Array();
     for (let i = 0; i != this.state.world.length; i++) {
@@ -59,7 +55,7 @@ class Engine extends React.Component {
 
     }
     this.state.shards = tmpWorld;
-    //tmpWorld.forEach((element,index) => console.log(index,element));
+    tmpWorld.forEach((element,index) => console.log(index,element));
   }
 
   FetchShard = (shard) => {
