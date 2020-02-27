@@ -16,14 +16,14 @@ export default function Player() {
  useEffect(() => {
   const interval = setInterval(() => {
      var tmpState = JSON.parse(JSON.stringify(state));
-     var tmpplayerState = JSON.parse(JSON.stringify(playerState));
+     var tmpPlayerState = JSON.parse(JSON.stringify(playerState));
 
-     tmpplayerState = Engine.Update(tmpplayerState);
-      tmpState.camera = tmpplayerState.position;
+     tmpPlayerState = Engine.Update(tmpPlayerState);
+      tmpState.camera = tmpPlayerState.position;
 
-     if(JSON.stringify(tmpState) !== JSON.stringify(playerState)){
+     if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
       setState(tmpState);
-      setPlayerState(tmpplayerState);
+      setPlayerState(tmpPlayerState);
     }
    }, (1000/settings.FPS));
   return () => clearInterval(interval);
