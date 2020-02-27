@@ -27,6 +27,23 @@ class Engine extends React.Component {
     console.log("Engine initialized");
   }
 
+  UpdateX = () => {
+    console.log("Update init");
+    console.log(JSON.stringify(this.state.gameState.world));
+  }
+
+  hasStarted = () => {
+    return this.state.init;
+  }
+  
+  GetWorld = () => {
+    return this.state.world;
+  }
+
+  SetWorld = (World) => {
+    this.state.World = World;
+  }
+
   AddObjToWorld = (obj) => {
     this.state.world.push(obj);
   }

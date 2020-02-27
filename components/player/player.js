@@ -24,7 +24,9 @@ export default function Player() {
      if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
       setState(tmpState);
       setPlayerState(tmpPlayerState);
+
     }
+    
    }, (1000/settings.FPS));
   return () => clearInterval(interval);
 }, [playerState]);
