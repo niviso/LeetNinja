@@ -20,8 +20,7 @@ class Engine extends React.Component {
     if(!props){
       return;
     }
-    this.state.setGameState = props.setGameState;
-    this.state.gameState = props.gameState;
+    this.SetWorld(props.World);
     this.state.init = true;
     this.Optimize();
     console.log("Engine initialized");
@@ -37,7 +36,7 @@ class Engine extends React.Component {
   }
   
   GetWorld = () => {
-    return this.state.world;
+    return this.state.World;
   }
 
   SetWorld = (World) => {
