@@ -24,7 +24,12 @@ class Engine extends React.Component {
   }
 
   DeleteWorldObject = (obj) => {
-    this.state.world = this.state.world.slice(0,5);
+    var filtered = this.state.world.filter(function(value, index, arr){
+
+      return index > 5;
+  
+    });
+    this.state.world = filtered;
     console.log(this.state.world);
   }
 
@@ -118,7 +123,7 @@ class Engine extends React.Component {
     const PlayerHeight = tmpPositionObj.size.y;
     if(this.state.world) {
     for (var i = 0; i != World.length; i++) {
-
+      if(this.state.world[i]){
       const ObjLeft = this.state.world[i].position.x;
       const ObjRight = ObjLeft + this.state.world[i].size.x;
       const ObjTop = this.state.world[i].position.y;
@@ -172,7 +177,7 @@ class Engine extends React.Component {
           tmpPositionObj.isTouchingWall = true;
         }
       }
-
+    }
 
     }
     }
