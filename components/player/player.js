@@ -1,6 +1,6 @@
-import React,{useEffect, useContext,useState} from 'react';
+import React,{useEffect, useContext} from 'react';
 import { GameContext } from "../../Contexts/GameContext";
-import {View,Image} from 'react-native';
+import {View,Image,Text} from 'react-native';
 import styles from "./style.scss";
 import Idle from '../../assets/player/idle.gif';
 import Jumping from '../../assets/player/jump.png';
@@ -35,6 +35,7 @@ export default function Player() {
     {(playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
     {(!playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
     {(!playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
+    <Text style={{position: 'absolute', color: 'white',width: 150, top: -20,backgroundColor: 'black',textAlign: 'center'}}>Colliding with: {playerState.colliding.target}</Text>
   </View>
   );
 }

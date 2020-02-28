@@ -1,6 +1,6 @@
 export function NewPlayerObj(){
     return {
-      id: "",
+      id: 1,
       directionVector: {
         x: 0,
         y: 0,

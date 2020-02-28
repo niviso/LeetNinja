@@ -26,11 +26,10 @@ class Engine extends React.Component {
   DeleteWorldObject = (obj) => {
     var filtered = this.state.world.filter(function(value, index, arr){
 
-      return index > 5;
+      return value !== obj;
   
     });
     this.state.world = filtered;
-    console.log(this.state.world);
   }
 
   hasStarted = () => {
@@ -151,6 +150,8 @@ class Engine extends React.Component {
       const r_collision = tiles_right - PlayerLeft;
 
       if (collision) {
+
+        tmpPositionObj.colliding.target = this.state.world[i].id;
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision

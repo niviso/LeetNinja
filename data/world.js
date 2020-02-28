@@ -6,7 +6,7 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 const baseBlock =  {
-    name: 'block',
+    id: 'block',
     text: null,
     texture: Floor,
     size: {
@@ -23,14 +23,14 @@ const baseBlock =  {
   for(let i = 0; i!=10;i++){
     let tmpBase = JSON.parse(JSON.stringify(baseBlock));
     tmpBase.position.x = 100 * i;
-    tmpBase.name = i;
+    tmpBase.id = i;
     Arr.push(tmpBase);
   }
 
 
 const World = [
   {
-    name: 'block',
+    id: 'block',
     text: 'Act 1',
     size: {
       x: screenWidth/2,
@@ -42,7 +42,7 @@ const World = [
     }
   },
   {
-    name: 'block 1',
+    id: 'block 1',
     size: {
       x: screenWidth/2,
       y: screenHeight
@@ -53,7 +53,7 @@ const World = [
     }
   },
   {
-      name: 'block',
+      id: 'block',
       text: null,
       texture: Block,
       size: {
@@ -65,7 +65,7 @@ const World = [
         y: -50
       }},
       {
-        name: 'block',
+        id: 'block',
         text: null,
         texture: Block,
         size: {

@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import settings from '../../settings';
-import {View } from 'react-native';
+import {View,Text } from 'react-native';
 import styles from "./style.scss";
 import Engine from '../../engine/engine';
 
@@ -17,10 +17,17 @@ export default function Enemy(){
             x: 60,
             y: 60
           },
-          name: "",
+          id: 1,
           position: {
             x: 260,
             y: 100
+          },
+          colliding:{
+            left: false,
+            right: false,
+            top: false,
+            bottom: false,
+            target: null
           },
           isGrounded: false,
           isTouchingWall: false,

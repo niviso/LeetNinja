@@ -15,8 +15,8 @@ import Engine from '../../engine/engine';
 export default function GameLevel(props) {
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
-  const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>);
-
+  const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>); 
+  //const Enemies =  Engine.GetEnemies().map((item,i) => <Block key={i} item={item}/>); // Or something similar
   UpdateWorld = () => {
     Engine.DeleteWorldObject();
   }
