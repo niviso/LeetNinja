@@ -18,9 +18,7 @@ export default function GameLevel(props) {
   const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>);
 
   UpdateWorld = () => {
-    let copy = JSON.parse(JSON.stringify(state));
-    copy.world = [];
-    setState(copy);
+    Engine.DeleteWorldObject();
   }
 
   if(!Engine.hasStarted()){

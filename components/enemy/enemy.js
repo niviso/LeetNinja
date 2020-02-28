@@ -37,8 +37,6 @@ export default function Enemy(){
           tmpState.player = Engine.Update(state.player);
           tmpState.player.activeDrag = true;
 
-
-
          if(JSON.stringify(tmpState) !== JSON.stringify(state)){
             setState(tmpState);
           }

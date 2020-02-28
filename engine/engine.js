@@ -23,6 +23,11 @@ class Engine extends React.Component {
     console.log("Engine initialized");
   }
 
+  DeleteWorldObject = (obj) => {
+    this.state.world = this.state.world.slice(0,5);
+    console.log(this.state.world);
+  }
+
   hasStarted = () => {
     return this.state.init;
   }
@@ -111,6 +116,7 @@ class Engine extends React.Component {
 
     const PlayerWidth = tmpPositionObj.size.x;
     const PlayerHeight = tmpPositionObj.size.y;
+    if(this.state.world) {
     for (var i = 0; i != World.length; i++) {
 
       const ObjLeft = this.state.world[i].position.x;
@@ -168,6 +174,7 @@ class Engine extends React.Component {
       }
 
 
+    }
     }
     return tmpPositionObj;
   }
