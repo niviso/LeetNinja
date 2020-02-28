@@ -9,8 +9,7 @@ const GameProvider = (props) => {
     camera:{
       x: 0,
       y: 0
-    },
-    world: World //Shard it[0-100] [100-200] then check the shard of the player or enemy and move obj to the shard you are in and enemy does not engage if in shard 600-700 and player is in shard 0-100 or even rendered
+    }
   });
   return (
     <GameContext.Provider value={[state, setState]}>

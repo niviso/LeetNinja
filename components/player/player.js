@@ -19,11 +19,12 @@ export default function Player() {
      var tmpPlayerState = JSON.parse(JSON.stringify(playerState));
 
      tmpPlayerState = Engine.Update(tmpPlayerState);
-      tmpState.camera = tmpPlayerState.position;
-
+     tmpState.camera = tmpPlayerState.position;
+     
      if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
       setState(tmpState);
       setPlayerState(tmpPlayerState);
+      //Engine.SetWorld(copy.world);
     }
     
    }, (1000/settings.FPS));

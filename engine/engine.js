@@ -14,11 +14,11 @@ class Engine extends React.Component {
     }
   }
 
-  Init(props){
-    if(!props){
+  Init(world){
+    if(!world){
       return;
     }
-    this.SetWorld(props.world);
+    this.SetWorld(world);
     this.state.init = true;
     console.log("Engine initialized");
   }
@@ -32,8 +32,9 @@ class Engine extends React.Component {
   }
 
   SetWorld = (world) => {
+    console.log("Set world");
     this.state.world = world;
-    this.Optimize();
+    //this.Optimize();
   }
 
   AddObjToWorld = (obj) => {
@@ -55,7 +56,6 @@ class Engine extends React.Component {
 
     }
     this.state.shards = tmpWorld;
-    tmpWorld.forEach((element,index) => console.log(index,element));
   }
 
   FetchShard = (shard) => {

@@ -15,18 +15,16 @@ import Engine from '../../engine/engine';
 export default function GameLevel(props) {
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
-  const Blocks =  state.world.map((item,i) => <Block key={i} item={item}/>);
+  const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>);
 
   UpdateWorld = () => {
-    console.log("Wow");
     let copy = JSON.parse(JSON.stringify(state));
     copy.world = [];
     setState(copy);
-    Engine.SetWorld(copy.world);
   }
 
   if(!Engine.hasStarted()){
-    Engine.Init(state);
+    Engine.Init(World);
   }
 
   return (
