@@ -1,4 +1,4 @@
-import React,{useContext,useEffect} from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import {View,ScrollView,Text,TouchableOpacity  } from 'react-native';
 import styles from "./style.scss";
 import Player from '../../components/player/player';
@@ -16,13 +16,18 @@ export default function GameLevel(props) {
   const {screenHeight,screenWidth} = props;
   const [state,setState] = useContext(GameContext);
   const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>); 
-  //const Enemies =  Engine.GetEnemies().map((item,i) => <Block key={i} item={item}/>); // Or something similar
+  const Enemies =  Engine.GetEnemies().map((item,i) => <Enemy key={i} state={item}/>); // Or something similar
+  const [forceUpdate,setForceUpdate] = useState(0);
   UpdateWorld = () => {
-    Engine.DeleteWorldObject();
+    Engine.DeleteWorldObject('block 5');
+  }
+
+  ForceUpdate = () => {
+    setForceUpdate(forceUpdate+1);
   }
 
   if(!Engine.hasStarted()){
-    Engine.Init(World);
+    Engine.Init(World,ForceUpdate);
   }
 
   return (
@@ -32,8 +37,8 @@ export default function GameLevel(props) {
       <Background/>
       <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.camera.x - (screenWidth/2),y: state.camera.y <= (screenHeight - Settings.Cameraoffset) && state.camera.y + Settings.Cameraoffset - screenHeight}} horizontal={true}>
       <Player/>
-      <Enemy/>
       {Blocks}
+      {Enemies}
     </ScrollView>
       <Overlay/>
       <GUI/>

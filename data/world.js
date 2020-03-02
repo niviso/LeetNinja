@@ -65,7 +65,7 @@ const World = [
         y: -50
       }},
       {
-        id: 'block',
+        id: 'block 5',
         text: null,
         texture: Block,
         size: {
