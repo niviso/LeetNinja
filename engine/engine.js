@@ -30,6 +30,7 @@ class Engine extends React.Component {
   }
 
   DeleteWorldObject = (id) => {
+    //This will go into optimize later?
     var filtered = this.state.world.filter(function(value, index, arr){
 
       return value.id !== id;
@@ -64,9 +65,8 @@ class Engine extends React.Component {
   }
 
   SetWorld = (world) => {
-    console.log("Set world");
     this.state.world = world;
-    //this.Optimize();
+    this.Optimize();
   }
 
   AddObjToWorld = (obj) => {
@@ -85,13 +85,11 @@ class Engine extends React.Component {
         shard = 0;
       }
       if (!tmpWorld[shard]) {
-        console.log("new shard crated",shard)
         tmpWorld[shard] = new Array();
       }
       tmpWorld[shard].push(this.state.world[i]);
 
     }
-    console.log(tmpWorld[200]);
     this.state.shards = tmpWorld;
   }
 
