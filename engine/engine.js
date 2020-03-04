@@ -7,14 +7,15 @@ const gravity = 5;
 class Engine extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      init: false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
-      world: World,//props.gameState.world, //Shard later 100,200,300,400,500,600 etc
-      enemies: [],
-      player: null,
-      shards: null,
-      updateFunc: null
-    }
+      this.init = false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
+      this.world = World,//props.gameState.world, //Shard later 100,200,300,400,500,600 etc
+      this.enemies = [],
+      this.player = null,
+      this.shards = null,
+      this.updateFunc = null
+    
+    this.shards = null;
+
   }
 
   Init(world,updateFunc){
@@ -24,73 +25,73 @@ class Engine extends React.Component {
     this.SetWorld(world);
     this.AddEnemy();
     this.Optimize();
-    this.state.init = true;
-    this.state.updateFunc = updateFunc;
+    this.init = true;
+    this.updateFunc = updateFunc;
     console.log("Engine initialized");
   }
 
   DeleteWorldObject = (id) => {
     //This will go into optimize later?
-    var filtered = this.state.world.filter(function(value, index, arr){
+    var filtered = this.world.filter(function(value, index, arr){
 
       return value.id !== id;
   
     });
-    this.state.world = filtered;
+    this.world = filtered;
     this.Optimize();
   }
 
   hasStarted = () => {
-    return this.state.init;
+    return this.init;
   }
 
   GetPlayer = () => {
-    return this.state.player;
+    return this.player;
   }
 
   SetPlayer = (player) => {
-    this.state.player = player;
+    this.player = player;
   }
   
   GetWorld = () => {
-    return this.state.world;
+    return this.world;
   }
 
   GetEnemies = () => {
-    return this.state.enemies;
+    return this.enemies;
   }
 
   AddEnemy = () => {
-    this.state.enemies.push(NewEnemyObj(0));
+    this.enemies.push(NewEnemyObj(0));
   }
 
   SetWorld = (world) => {
-    this.state.world = world;
+    this.world = world;
     this.Optimize();
   }
 
   AddObjToWorld = (obj) => {
-    this.state.world.push(obj);
+    this.world.push(obj);
   }
 
   Optimize = () => {
-    if(this.state.world == null){
+    if(this.world == null){
       return;
     }
     //This function optimizes the collision detection by sharding the world blocks into positions from 0-100,100-200 etc this is based on x pos
     let tmpWorld = new Array();
-    for (let i = 0; i != this.state.world.length; i++) {
-      let shard = (Math.ceil(this.state.world[i].position.x / 100) * 100).toString(); // 0,100,200,300
+    for (let i = 0; i != this.world.length; i++) {
+      let shard = (Math.ceil(this.world[i].position.x / 100) * 100).toString(); // 0,100,200,300
       if(shard < 0){
         shard = 0;
       }
       if (!tmpWorld[shard]) {
         tmpWorld[shard] = new Array();
       }
-      tmpWorld[shard].push(this.state.world[i]);
+      tmpWorld[shard].push(this.world[i]);
 
     }
-    this.state.shards = tmpWorld;
+    this.shards = tmpWorld;
   }
 
   FetchShard = (shard) => {
@@ -133,9 +134,9 @@ class Engine extends React.Component {
     return tmpPositionObj;
   }
   GetShardRange = (from,to) => {
-    let Shards = this.state.shards[from];
+    let Shards = this.shards[from];
     for(var i = from; i != to;i++){
-      Shards.concat(this.state.shards[i]);
+      Shards.concat(this.shards[i]);
     }
     return Shards;
   }
@@ -154,12 +155,12 @@ class Engine extends React.Component {
     //COLLISION DETECTION World
     const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
     
-    var WorldShards = this.state.shards[shard];
+    var WorldShards = this.shards[shard];
     if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
-      WorldShards = WorldShards.concat(this.state.shards[shard-100]);
+      WorldShards = WorldShards.concat(this.shards[shard-100]);
     }
 
-    WorldShards = WorldShards.concat(this.state.enemies);
+    WorldShards = WorldShards.concat(this.enemies);
 
 
 
@@ -231,26 +232,38 @@ class Engine extends React.Component {
 
 
   UpdateId = (id) => { //Updates the position of a object
-    var tmpPositionObj = this.Gravity(this.state.enemies[0]);
+    var tmpPositionObj = this.Gravity(this.enemies[0]);
+    var state = this.enemies[0];
 
-    //COLLISION DETECTION World
-    const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
-    //const WorldShard = this.state.shards[shard]; //IF x right pos > shard fetch shard + 1
+
 
     const PlayerLeft = tmpPositionObj.position.x;
     const PlayerRight = PlayerLeft + tmpPositionObj.size.x;
     const PlayerTop = tmpPositionObj.position.y;
     const PlayerBottom = PlayerTop + tmpPositionObj.size.y;
 
-    const PlayerWidth = tmpPositionObj.size.x;
     const PlayerHeight = tmpPositionObj.size.y;
-    if(this.state.world) {
-    for (var i = 0; i != World.length; i++) {
-      if(this.state.world[i]){
-      const ObjLeft = this.state.world[i].position.x;
-      const ObjRight = ObjLeft + this.state.world[i].size.x;
-      const ObjTop = this.state.world[i].position.y;
-      const ObjBottom = ObjTop + this.state.world[i].size.y;
+
+    //COLLISION DETECTION World
+    const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
+    
+    var WorldShards = this.shards[shard];
+    if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
+      WorldShards = WorldShards.concat(this.shards[shard-100]);
+    }
+
+    WorldShards = WorldShards.concat(this.enemies);
+
+
+
+
+    if(WorldShards) {
+    for (var i = 0; i != WorldShards.length; i++) {
+      if(WorldShards[i]){
+      const ObjLeft = WorldShards[i].position.x;
+      const ObjRight = ObjLeft + WorldShards[i].size.x;
+      const ObjTop = WorldShards[i].position.y;
+      const ObjBottom = ObjTop + WorldShards[i].size.y;
 
       const rightOfX = PlayerLeft >= ObjRight;
       const leftOfX = PlayerRight <= ObjLeft;
@@ -264,9 +277,9 @@ class Engine extends React.Component {
 
 
       const player_bottom = PlayerTop + tmpPositionObj.size.y - 4;
-      const tiles_bottom = ObjTop + this.state.world[i].size.y;
+      const tiles_bottom = ObjTop + WorldShards[i].size.y;
       const player_right = PlayerLeft + tmpPositionObj.size.x;
-      const tiles_right = ObjLeft + this.state.world[i].size.x;
+      const tiles_right = ObjLeft + WorldShards[i].size.x;
 
       const b_collision = tiles_bottom - PlayerTop;
       const t_collision = player_bottom - ObjTop;
@@ -275,7 +288,7 @@ class Engine extends React.Component {
 
       if (collision) {
 
-        tmpPositionObj.colliding.target = this.state.world[i].id;
+        tmpPositionObj.colliding.target = WorldShards[i].id;
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision
@@ -306,8 +319,10 @@ class Engine extends React.Component {
 
     }
     }
-    this.state.enemies[0] = tmpPositionObj;
-    this.state.updateFunc();
+
+    this.enemies[0] = tmpPositionObj;
+  
+    this.updateFunc();
 
   }
 }

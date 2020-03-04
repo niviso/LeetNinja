@@ -1,5 +1,5 @@
 const settings = {
-    FPS: 60,
+    FPS: 10,
     Cameraoffset: 150,
 }
 

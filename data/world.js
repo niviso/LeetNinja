@@ -62,7 +62,7 @@ const World = [
       },
       position:{
         x: 100,
-        y: -50
+        y: 50
       }},
       {
         id: 'block 5',
@@ -74,7 +74,7 @@ const World = [
         },
         position:{
           x: 100,
-          y: 50
+          y: 200
         }
       },
   ...Arr
