@@ -1,4 +1,4 @@
-import React,{useContext,useEffect,useState} from 'react';
+import React,{useContext} from 'react';
 import {View,ScrollView,Text,TouchableOpacity  } from 'react-native';
 import styles from "./style.scss";
 import Player from '../../components/player/player';
@@ -17,13 +17,12 @@ export default function GameLevel(props) {
   const [state,setState] = useContext(GameContext);
   const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>); 
   const Enemies =  Engine.GetEnemies().map((item,i) => <Enemy key={i} state={item}/>); // Or something similar
-  const [forceUpdate,setForceUpdate] = useState(0);
   UpdateWorld = () => {
     Engine.DeleteWorldObject('block 5');
   }
 
   ForceUpdate = () => {
-    setForceUpdate(forceUpdate+1);
+    
   }
 
   if(!Engine.hasStarted()){

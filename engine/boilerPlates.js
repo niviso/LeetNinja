@@ -27,7 +27,7 @@ export function NewPlayerObj(){
       activeDrag: false,
       isWalking: false,
       drag: 0.2,
-      speed: 20
+      speed: 15
     }
   }
 
@@ -36,7 +36,7 @@ export function NewPlayerObj(){
       id: id,
       type: 'enemy',
       directionVector: {
-        x: -1,
+        x: 1,
         y: 0,
         direction: "right"
       },
@@ -46,7 +46,7 @@ export function NewPlayerObj(){
       },
       position: {
         x: 460,
-        y: 0
+        y: 100
       },
       colliding:{
         left: false,

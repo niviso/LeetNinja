@@ -7,15 +7,13 @@ const gravity = 5;
 class Engine extends React.Component {
   constructor(props) {
     super(props);
-      this.init = false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
-      this.world = World,//props.gameState.world, //Shard later 100,200,300,400,500,600 etc
-      this.enemies = [],
-      this.player = null,
-      this.shards = null,
-      this.updateFunc = null
-    
+    this.init = false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
+    this.world = World, //Moves over to shards
+    this.enemies = [],
+    this.player = null,
+    this.shards = null,
+    this.updateFunc = null
     this.shards = null;
-
   }
 
   Init(world,updateFunc){
@@ -33,9 +31,7 @@ class Engine extends React.Component {
   DeleteWorldObject = (id) => {
     //This will go into optimize later?
     var filtered = this.world.filter(function(value, index, arr){
-
       return value.id !== id;
-  
     });
     this.world = filtered;
     this.Optimize();
@@ -134,11 +130,13 @@ class Engine extends React.Component {
     return tmpPositionObj;
   }
   GetShardRange = (from,to) => {
-    let Shards = this.shards[from];
-    for(var i = from; i != to;i++){
-      Shards.concat(this.shards[i]);
+    let WorldShards = this.shards[from];
+    if(!to){
+      return WorldShards;
     }
-    return Shards;
+    WorldShards = WorldShards.concat(this.shards[to]);
+
+    return WorldShards;
   }
   Update = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
@@ -155,9 +153,11 @@ class Engine extends React.Component {
     //COLLISION DETECTION World
     const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
     
-    var WorldShards = this.shards[shard];
     if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
-      WorldShards = WorldShards.concat(this.shards[shard-100]);
+      var WorldShards = this.GetShardRange(shard,shard-100);
+    } else {
+      var WorldShards = this.GetShardRange(shard);
+
     }
 
     WorldShards = WorldShards.concat(this.enemies);
@@ -197,6 +197,7 @@ class Engine extends React.Component {
       if (collision) {
 
         tmpPositionObj.colliding.target = WorldShards[i].id;
+        //console.log("Colliding with ",WorldShards[i].id)
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision
@@ -321,8 +322,7 @@ class Engine extends React.Component {
     }
 
     this.enemies[0] = tmpPositionObj;
-  
-    this.updateFunc();
+    //this.updateFunc();
 
   }
 }
