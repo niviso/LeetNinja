@@ -36,6 +36,7 @@ class Engine extends React.Component {
   
     });
     this.state.world = filtered;
+    this.Optimize();
   }
 
   hasStarted = () => {
@@ -59,38 +60,7 @@ class Engine extends React.Component {
   }
 
   AddEnemy = () => {
-    this.state.enemies.push(
-      {
-        id: 1,
-        type: 'player',
-        directionVector: {
-          x: 0.2,
-          y: 0,
-          direction: "right"
-        },
-        size: {
-          x: 100,
-          y: 100
-        },
-        position: {
-          x: 260,
-          y: 0
-        },
-        colliding:{
-          left: false,
-          right: false,
-          top: false,
-          bottom: false,
-          target: null
-        },
-        isGrounded: false,
-        isTouchingWall: false,
-        activeDrag: false,
-        isWalking: false,
-        drag: 0.2,
-        speed: 20
-      }
-    );
+    this.state.enemies.push(NewEnemyObj(0));
   }
 
   SetWorld = (world) => {
@@ -190,6 +160,9 @@ class Engine extends React.Component {
     if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
       WorldShards = WorldShards.concat(this.state.shards[shard-100]);
     }
+
+    WorldShards = WorldShards.concat(this.state.enemies);
+
 
 
 
