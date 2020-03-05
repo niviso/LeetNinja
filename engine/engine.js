@@ -130,11 +130,20 @@ class Engine extends React.Component {
     return tmpPositionObj;
   }
   GetShardRange = (from,to) => {
-    let WorldShards = this.shards[from];
+    let WorldShards = [];
+
+    if(this.shards[from]){
+      WorldShards = this.shards[from];
+    }
+
+    WorldShards = WorldShards.concat(this.enemies);
+
     if(!to){
       return WorldShards;
     }
-    WorldShards = WorldShards.concat(this.shards[to]);
+    if(this.shards[to] !== 'undefined'){
+      WorldShards = WorldShards.concat(this.shards[to]);
+    }
 
     return WorldShards;
   }
@@ -157,10 +166,7 @@ class Engine extends React.Component {
       var WorldShards = this.GetShardRange(shard,shard-100);
     } else {
       var WorldShards = this.GetShardRange(shard);
-
     }
-
-    WorldShards = WorldShards.concat(this.enemies);
 
 
 
@@ -248,12 +254,11 @@ class Engine extends React.Component {
     //COLLISION DETECTION World
     const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
     
-    var WorldShards = this.shards[shard];
     if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
-      WorldShards = WorldShards.concat(this.shards[shard-100]);
+      var WorldShards = this.GetShardRange(shard,shard-100);
+    } else {
+      var WorldShards = this.GetShardRange(shard);
     }
-
-    WorldShards = WorldShards.concat(this.enemies);
 
 
     if(WorldShards) {
