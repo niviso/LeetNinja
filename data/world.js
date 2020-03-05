@@ -30,29 +30,6 @@ const baseBlock =  {
 
 const World = [
   {
-    id: 'block',
-    text: 'Act 1',
-    size: {
-      x: screenWidth/2,
-      y: screenHeight
-    },
-    position:{
-      x: -(screenWidth/2),
-      y: 0
-    }
-  },
-  {
-    id: 'block 1',
-    size: {
-      x: screenWidth/2,
-      y: screenHeight
-    },
-    position:{
-      x: -(screenWidth/2),
-      y: -screenHeight
-    }
-  },
-  {
       id: 'block',
       text: null,
       texture: Block,

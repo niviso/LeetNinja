@@ -206,21 +206,21 @@ class Engine extends React.Component {
           tmpPositionObj.isGrounded = true;
         }
         if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
-          tmpPositionObj.position.y = state.position.y;
+          tmpPositionObj.position.y = state.position.y + 1;
           tmpPositionObj.directionVector.y += state.gravity;
 
           //bottom collsion
         }
         if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision) {
           //Left collision
-          tmpPositionObj.position.x = state.position.x; //ObjLeft - PlayerWidth;
+          tmpPositionObj.position.x = state.position.x - 1; //ObjLeft - PlayerWidth;
           tmpPositionObj.isTouchingWall = true;
 
 
         }
         if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision) {
           //Right collision
-          tmpPositionObj.position.x = state.position.x; //ObjRight;
+          tmpPositionObj.position.x = state.position.x + 1; //ObjRight;
           tmpPositionObj.isTouchingWall = true;
         }
       }
@@ -256,11 +256,9 @@ class Engine extends React.Component {
     WorldShards = WorldShards.concat(this.enemies);
 
 
-
-
     if(WorldShards) {
     for (var i = 0; i != WorldShards.length; i++) {
-      if(WorldShards[i]){
+      if(WorldShards[i] && WorldShards[i].id !== state.id){
       const ObjLeft = WorldShards[i].position.x;
       const ObjRight = ObjLeft + WorldShards[i].size.x;
       const ObjTop = WorldShards[i].position.y;
@@ -300,7 +298,6 @@ class Engine extends React.Component {
         if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
           tmpPositionObj.position.y = state.position.y;
           tmpPositionObj.directionVector.y += state.gravity;
-
           //bottom collsion
         }
         if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision) {
