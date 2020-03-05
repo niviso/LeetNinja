@@ -254,6 +254,8 @@ UpdateEnemies = () => {
       this.UpdateId(this.enemies[i].id);
     }
   }
+
+  //Need to do this at the end of the for and render cycle to not freeze the game
   this.KillEnemeis();
 }
   UpdateId = (id) => { //Updates the position of a object
