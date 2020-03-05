@@ -26,7 +26,10 @@ export default function GameLevel(props) {
   }
 
   if(!Engine.hasStarted()){
-    Engine.Init(World,ForceUpdate);
+    Engine.Init({
+      world: World,
+      forceUpdate: ForceUpdate
+    });
   }
 
   return (

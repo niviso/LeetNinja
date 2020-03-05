@@ -16,7 +16,8 @@ class Engine extends React.Component {
     this.shards = null;
   }
 
-  Init(world,updateFunc){
+  Init(props){
+    const {world,updateFunc} = props;
     if(!world){
       return;
     }
@@ -238,11 +239,39 @@ class Engine extends React.Component {
   }
 
 
+DeleteEnemy = (id) => {
+  var filtered = this.enemies.filter(function(value, index, arr){
+    return value.id !== id;
+  });
+
+  this.enemies = filtered;
+}
+
+UpdateEnemies = () => {
+  //Update if in range of camera
+  for(let i = 0; i != this.enemies.length; i++){
+    if(this.enemies[i]){
+      this.UpdateId(this.enemies[i].id);
+    }
+  }
+}
   UpdateId = (id) => { //Updates the position of a object
-    var tmpPositionObj = this.Gravity(this.enemies[0]);
-    var state = this.enemies[0];
+    if(id == 'player'){
+      var tmpPositionObj = this.Gravity(this.player);
+      var state = this.player;
+    } else {
+      var tmpPositionObj = this.Gravity(this.enemies[id]);
+      var state = this.enemies[id];
+    }
 
 
+    let kill = false;
+
+
+    if(tmpPositionObj.position.y > 500){
+      kill = true;
+      
+    }
 
     const PlayerLeft = tmpPositionObj.position.x;
     const PlayerRight = PlayerLeft + tmpPositionObj.size.x;
@@ -322,8 +351,11 @@ class Engine extends React.Component {
 
     }
     }
-
-    this.enemies[0] = tmpPositionObj;
+    if(kill){
+      this.DeleteEnemy(tmpPositionObj.id);
+      return;
+    }
+    this.enemies[id] = tmpPositionObj;
     //this.updateFunc();
 
   }
