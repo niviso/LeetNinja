@@ -239,9 +239,9 @@ class Engine extends React.Component {
   }
 
 
-DeleteEnemy = (id) => {
+  KillEnemeis = () => {
   var filtered = this.enemies.filter(function(value, index, arr){
-    return value.id !== id;
+    return !value.kill;
   });
 
   this.enemies = filtered;
@@ -254,6 +254,7 @@ UpdateEnemies = () => {
       this.UpdateId(this.enemies[i].id);
     }
   }
+  this.KillEnemeis();
 }
   UpdateId = (id) => { //Updates the position of a object
     if(id == 'player'){
@@ -265,11 +266,8 @@ UpdateEnemies = () => {
     }
 
 
-    let kill = false;
-
-
     if(tmpPositionObj.position.y > 500){
-      kill = true;
+      tmpPositionObj.kill = true;
       
     }
 
@@ -351,12 +349,7 @@ UpdateEnemies = () => {
 
     }
     }
-    if(kill){
-      this.DeleteEnemy(tmpPositionObj.id);
-      return;
-    }
     this.enemies[id] = tmpPositionObj;
-    //this.updateFunc();
 
   }
 }
