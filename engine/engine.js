@@ -1,6 +1,7 @@
 import World from '../data/world';
 import React from 'react';
-import { NewEnemyObj } from './boilerPlates';
+import Enemy from './enemy';
+import { NewEnemyObj,NewCollider } from './boilerPlates';
 const gravity = 5;
 
 
@@ -204,7 +205,10 @@ class Engine extends React.Component {
       if (collision) {
 
         tmpPositionObj.colliding.target = WorldShards[i].id;
-        //console.log("Colliding with ",WorldShards[i].id)
+
+        if(WorldShards[i].type == "enemy"){
+        } else {
+        //console.log("Colliding with ",WorldShards[i].)
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision
@@ -231,6 +235,7 @@ class Engine extends React.Component {
           tmpPositionObj.isTouchingWall = true;
         }
       }
+      }
     }
 
     }
@@ -251,14 +256,14 @@ UpdateEnemies = () => {
   //Update if in range of camera
   for(let i = 0; i != this.enemies.length; i++){
     if(this.enemies[i]){
-      this.UpdateId(this.enemies[i].id);
+      this.UpdateEnemy(this.enemies[i].id);
     }
   }
 
   //Need to do this at the end of the for and render cycle to not freeze the game
   this.KillEnemeis();
 }
-  UpdateId = (id) => { //Updates the position of a object
+  UpdateEnemy = (id) => { //Updates the position of a object
     if(id == 'player'){
       var tmpPositionObj = this.Gravity(this.player);
       var state = this.player;
@@ -318,6 +323,8 @@ UpdateEnemies = () => {
       const t_collision = player_bottom - ObjTop;
       const l_collision = player_right - ObjLeft;
       const r_collision = tiles_right - PlayerLeft;
+        
+      tmpPositionObj.colliding = NewCollider();
 
       if (collision) {
 
@@ -328,16 +335,21 @@ UpdateEnemies = () => {
           tmpPositionObj.directionVector.y = 0;
           tmpPositionObj.position.y = ObjTop - PlayerHeight;
           tmpPositionObj.isGrounded = true;
+          tmpPositionObj.colliding.top = true;
         }
         if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
           tmpPositionObj.position.y = state.position.y;
           tmpPositionObj.directionVector.y += state.gravity;
+          tmpPositionObj.colliding.bottom = true;
+
           //bottom collsion
         }
         if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision) {
           //Left collision
           tmpPositionObj.position.x = state.position.x; //ObjLeft - PlayerWidth;
           tmpPositionObj.isTouchingWall = true;
+          tmpPositionObj.colliding.left = true;
+
 
 
         }
@@ -345,7 +357,14 @@ UpdateEnemies = () => {
           //Right collision
           tmpPositionObj.position.x = state.position.x; //ObjRight;
           tmpPositionObj.isTouchingWall = true;
+          tmpPositionObj.colliding.right = true;
+
         }
+
+        if(tmpPositionObj.colliding.left || tmpPositionObj.colliding.right){
+          tmpPositionObj.directionVector.x = -tmpPositionObj.directionVector.x;
+        }
+      
       }
     }
 

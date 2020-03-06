@@ -1,12 +1,13 @@
 import {Dimensions} from 'react-native';
 import Block from '../assets/tiles/ground_01.png';
 import Floor from '../assets/tiles/ground_01.png';
-
+import {NewBlockObj} from '../engine/boilerPlates';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 
 const baseBlock =  {
-    id: 'block',
+    id: 0,
+    type: 'block',
     text: null,
     texture: Floor,
     size: {
@@ -30,7 +31,8 @@ const baseBlock =  {
 
 const World = [
   {
-      id: 'block',
+      id: 1,
+      type: 'block',
       text: null,
       texture: Block,
       size: {
@@ -39,7 +41,7 @@ const World = [
       },
       position:{
         x: 100,
-        y: 50
+        y: screenHeight - 200
       }},
       {
         id: 'block 5',
@@ -50,10 +52,12 @@ const World = [
           y: 100
         },
         position:{
-          x: 100,
-          y: 200
+          x: 500,
+          y: screenHeight - 200
         }
       },
+
+
   ...Arr
 
 ];

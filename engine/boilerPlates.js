@@ -36,7 +36,7 @@ export function NewPlayerObj(){
       id: id,
       type: 'enemy',
       directionVector: {
-        x: 0.2,
+        x: -0.2,
         y: 0,
         direction: "right"
       },
@@ -81,5 +81,16 @@ export function NewPlayerObj(){
         bottom: false,
         target: null
       }
+    }
+  }
+
+
+  export function NewCollider(){
+    return {
+      left: false,
+      right: false,
+      top: false,
+      bottom: false,
+      target: null
     }
   }
