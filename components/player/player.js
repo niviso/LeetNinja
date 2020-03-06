@@ -20,11 +20,12 @@ export default function Player() {
 
      tmpPlayerState = Engine.Update(tmpPlayerState);
      tmpState.camera = tmpPlayerState.position;
-     //if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
+    if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
       setPlayerState(tmpPlayerState);
       setState(tmpState);
-    //}
-    Engine.UpdateEnemies();
+      Engine.UpdateEnemies();
+
+    }
 
 
    }, (1000/settings.FPS));

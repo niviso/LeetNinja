@@ -361,8 +361,15 @@ UpdateEnemies = () => {
 
         }
 
-        if(tmpPositionObj.colliding.left || tmpPositionObj.colliding.right){
+        if(tmpPositionObj.colliding.left){
           tmpPositionObj.directionVector.x = -tmpPositionObj.directionVector.x;
+          tmpPositionObj.directionVector.direction = "right";
+        }
+        if(tmpPositionObj.colliding.right){
+          tmpPositionObj.directionVector.direction = "left";
+          tmpPositionObj.directionVector.x = -tmpPositionObj.directionVector.x;
+
+          
         }
       
       }
