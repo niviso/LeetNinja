@@ -1,6 +1,7 @@
 import World from '../data/world';
 import React from 'react';
 import Enemy from './enemy';
+import settings from '../settings';
 import { NewEnemyObj,NewCollider } from './boilerPlates';
 const gravity = 5;
 
@@ -103,6 +104,9 @@ class Engine extends React.Component {
       y: tmpPositionObj.directionVector.y + gravity,
       direction: tmpPositionObj.directionVector.direction
     }
+    if(tmpPositionObj.invincibilityFrames > 0){
+      tmpPositionObj.invincibilityFrames -= 1;
+    }
 
     if (tmpPositionObj.activeDrag && tmpPositionObj.directionVector.direction == "left") {
       tmpPositionObj.directionVector.x = tmpPositionObj.directionVector.x - tmpPositionObj.drag;
@@ -149,7 +153,7 @@ class Engine extends React.Component {
 
     return WorldShards;
   }
-  Update = (state) => { //Updates the position of a object
+  UpdatePlayer = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
 
 
@@ -207,8 +211,11 @@ class Engine extends React.Component {
         tmpPositionObj.colliding.target = WorldShards[i].id;
 
         if(WorldShards[i].type == "enemy"){
+          if(tmpPositionObj.invincibilityFrames <= 0){
+            tmpPositionObj.health -= 1;
+            tmpPositionObj.invincibilityFrames = settings.invincibilityFramesOnHit;
+          }
         } else {
-        //console.log("Colliding with ",WorldShards[i].)
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision
@@ -314,7 +321,7 @@ UpdateEnemies = () => {
       const collision = detectX && detectY;
 
 
-      const player_bottom = PlayerTop + tmpPositionObj.size.y - 4;
+      const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
       const player_right = PlayerLeft + tmpPositionObj.size.x;
       const tiles_right = ObjLeft + WorldShards[i].size.x;

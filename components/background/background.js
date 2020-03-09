@@ -4,7 +4,7 @@ import {View,Image,Dimensions} from 'react-native';
 import Background from '../../assets/backgrounds/jungle/plx-1.png';
 import Background1 from '../../assets/backgrounds/jungle/plx-2.png';
 import Background2 from '../../assets/backgrounds/jungle/plx-3.png';
-import Background3 from '../../assets/backgrounds/jungle/plx-4.png';
+import Background3 from '../../assets/backgrounds/jungle/plx-5.png';
 export default function Player() {
  const [state,setState] = useContext(GameContext);
  const screenWidth = Math.round(Dimensions.get('window').width);

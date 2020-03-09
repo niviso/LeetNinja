@@ -18,26 +18,26 @@ export default function Player() {
      var tmpState = JSON.parse(JSON.stringify(state));
      var tmpPlayerState = JSON.parse(JSON.stringify(playerState));
 
-     tmpPlayerState = Engine.Update(tmpPlayerState);
+     tmpPlayerState = Engine.UpdatePlayer(tmpPlayerState);
      tmpState.camera = tmpPlayerState.position;
-    if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
+    //if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
       setPlayerState(tmpPlayerState);
       setState(tmpState);
       Engine.UpdateEnemies();
 
-    }
+    //}
 
 
    }, (1000/settings.FPS));
   return () => clearInterval(interval);
 }, [playerState]);
   return (
-    <View style={{...styles.character,left: playerState.position.x,top: playerState.position.y}} pointerEvents="none">
+    <View style={{...styles.character,left: playerState.position.x,top: playerState.position.y,opacity: playerState.invincibilityFrames > 0 ? 0.5 : 1}} pointerEvents="none">
     {(playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
     {(!playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
     {(!playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
     <Text style={{position: 'absolute', color: 'white',width: 150, top: -20,backgroundColor: 'black',textAlign: 'center'}}>Colliding with: {playerState.colliding.target}</Text>
-    <Text style={{position: 'absolute', color: 'white',width: 150, top: -40,backgroundColor: 'black',textAlign: 'center'}}>X pos: {playerState.position.x}</Text>
+    <Text style={{position: 'absolute', color: 'white',width: 150, top: -40,backgroundColor: 'black',textAlign: 'center'}}>invici frames: {playerState.invincibilityFrames}</Text>
 
   </View>
   );

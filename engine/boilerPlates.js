@@ -2,6 +2,8 @@ export function NewPlayerObj(){
     return {
       id: 1,
       type: 'player',
+      health: 2,
+      invincibilityFrames : 0,
       directionVector: {
         x: 0,
         y: 0,
@@ -35,6 +37,8 @@ export function NewPlayerObj(){
     return {
       id: id,
       type: 'enemy',
+      health: 1,
+      invincibilityFrames : 0,
       directionVector: {
         x: -0.2,
         y: 0,
