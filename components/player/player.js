@@ -32,13 +32,10 @@ export default function Player() {
   return () => clearInterval(interval);
 }, [playerState]);
   return (
-    <View style={{...styles.character,left: playerState.position.x,top: playerState.position.y,opacity: playerState.invincibilityFrames > 0 ? 0.5 : 1}} pointerEvents="none">
+    <View style={{...styles.character,left: playerState.position.x,top: playerState.position.y,opacity: playerState.invincibilityFrames > 0 ? (playerState.invincibilityFrames % 2 ? 0.4 : 0.8) : 1}} pointerEvents="none">
     {(playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
     {(!playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
     {(!playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
-    <Text style={{position: 'absolute', color: 'white',width: 150, top: -20,backgroundColor: 'black',textAlign: 'center'}}>Colliding with: {playerState.colliding.target}</Text>
-    <Text style={{position: 'absolute', color: 'white',width: 150, top: -40,backgroundColor: 'black',textAlign: 'center'}}>invici frames: {playerState.invincibilityFrames}</Text>
-
   </View>
   );
 }
