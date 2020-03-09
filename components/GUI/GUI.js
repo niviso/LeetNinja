@@ -11,7 +11,7 @@ export default function GUI() {
   const Jump = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     if(state.isGrounded){
-      tmpState.directionVector.y = -30;
+      tmpState.directionVector.y = -40;
       tmpState.isGrounded = false;
       setState(tmpState);
       AudioHelper.init(require('../..//assets/sound/jump.wav'));

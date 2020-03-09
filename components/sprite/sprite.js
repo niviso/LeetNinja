@@ -3,14 +3,26 @@ import React,{useState,useEffect} from 'react';
 import {Image,ScrollView } from 'react-native';
 
 export default function Sprite(props){
-    const {source,styling} = props;
+    const {source,frames,styling,fps=1} = props;
     const [frame,setFrame] = useState(1);
+    const {width, height} = Image.resolveAssetSource(source);
+    const frameLength = width/frames;
     useEffect(() => {
-        //setFrame(frame+1);
-    });
+        const interval = setInterval(() => {
+          
+            if(frame+1 >= frames){
+                setFrame(0);
+            } else {
+                setFrame(frame+1);
+
+            }
+      
+         }, (1000/fps));
+        return () => clearInterval(interval);
+      }, [frame]);
     return (
-        <ScrollView  style={{width: 100,height: 100}}  alwaysBounceHorizontal={false} contentOffset={{x:51.5*frame,y:0}} horizontal={true}>
-        <Image style={{height: 100}} source={source} />
+        <ScrollView  style={{width: frameLength,height: height,overflow: 'hidden'}}  alwaysBounceHorizontal={false} contentOffset={{x:frameLength*frame,y:0}} horizontal={true}>
+        <Image source={source} />
         </ScrollView>
     )
 }
