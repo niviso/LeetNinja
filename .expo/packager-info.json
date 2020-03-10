@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19004,
-  "packagerPid": 13296,
-  "expoServerNgrokUrl": "https://k4-dxg.anonymous.leetninja.exp.direct",
-  "packagerNgrokUrl": "https://packager.k4-dxg.anonymous.leetninja.exp.direct",
-  "ngrokPid": 13324
+  "packagerPort": 19001,
+  "packagerPid": 4460,
+  "expoServerNgrokUrl": "https://k4-dxg.niviso.leetninja.exp.direct",
+  "packagerNgrokUrl": "https://packager.k4-dxg.niviso.leetninja.exp.direct",
+  "ngrokPid": 15492
 }

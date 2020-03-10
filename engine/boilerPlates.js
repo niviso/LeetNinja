@@ -29,7 +29,7 @@ export function NewPlayerObj(){
       activeDrag: false,
       isWalking: false,
       drag: 0.2,
-      speed: 15
+      speed: 20
     }
   }
 
@@ -66,7 +66,7 @@ export function NewPlayerObj(){
       drag: 0.2,
       speed: 15
     }
-    
+
   }
 
   export function NewBlockObj(id=0,position={x:0,y:0}){

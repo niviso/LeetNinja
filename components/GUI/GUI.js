@@ -11,7 +11,7 @@ export default function GUI() {
   const Jump = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     if(state.isGrounded){
-      tmpState.directionVector.y = -40;
+      tmpState.directionVector.y = -45;
       tmpState.isGrounded = false;
       setState(tmpState);
       AudioHelper.init(require('../..//assets/sound/jump.wav'));
@@ -19,14 +19,14 @@ export default function GUI() {
 
     } else if(state.isTouchingWall && !tmpState.isGrounded){
       if(tmpState.directionVector.direction == "right"){
-      tmpState.directionVector.y = -40;
+      tmpState.directionVector.y = -45;
       tmpState.directionVector.x = 1.7;
       tmpState.directionVector.direction = "left";
       AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
 
 
     } else {
-      tmpState.directionVector.y = -40;
+      tmpState.directionVector.y = -45;
       tmpState.directionVector.x = -1.7;
       tmpState.directionVector.direction = "right";
       AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
