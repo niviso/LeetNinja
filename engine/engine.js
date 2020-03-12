@@ -225,10 +225,10 @@ class Engine extends React.Component {
         bottom: false,
         target: null
       };
-      
+
       if (collision) {
 
-        tmpPositionObj.colliding.target = WorldShards[i].id;
+        tmpPositionObj.colliding.target = "test";//WorldShards[i].id;
 
         if(WorldShards[i].type == "enemy"){
           if(tmpPositionObj.invincibilityFrames <= 0){
@@ -243,6 +243,8 @@ class Engine extends React.Component {
           tmpPositionObj.position.y = ObjTop - PlayerHeight;
           tmpPositionObj.colliding.bottom = true;
           tmpPositionObj.isGrounded = true;
+          //console.log(Math.floor(Date.now()/1000));
+          //WHY is it no adding the updated vars but the collision happens?!
         }
         else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
           tmpPositionObj.position.y = state.position.y + 1;
