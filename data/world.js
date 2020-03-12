@@ -7,7 +7,7 @@ const baseBlock =  {
     id: 0,
     type: 'block',
     text: null,
-    style: {backgroundColor: 'red'},
+    style: {backgroundColor: 'green'},
     texture: null,
     size: {
       x: 100,
@@ -20,7 +20,7 @@ const baseBlock =  {
   }
 
   var Arr = [];
-  for(let i = 0; i!=30;i++){
+  for(let i = 1; i!=30;i++){
     let tmpBase = JSON.parse(JSON.stringify(baseBlock));
     tmpBase.position.x = 100 * i;
     tmpBase.id = i;
@@ -33,7 +33,7 @@ const World = [
       id: 1,
       type: 'block',
       text: null,
-      style: {backgroundColor: 'red'},
+      style: {backgroundColor: 'purple'},
       texture: null,
       size: {
         x: 100,
@@ -47,13 +47,13 @@ const World = [
         id: 'block 5',
         text: null,
         texture: null,
-        style: {backgroundColor: 'red',borderBottom: '2px solid black'},
+        style: {backgroundColor: 'purple'},
         size: {
           x: 100,
           y: 100
         },
         position:{
-          x: 500,
+          x: 700,
           y: screenHeight - 200
         }
       },

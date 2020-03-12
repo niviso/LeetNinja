@@ -12,7 +12,7 @@ import { PlayerContext } from "../../Contexts/PlayerContext";
 export default function Player() {
  const [state,setState] = useContext(GameContext);
  const [playerState,setPlayerState] = useContext(PlayerContext);
- const CharacterStyle = {overflow: 'hidden',backgroundColor: 'orange',height: playerState.size.y,width: playerState.size.x,transform : [{scaleX: playerState.directionVector.direction=='right' ? -1 : 1 }] };
+ const CharacterStyle = {overflow: 'hidden',height: playerState.size.y,width: playerState.size.x,transform : [{scaleX: playerState.directionVector.direction=='right' ? -1 : 1 }] };
  useEffect(() => {
   const interval = setInterval(() => {
      var tmpState = JSON.parse(JSON.stringify(state));

@@ -85,7 +85,7 @@ class Engine extends React.Component {
     let tmpWorld = new Array();
     for (let i = 0; i != this.world.length; i++) {
       let shard = (Math.ceil(this.world[i].position.x / 100) * 100).toString(); // 0,100,200,300
-      if(shard < 0){
+      if(shard <= 0){
         shard = 0;
       }
       if (!tmpWorld[shard]) {
@@ -95,6 +95,7 @@ class Engine extends React.Component {
 
     }
     this.shards = tmpWorld;
+    console.log(this.shards[0])
   }
 
   FetchShard = (shard) => {
@@ -332,7 +333,7 @@ UpdateEnemies = () => {
       const collision = detectX && detectY;
 
 
-      const player_bottom = PlayerTop + tmpPositionObj.size.y;
+      const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
       const player_right = PlayerLeft + tmpPositionObj.size.x;
       const tiles_right = ObjLeft + WorldShards[i].size.x;
