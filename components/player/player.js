@@ -12,7 +12,7 @@ import { PlayerContext } from "../../Contexts/PlayerContext";
 export default function Player() {
  const [state,setState] = useContext(GameContext);
  const [playerState,setPlayerState] = useContext(PlayerContext);
- const CharacterStyle = {overflow: 'hidden',height: playerState.size.y,width: playerState.size.x,transform : [{scaleX: playerState.directionVector.direction=='right' ? -1 : 1 }] };
+ const CharacterStyle = {overflow: 'hidden',backgroundColor: 'orange',height: playerState.size.y,width: playerState.size.x,transform : [{scaleX: playerState.directionVector.direction=='right' ? -1 : 1 }] };
  useEffect(() => {
   const interval = setInterval(() => {
      var tmpState = JSON.parse(JSON.stringify(state));
@@ -36,6 +36,8 @@ export default function Player() {
     {(playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
     {(!playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
     {(!playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
+    <Text style={{position: 'absolute', color: 'white',width: 150, top: -20,backgroundColor: 'black',textAlign: 'center'}}>Colliding with: {playerState.colliding.target}</Text>
+        <Text style={{position: 'absolute', color: 'white',width: 150, top: -40,backgroundColor: 'black',textAlign: 'center'}}>X pos: {playerState.position.x}</Text>
   </View>
   );
 }

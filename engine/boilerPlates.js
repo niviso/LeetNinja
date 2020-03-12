@@ -50,7 +50,7 @@ export function NewPlayerObj(){
       },
       position: {
         x: 400,
-        y: 0
+        y: 150
       },
       colliding:{
         left: false,

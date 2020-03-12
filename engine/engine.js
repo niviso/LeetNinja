@@ -24,7 +24,11 @@ class Engine extends React.Component {
       return;
     }
     this.SetWorld(world);
-    this.AddEnemy();
+    this.AddEnemy(0);
+    setTimeout(x=>{
+    this.AddEnemy(1);
+  },2000);
+
     this.Optimize();
     this.init = true;
     this.updateFunc = updateFunc;
@@ -60,8 +64,8 @@ class Engine extends React.Component {
     return this.enemies;
   }
 
-  AddEnemy = () => {
-    this.enemies.push(NewEnemyObj(0));
+  AddEnemy = (id) => {
+    this.enemies.push(NewEnemyObj(id));
   }
 
   SetWorld = (world) => {
@@ -138,6 +142,13 @@ class Engine extends React.Component {
   GetShardRange = (from,to) => {
     let WorldShards = [];
 
+    if(from <= 0){
+      from = 0;
+    }
+    if(to <= 0){
+      to = 0;
+    }
+
     if(this.shards[from]){
       WorldShards = this.shards[from];
     }
@@ -196,7 +207,7 @@ class Engine extends React.Component {
       const collision = detectX && detectY;
 
 
-      const player_bottom = PlayerTop + tmpPositionObj.size.y - 4;
+      const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
       const player_right = PlayerLeft + tmpPositionObj.size.x;
       const tiles_right = ObjLeft + WorldShards[i].size.x;
@@ -321,7 +332,7 @@ UpdateEnemies = () => {
       const collision = detectX && detectY;
 
 
-      const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
+      const player_bottom = PlayerTop + tmpPositionObj.size.y;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
       const player_right = PlayerLeft + tmpPositionObj.size.x;
       const tiles_right = ObjLeft + WorldShards[i].size.x;
