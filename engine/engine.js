@@ -218,6 +218,14 @@ class Engine extends React.Component {
       const l_collision = player_right - ObjLeft;
       const r_collision = tiles_right - PlayerLeft;
 
+      tmpPositionObj.colliding = {
+        left: false,
+        top: false,
+        right: false,
+        bottom: false,
+        target: null
+      };
+      
       if (collision) {
 
         tmpPositionObj.colliding.target = WorldShards[i].id;
@@ -233,23 +241,28 @@ class Engine extends React.Component {
           //Top collision
           tmpPositionObj.directionVector.y = 0;
           tmpPositionObj.position.y = ObjTop - PlayerHeight;
+          tmpPositionObj.colliding.bottom = true;
           tmpPositionObj.isGrounded = true;
         }
-        if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
+        else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
           tmpPositionObj.position.y = state.position.y + 1;
           tmpPositionObj.directionVector.y += state.gravity;
+          tmpPositionObj.colliding.top = true;
 
           //bottom collsion
         }
-        if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision) {
+        else if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision) {
           //Left collision
+          tmpPositionObj.colliding.left = true;
+
           tmpPositionObj.position.x = state.position.x - 1; //ObjLeft - PlayerWidth;
           tmpPositionObj.isTouchingWall = true;
 
 
         }
-        if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision) {
+        else if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision) {
           //Right collision
+          tmpPositionObj.colliding.right = true;
           tmpPositionObj.position.x = state.position.x + 1; //ObjRight;
           tmpPositionObj.isTouchingWall = true;
         }

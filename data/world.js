@@ -23,7 +23,7 @@ const baseBlock =  {
   for(let i = 1; i!=30;i++){
     let tmpBase = JSON.parse(JSON.stringify(baseBlock));
     tmpBase.position.x = 100 * i;
-    tmpBase.id = i;
+    tmpBase.id = "block " + i;
     Arr.push(tmpBase);
   }
 

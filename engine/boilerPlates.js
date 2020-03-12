@@ -45,7 +45,7 @@ export function NewPlayerObj(){
         direction: "right"
       },
       size: {
-        x: 100,
+        x: 85,
         y: 100
       },
       position: {
