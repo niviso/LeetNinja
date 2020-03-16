@@ -18,7 +18,7 @@ export default function GameLevel(props) {
   const [state,setState] = useContext(GameContext);
   const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>);
   const Enemies =  Engine.GetEnemies().map((item,i) => <Enemy key={i} state={item}/>); // Or something similar
-  var test = false;
+  var LoadingInterval = false;
   UpdateWorld = () => {
     Engine.DeleteWorldObject('block 5');
   }
@@ -34,28 +34,31 @@ export default function GameLevel(props) {
     });
   }
 
-  test = setInterval(x=>{
+ LoadingInterval = setInterval(x=>{
     if(Engine.hasStarted()){
-    setLevelLoaded(true);
-    clearInterval(test);
+      setLevelLoaded(true);
+      clearInterval(LoadingInterval);
     }
-  },500)
+  },1000);
+
   GameView = () => {
-    return (    <PlayerProvider>
+    return (
+      <PlayerProvider>
         <View  style={styles.container}>
           <Background/>
           <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.camera.x - (screenWidth/2),y: state.camera.y <= (screenHeight - Settings.Cameraoffset) && state.camera.y + Settings.Cameraoffset - screenHeight}} horizontal={true}>
           <Player/>
           {Blocks}
           {Enemies}
-        </ScrollView>
+          </ScrollView>
           <Overlay/>
           <GUI/>
           <TouchableOpacity style={{padding: 5,zIndex:9999999,position: 'absolute',backgroundColor: 'red'}} onPressIn={() => UpdateWorld()}>
               <Text>Update World</Text>
           </TouchableOpacity>
         </View>
-        </PlayerProvider>)
+      </PlayerProvider>
+    )
   }
   return (
     <View>
