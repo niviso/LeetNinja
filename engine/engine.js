@@ -55,7 +55,7 @@ class Engine extends React.Component {
   SetPlayer = (player) => {
     this.player = player;
   }
-  
+
   GetWorld = () => {
     return this.world;
   }
@@ -140,28 +140,26 @@ class Engine extends React.Component {
 
     return tmpPositionObj;
   }
-  GetShardRange = (from,to) => {
+  GetShardRange = (from) => {
     let WorldShards = [];
 
     if(from <= 0){
       from = 0;
     }
-    if(to <= 0){
-      to = 0;
-    }
 
-    if(this.shards[from]){
+    if(this.shards[from] !== 'undefined'){
       WorldShards = this.shards[from];
     }
 
-    WorldShards = WorldShards.concat(this.enemies);
+    if(this.shards[from+100] !== 'undefined'){
+      WorldShards = WorldShards.concat(this.shards[from+100]);
+    }
 
-    if(!to){
-      return WorldShards;
+    if(this.shards[from-100] !== 'undefined'){
+      WorldShards = WorldShards.concat(this.shards[from-100]);
     }
-    if(this.shards[to] !== 'undefined'){
-      WorldShards = WorldShards.concat(this.shards[to]);
-    }
+
+    WorldShards = WorldShards.concat(this.enemies);
 
     return WorldShards;
   }
@@ -179,7 +177,7 @@ class Engine extends React.Component {
 
     //COLLISION DETECTION World
     const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
-    
+
     if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
       var WorldShards = this.GetShardRange(shard,shard-100);
     } else {
@@ -218,17 +216,10 @@ class Engine extends React.Component {
       const l_collision = player_right - ObjLeft;
       const r_collision = tiles_right - PlayerLeft;
 
-      tmpPositionObj.colliding = {
-        left: false,
-        top: false,
-        right: false,
-        bottom: false,
-        target: null
-      };
 
       if (collision) {
 
-        tmpPositionObj.colliding.target = "test";//WorldShards[i].id;
+        tmpPositionObj.colliding.target = WorldShards[i].id;
 
         if(WorldShards[i].type == "enemy"){
           if(tmpPositionObj.invincibilityFrames <= 0){
@@ -269,7 +260,9 @@ class Engine extends React.Component {
           tmpPositionObj.isTouchingWall = true;
         }
       }
-      }
+    } else {
+
+    }
     }
 
     }
@@ -309,7 +302,7 @@ UpdateEnemies = () => {
 
     if(tmpPositionObj.position.y > 500){
       tmpPositionObj.kill = true;
-      
+
     }
 
     const PlayerLeft = tmpPositionObj.position.x;
@@ -321,7 +314,7 @@ UpdateEnemies = () => {
 
     //COLLISION DETECTION World
     const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
-    
+
     if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
       var WorldShards = this.GetShardRange(shard,shard-100);
     } else {
@@ -357,7 +350,7 @@ UpdateEnemies = () => {
       const t_collision = player_bottom - ObjTop;
       const l_collision = player_right - ObjLeft;
       const r_collision = tiles_right - PlayerLeft;
-        
+
       tmpPositionObj.colliding = NewCollider();
 
       if (collision) {
@@ -403,9 +396,9 @@ UpdateEnemies = () => {
           tmpPositionObj.directionVector.direction = "left";
           tmpPositionObj.directionVector.x = -tmpPositionObj.directionVector.x;
 
-          
+
         }
-      
+
       }
     }
 
