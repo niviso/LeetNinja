@@ -64,7 +64,8 @@ export function NewPlayerObj(){
       activeDrag: false,
       isWalking: false,
       drag: 0.2,
-      speed: 10
+      speed: 10,
+      kill : false
     }
 
   }

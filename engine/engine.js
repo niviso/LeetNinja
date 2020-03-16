@@ -27,8 +27,8 @@ class Engine extends React.Component {
     this.SetWorld(world);
     this.AddEnemy(0,400);
     this.AddEnemy(1,500);
-        this.AddEnemy(2,300);
-
+    this.AddEnemy(2,300);
+        this.AddEnemy(3,200);
     this.Optimize();
   }
 
@@ -222,6 +222,11 @@ class Engine extends React.Component {
           if(tmpPositionObj.invincibilityFrames <= 0){
             tmpPositionObj.health -= 1;
             tmpPositionObj.invincibilityFrames = settings.invincibilityFramesOnHit;
+
+            if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
+              //Top collision
+              this.enemies[tmpPositionObj.colliding.target].kill = true;
+            }
           }
         } else {
 
