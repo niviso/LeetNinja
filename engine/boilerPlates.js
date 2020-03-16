@@ -46,7 +46,7 @@ export function NewPlayerObj(){
       },
       size: {
         x: 85,
-        y: 100
+        y: 80
       },
       position: {
         x: x,

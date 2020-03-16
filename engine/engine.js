@@ -25,7 +25,7 @@ class Engine extends React.Component {
       return;
     }
     this.SetWorld(world);
-    this.AddEnemy(0,800);
+    this.AddEnemy(0,400);
     this.Optimize();
   }
 
@@ -215,16 +215,6 @@ class Engine extends React.Component {
 
         tmpPositionObj.colliding.target = WorldShards[i].id;
 
-        if(WorldShards[i].type == "enemy"){
-
-            if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
-              //Top collision
-              this.enemies[tmpPositionObj.colliding.target].kill = true;
-            } else if(tmpPositionObj.invincibilityFrames <= 0) {
-                tmpPositionObj.health -= 1;
-                tmpPositionObj.invincibilityFrames = settings.invincibilityFramesOnHit;
-            }
-        } else {
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision
@@ -232,6 +222,11 @@ class Engine extends React.Component {
           tmpPositionObj.position.y = ObjTop - PlayerHeight;
           tmpPositionObj.colliding.bottom = true;
           tmpPositionObj.isGrounded = true;
+          if(WorldShards[i].type == "enemy"){
+
+            this.enemies[tmpPositionObj.colliding.target].kill = true;
+            tmpPositionObj.directionVector.y = -30;
+          }
         }
         else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
           tmpPositionObj.position.y = state.position.y + 1;
@@ -255,7 +250,12 @@ class Engine extends React.Component {
           tmpPositionObj.position.x = state.position.x + 1; //ObjRight;
           tmpPositionObj.isTouchingWall = true;
         }
-      }
+        else if(tmpPositionObj.invincibilityFrames <= 0) {
+                tmpPositionObj.health -= 1;
+                tmpPositionObj.invincibilityFrames = settings.invincibilityFramesOnHit;
+            }
+
+
     } else {
         //If no collision occours
     }
