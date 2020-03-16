@@ -27,6 +27,7 @@ class Engine extends React.Component {
     this.SetWorld(world);
     this.AddEnemy(0,400);
     this.AddEnemy(1,500);
+        this.AddEnemy(2,300);
 
     this.Optimize();
   }
