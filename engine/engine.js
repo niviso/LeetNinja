@@ -12,6 +12,7 @@ class Engine extends React.Component {
     this.init = false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
     this.world = World, //Moves over to shards
     this.enemies = [],
+    this.projectiles = [],
     this.player = null,
     this.shards = null,
     this.updateFunc = null
@@ -208,8 +209,8 @@ class Engine extends React.Component {
 
       const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
-      const player_right = PlayerLeft + tmpPositionObj.size.x + 10;
-      const tiles_right = ObjLeft + WorldShards[i].size.x + 50;
+      const player_right = PlayerLeft + tmpPositionObj.size.x;
+      const tiles_right = ObjLeft + WorldShards[i].size.x;
 
       const b_collision = tiles_bottom - PlayerTop;
       const t_collision = player_bottom - ObjTop;
@@ -234,8 +235,6 @@ class Engine extends React.Component {
           tmpPositionObj.position.y = ObjTop - PlayerHeight;
           tmpPositionObj.colliding.bottom = true;
           tmpPositionObj.isGrounded = true;
-          //console.log(Math.floor(Date.now()/1000));
-          //WHY is it no adding the updated vars but the collision happens?!
         }
         else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
           tmpPositionObj.position.y = state.position.y + 1;
