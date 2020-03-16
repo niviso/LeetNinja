@@ -25,10 +25,8 @@ class Engine extends React.Component {
       return;
     }
     this.SetWorld(world);
-    this.AddEnemy(0);
-    setTimeout(x=>{
-    this.AddEnemy(1);
-  },2000);
+    this.AddEnemy(0,400);
+    this.AddEnemy(1,500);
 
     this.Optimize();
   }
@@ -62,8 +60,8 @@ class Engine extends React.Component {
     return this.enemies;
   }
 
-  AddEnemy = (id) => {
-    this.enemies.push(NewEnemyObj(id));
+  AddEnemy = (id,x) => {
+    this.enemies.push(NewEnemyObj(id,x));
   }
 
   SetWorld = (world) => {

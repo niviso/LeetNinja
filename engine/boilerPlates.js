@@ -33,7 +33,7 @@ export function NewPlayerObj(){
     }
   }
 
-  export function NewEnemyObj(id){
+  export function NewEnemyObj(id,x){
     return {
       id: id,
       type: 'enemy',
@@ -49,7 +49,7 @@ export function NewPlayerObj(){
         y: 100
       },
       position: {
-        x: 400,
+        x: x,
         y: 150
       },
       colliding:{
