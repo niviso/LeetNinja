@@ -226,6 +226,8 @@ class Engine extends React.Component {
 
             this.enemies[tmpPositionObj.colliding.target].kill = true;
             tmpPositionObj.directionVector.y = -30;
+            tmpPositionObj.isGrounded = false;
+
           }
         }
         else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
