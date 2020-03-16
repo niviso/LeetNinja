@@ -208,8 +208,8 @@ class Engine extends React.Component {
 
       const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
-      const player_right = PlayerLeft + tmpPositionObj.size.x;
-      const tiles_right = ObjLeft + WorldShards[i].size.x;
+      const player_right = PlayerLeft + tmpPositionObj.size.x + 10;
+      const tiles_right = ObjLeft + WorldShards[i].size.x + 50;
 
       const b_collision = tiles_bottom - PlayerTop;
       const t_collision = player_bottom - ObjTop;
@@ -261,7 +261,7 @@ class Engine extends React.Component {
         }
       }
     } else {
-
+        //If no collision occours
     }
     }
 
