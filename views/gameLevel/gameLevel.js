@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState} from 'react';
 import {View,ScrollView,Text,TouchableOpacity  } from 'react-native';
 import styles from "./style.scss";
 import Player from '../../components/player/player';
@@ -14,15 +14,17 @@ import Settings from '../../settings';
 import Engine from '../../engine/engine';
 export default function GameLevel(props) {
   const {screenHeight,screenWidth} = props;
+  const [levelLoaded,setLevelLoaded] = useState(false);
   const [state,setState] = useContext(GameContext);
-  const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>); 
+  const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>);
   const Enemies =  Engine.GetEnemies().map((item,i) => <Enemy key={i} state={item}/>); // Or something similar
+  var test = false;
   UpdateWorld = () => {
     Engine.DeleteWorldObject('block 5');
   }
 
   ForceUpdate = () => {
-    
+
   }
 
   if(!Engine.hasStarted()){
@@ -32,23 +34,35 @@ export default function GameLevel(props) {
     });
   }
 
+  test = setInterval(x=>{
+    if(Engine.hasStarted()){
+    setLevelLoaded(true);
+    clearInterval(test);
+    }
+  },500)
+  GameView = () => {
+    return (    <PlayerProvider>
+        <View  style={styles.container}>
+          <Background/>
+          <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.camera.x - (screenWidth/2),y: state.camera.y <= (screenHeight - Settings.Cameraoffset) && state.camera.y + Settings.Cameraoffset - screenHeight}} horizontal={true}>
+          <Player/>
+          {Blocks}
+          {Enemies}
+        </ScrollView>
+          <Overlay/>
+          <GUI/>
+          <TouchableOpacity style={{padding: 5,zIndex:9999999,position: 'absolute',backgroundColor: 'red'}} onPressIn={() => UpdateWorld()}>
+              <Text>Update World</Text>
+          </TouchableOpacity>
+        </View>
+        </PlayerProvider>)
+  }
   return (
+    <View>
 
-    <PlayerProvider>
-    <View  style={styles.container}>
-      <Background/>
-      <ScrollView  style={styles.container} alwaysBounceHorizontal={false} contentOffset={{x:state.camera.x - (screenWidth/2),y: state.camera.y <= (screenHeight - Settings.Cameraoffset) && state.camera.y + Settings.Cameraoffset - screenHeight}} horizontal={true}>
-      <Player/>
-      {Blocks}
-      {Enemies}
-    </ScrollView>
-      <Overlay/>
-      <GUI/>
-      <TouchableOpacity style={{padding: 5,zIndex:9999999,position: 'absolute',backgroundColor: 'red'}} onPressIn={() => UpdateWorld()}>
-          <Text>Update World</Text>
-      </TouchableOpacity>
+    {levelLoaded ? GameView() : <Background/>}
+
     </View>
-    </PlayerProvider>
 
   );
 }

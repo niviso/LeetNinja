@@ -58,6 +58,21 @@ const World = [
         }
       },
 
+      {
+        id: 'block 6',
+        text: null,
+        texture: null,
+        style: {backgroundColor: 'purple'},
+        size: {
+          x: 100,
+          y: 100
+        },
+        position:{
+          x: 600,
+          y: screenHeight - 200
+        }
+      },
+
 
   ...Arr
 

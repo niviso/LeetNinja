@@ -31,9 +31,6 @@ class Engine extends React.Component {
   },2000);
 
     this.Optimize();
-    this.init = true;
-    this.updateFunc = updateFunc;
-    console.log("Engine initialized");
   }
 
   DeleteWorldObject = (id) => {
@@ -96,7 +93,7 @@ class Engine extends React.Component {
 
     }
     this.shards = tmpWorld;
-    console.log(this.shards[0])
+    this.init = true;
   }
 
   FetchShard = (shard) => {
