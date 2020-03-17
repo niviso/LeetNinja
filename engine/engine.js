@@ -283,18 +283,20 @@ class Engine extends React.Component {
 UpdateEnemies = () => {
   //Update if in range of camera
 
-  let updatedEnemies = this.enemies.filter((enemy, index, arr) => {
-    return this.UpdateEnemy(enemy);
-
+  this.enemies.filter((enemy, index, arr) => {
+    this.UpdateEnemy(enemy);
   });
 
-  this.enemies = updatedEnemies;
+
+
+
 
   //Need to do this at the end of the for and render cycle to not freeze the game
   //this.KillEnemeis();
 }
   UpdateEnemy = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
+    console.log(state.position.y,tmpPositionObj.position.y)
 
     if(tmpPositionObj.position.y > 500){
       tmpPositionObj.kill = true;
@@ -399,7 +401,7 @@ UpdateEnemies = () => {
 
     }
     }
-    return tmpPositionObj;
+    return this.enemies[tmpPositionObj.id]  = tmpPositionObj;
 
   }
 }
