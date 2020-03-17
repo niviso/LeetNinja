@@ -25,7 +25,9 @@ class Engine extends React.Component {
       return;
     }
     this.SetWorld(world);
-    this.AddEnemy(0,400);
+    this.AddEnemy(400);
+    this.AddEnemy(500);
+
     this.Optimize();
   }
 
@@ -58,8 +60,9 @@ class Engine extends React.Component {
     return this.enemies;
   }
 
-  AddEnemy = (id,x) => {
-    this.enemies.push(NewEnemyObj(id,x));
+  AddEnemy = (x) => {
+    const id = Math.floor(Math.random() * 100).toString();
+    this.enemies[id] = NewEnemyObj(id,x);
   }
 
   SetWorld = (world) => {
@@ -153,7 +156,7 @@ class Engine extends React.Component {
       WorldShards = WorldShards.concat(this.shards[from-100]);
     }
 
-    WorldShards = WorldShards.concat(this.enemies);
+    //WorldShards = WorldShards.concat(this.enemies);
 
     return WorldShards;
   }
@@ -222,7 +225,7 @@ class Engine extends React.Component {
           tmpPositionObj.position.y = ObjTop - PlayerHeight;
           tmpPositionObj.colliding.bottom = true;
           tmpPositionObj.isGrounded = true;
-          if(WorldShards[i].type == "enemy"){
+          if(WorldShards[i].type == "enemy" && this.enemies[tmpPositionObj.colliding.target]){
 
             this.enemies[tmpPositionObj.colliding.target].kill = true;
             tmpPositionObj.directionVector.y = -30;
@@ -279,28 +282,22 @@ class Engine extends React.Component {
 
 UpdateEnemies = () => {
   //Update if in range of camera
-  for(let i = 0; i != this.enemies.length; i++){
-    if(this.enemies[i]){
-      this.UpdateEnemy(this.enemies[i].id);
-    }
-  }
+
+  let updatedEnemies = this.enemies.filter((enemy, index, arr) => {
+    return this.UpdateEnemy(enemy);
+
+  });
+
+  this.enemies = updatedEnemies;
 
   //Need to do this at the end of the for and render cycle to not freeze the game
-  this.KillEnemeis();
+  //this.KillEnemeis();
 }
-  UpdateEnemy = (id) => { //Updates the position of a object
-    if(id == 'player'){
-      var tmpPositionObj = this.Gravity(this.player);
-      var state = this.player;
-    } else {
-      var tmpPositionObj = this.Gravity(this.enemies[id]);
-      var state = this.enemies[id];
-    }
-
+  UpdateEnemy = (state) => { //Updates the position of a object
+    var tmpPositionObj = this.Gravity(state);
 
     if(tmpPositionObj.position.y > 500){
       tmpPositionObj.kill = true;
-
     }
 
     const PlayerLeft = tmpPositionObj.position.x;
@@ -402,7 +399,7 @@ UpdateEnemies = () => {
 
     }
     }
-    this.enemies[id] = tmpPositionObj;
+    return tmpPositionObj;
 
   }
 }
