@@ -155,8 +155,11 @@ class Engine extends React.Component {
     if(this.shards[from-100] !== 'undefined'){
       WorldShards = WorldShards.concat(this.shards[from-100]);
     }
-
-    //WorldShards = WorldShards.concat(this.enemies);
+    var arr = [];
+    this.enemies.filter((obj,index) => {
+      arr.push(obj);
+    });
+    WorldShards = WorldShards.concat(arr);
 
     return WorldShards;
   }
@@ -273,11 +276,13 @@ class Engine extends React.Component {
 
 
   KillEnemeis = () => {
-  var filtered = this.enemies.filter(function(value, index, arr){
-    return !value.kill;
+  let arr = [];
+  var filtered = this.enemies.filter((enemy) => {
+     enemy.kill ? null : arr[enemy.id] = enemy;
   });
 
-  this.enemies = filtered;
+
+  this.enemies = arr;
 }
 
 UpdateEnemies = () => {
@@ -287,6 +292,7 @@ UpdateEnemies = () => {
     this.UpdateEnemy(enemy);
   });
 
+  this.KillEnemeis();
 
 
 
@@ -296,7 +302,7 @@ UpdateEnemies = () => {
 }
   UpdateEnemy = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
-    console.log(state.position.y,tmpPositionObj.position.y)
+    //console.log(state.position.y,tmpPositionObj.position.y)
 
     if(tmpPositionObj.position.y > 500){
       tmpPositionObj.kill = true;

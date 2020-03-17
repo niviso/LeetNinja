@@ -1,5 +1,5 @@
 const settings = {
-    FPS: 10,
+    FPS: 30,
     Cameraoffset: 200,
     invincibilityFramesOnHit: 30,
     debug: false
