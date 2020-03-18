@@ -3,6 +3,7 @@ export function NewPlayerObj(){
       id: 1,
       type: 'player',
       health: 2,
+      gravity: true,
       invincibilityFrames : 0,
       directionVector: {
         x: 0,
@@ -39,6 +40,45 @@ export function NewPlayerObj(){
       type: 'enemy',
       health: 1,
       invincibilityFrames : 0,
+      gravity: true,
+      directionVector: {
+        x: -0.2,
+        y: 0,
+        direction: "right"
+      },
+      size: {
+        x: 85,
+        y: 80
+      },
+      position: {
+        x: x,
+        y: 150
+      },
+      colliding:{
+        left: false,
+        right: false,
+        top: false,
+        bottom: false,
+        target: null
+      },
+      isGrounded: false,
+      isTouchingWall: false,
+      activeDrag: false,
+      isWalking: false,
+      drag: 0.2,
+      speed: 10,
+      kill : false
+    }
+
+  }
+
+  export function NewProjectile(id,x){
+    return {
+      id: id,
+      type: 'enemy',
+      health: 1,
+      invincibilityFrames : 0,
+      gravity: false,
       directionVector: {
         x: -0.2,
         y: 0,

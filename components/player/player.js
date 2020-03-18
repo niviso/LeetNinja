@@ -24,6 +24,7 @@ export default function Player() {
       setPlayerState(tmpPlayerState);
       setState(tmpState);
       Engine.UpdateEnemies();
+      Engine.UpdateProjectiles();
 
     //}
 

@@ -2,7 +2,7 @@ import World from '../data/world';
 import React from 'react';
 import Enemy from './enemy';
 import settings from '../settings';
-import { NewEnemyObj,NewCollider } from './boilerPlates';
+import { NewEnemyObj,NewCollider,NewProjectile } from './boilerPlates';
 const gravity = 5;
 
 
@@ -25,7 +25,6 @@ class Engine extends React.Component {
     this.AddEnemy(400);
     this.AddEnemy(500);
     this.AddProjectile(500);
-
     this.Optimize();
   }
 
@@ -61,7 +60,7 @@ class Engine extends React.Component {
 
   AddProjectile = (x) => {
     const id = Math.floor(Math.random() * 100).toString();
-    this.projectiles[id] = NewEnemyObj(id,x);
+    this.projectiles[id] = NewProjectile(id,x);
   }
 
   SetWorld = (world) => {
@@ -102,7 +101,7 @@ class Engine extends React.Component {
 
     tmpPositionObj.directionVector = {
       x: tmpPositionObj.directionVector.x,
-      y: tmpPositionObj.directionVector.y + gravity,
+      y: tmpPositionObj.directionVector.y + (state.gravity ? gravity : 0),
       direction: tmpPositionObj.directionVector.direction
     }
     if(tmpPositionObj.invincibilityFrames > 0){
@@ -284,21 +283,33 @@ class Engine extends React.Component {
   this.enemies = arr;
 }
 
+//In the future i want to bake all of this into one big loop maybe
+
 UpdateEnemies = () => {
   //Update if in range of camera
+  if(this.enemies){
+    this.enemies.filter((enemy, index, arr) => {
+      this.enemies[enemy.id]  = this.UpdateEnemy(enemy);
+    });
 
-  this.enemies.filter((enemy, index, arr) => {
-    this.enemies[enemy.id]  = this.UpdateEnemy(enemy);
+    this.KillEnemeis();
+  }
+
+  //Need to do this at the end of the for and render cycle to not freeze the game
+}
+
+UpdateProjectiles = () => {
+  //Update if in range of camera
+
+  this.projectiles.filter((projectile, index, arr) => {
+    this.projectiles[projectile.id]  = this.UpdateEnemy(projectile);
   });
 
   this.KillEnemeis();
 
-
-
-
   //Need to do this at the end of the for and render cycle to not freeze the game
-  //this.KillEnemeis();
 }
+
   UpdateEnemy = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
     //console.log(state.position.y,tmpPositionObj.position.y)
