@@ -153,9 +153,17 @@ class Engine extends React.Component {
     if(this.shards[from-100] !== 'undefined'){
       WorldShards = WorldShards.concat(this.shards[from-100]);
     }
-    if(this.enemies){
+    if(this.enemies.length > 0){
       var arr = [];
       this.enemies.filter((obj,index) => {
+        arr.push(obj);
+      });
+      WorldShards = WorldShards.concat(arr);
+    }
+
+    if(this.projectiles.length > 0){
+      var arr = [];
+      this.projectiles.filter((obj,index) => {
         arr.push(obj);
       });
       WorldShards = WorldShards.concat(arr);
