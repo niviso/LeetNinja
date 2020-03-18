@@ -11,6 +11,7 @@ import Background from '../../components/background/background';
 import Overlay from '../../components/overlay/overlay';
 import Enemy from '../../components/enemy/enemy';
 import Projectile from '../../components/projectile/projectile';
+import AudioHelper from '../../helpers/AudioHelper'
 
 import Settings from '../../settings';
 import Engine from '../../engine/engine';
@@ -21,6 +22,10 @@ export default function GameLevel(props) {
   const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>);
   const Enemies =  Engine.GetEnemies().map((item,i) => <Enemy key={i} state={item}/>);
   const Projectiles =  Engine.GetProjectiles().map((item,i) => <Projectile key={i} state={item}/>); // Or something similar
+
+
+  AudioHelper.play(require('../../assets/sound/bg.mp3'),true);
+
 
   var LoadingInterval = false;
   UpdateWorld = () => {
