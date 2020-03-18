@@ -10,6 +10,8 @@ import World from '../../data/world';
 import Background from '../../components/background/background';
 import Overlay from '../../components/overlay/overlay';
 import Enemy from '../../components/enemy/enemy';
+import Projectile from '../../components/projectile/projectile';
+
 import Settings from '../../settings';
 import Engine from '../../engine/engine';
 export default function GameLevel(props) {
@@ -50,6 +52,7 @@ export default function GameLevel(props) {
           <Player/>
           {Blocks}
           {Enemies}
+          <Projectile/>
           </ScrollView>
           <Overlay/>
           <GUI/>
