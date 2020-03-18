@@ -19,7 +19,9 @@ export default function GameLevel(props) {
   const [levelLoaded,setLevelLoaded] = useState(false);
   const [state,setState] = useContext(GameContext);
   const Blocks =  Engine.GetWorld().map((item,i) => <Block key={i} item={item}/>);
-  const Enemies =  Engine.GetEnemies().map((item,i) => <Enemy key={i} state={item}/>); // Or something similar
+  const Enemies =  Engine.GetEnemies().map((item,i) => <Enemy key={i} state={item}/>);
+  const Projectiles =  Engine.GetProjectiles().map((item,i) => <Projectile key={i} state={item}/>); // Or something similar
+
   var LoadingInterval = false;
   UpdateWorld = () => {
     Engine.DeleteWorldObject('block 5');
@@ -52,7 +54,7 @@ export default function GameLevel(props) {
           <Player/>
           {Blocks}
           {Enemies}
-          <Projectile/>
+          {Projectiles}
           </ScrollView>
           <Overlay/>
           <GUI/>

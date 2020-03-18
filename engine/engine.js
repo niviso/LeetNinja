@@ -13,20 +13,18 @@ class Engine extends React.Component {
     this.world = World, //Moves over to shards
     this.enemies = [],
     this.projectiles = [],
-    this.player = null,
-    this.shards = null,
-    this.updateFunc = null
     this.shards = null;
   }
 
   Init(props){
-    const {world,updateFunc} = props;
+    const {world} = props;
     if(!world){
       return;
     }
     this.SetWorld(world);
     this.AddEnemy(400);
     this.AddEnemy(500);
+    this.AddProjectile(500);
 
     this.Optimize();
   }
@@ -44,14 +42,6 @@ class Engine extends React.Component {
     return this.init;
   }
 
-  GetPlayer = () => {
-    return this.player;
-  }
-
-  SetPlayer = (player) => {
-    this.player = player;
-  }
-
   GetWorld = () => {
     return this.world;
   }
@@ -60,9 +50,18 @@ class Engine extends React.Component {
     return this.enemies;
   }
 
+  GetProjectiles = () => {
+    return this.projectiles;
+  }
+
   AddEnemy = (x) => {
     const id = Math.floor(Math.random() * 100).toString();
     this.enemies[id] = NewEnemyObj(id,x);
+  }
+
+  AddProjectile = (x) => {
+    const id = Math.floor(Math.random() * 100).toString();
+    this.projectiles[id] = NewEnemyObj(id,x);
   }
 
   SetWorld = (world) => {
@@ -289,7 +288,7 @@ UpdateEnemies = () => {
   //Update if in range of camera
 
   this.enemies.filter((enemy, index, arr) => {
-    this.UpdateEnemy(enemy);
+    this.enemies[enemy.id]  = this.UpdateEnemy(enemy);
   });
 
   this.KillEnemeis();
@@ -407,7 +406,7 @@ UpdateEnemies = () => {
 
     }
     }
-    return this.enemies[tmpPositionObj.id]  = tmpPositionObj;
+    return tmpPositionObj;
 
   }
 }
