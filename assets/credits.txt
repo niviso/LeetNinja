@@ -1,7 +1,11 @@
+Graphics provided by Jesse Munguia:
+https://jesse-m.itch.io/
+
+
 Music:
 
 
-This [video/theatre piece/...] uses these sounds from freesound:
+This game uses these sounds from freesound:
 
 
 tropical_loop by https://freesound.org/people/dpren/
