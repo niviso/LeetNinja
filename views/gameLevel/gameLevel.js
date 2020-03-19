@@ -11,10 +11,13 @@ import Background from '../../components/background/background';
 import Overlay from '../../components/overlay/overlay';
 import Enemy from '../../components/enemy/enemy';
 import Projectile from '../../components/projectile/projectile';
-import AudioHelper from '../../helpers/AudioHelper'
+import AudioHelper from '../../helpers/AudioHelper';
+import {game_bgm} from '../../helpers/sounds';
 
+import Loading from '../loading/loading';
 import Settings from '../../settings';
 import Engine from '../../engine/engine';
+
 export default function GameLevel(props) {
   const {screenHeight,screenWidth} = props;
   const [levelLoaded,setLevelLoaded] = useState(false);
@@ -24,7 +27,6 @@ export default function GameLevel(props) {
   const Projectiles =  Engine.GetProjectiles().map((item,i) => <Projectile key={i} state={item}/>); // Or something similar
 
 
-  AudioHelper.play(require('../../assets/sound/bg.mp3'),true);
 
 
   var LoadingInterval = false;
@@ -48,9 +50,11 @@ export default function GameLevel(props) {
       setLevelLoaded(true);
       clearInterval(LoadingInterval);
     }
-  },1000);
+  },2500);
 
   GameView = () => {
+    AudioHelper.play(game_bgm,true);
+
     return (
       <PlayerProvider>
         <View  style={styles.container}>
@@ -73,7 +77,7 @@ export default function GameLevel(props) {
   return (
     <View>
 
-    {levelLoaded ? GameView() : <Background/>}
+    {levelLoaded ? GameView() : <Loading/>}
 
     </View>
 

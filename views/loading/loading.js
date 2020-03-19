@@ -1,16 +1,17 @@
 import React,{useState,useEffect} from 'react';
 import {View,Dimensions,TouchableWithoutFeedback,Text} from 'react-native';
 import styles from './style.scss';
+import AudioHelper from '../../helpers/AudioHelper';
+import {loading_loop} from '../../helpers/sounds';
 
 export default function Loading() {
   const [count,setCount] = useState(100);
+  AudioHelper.play(loading_loop,true,1);
   useEffect(() => {
-    setTimeout(x=> {
-      if(count > 0){
-        setCount(count-1);
-      }
-    },20);
-  },[count]);
+    return () => {
+        AudioHelper.stop(loading_loop);
+    }
+  }, []);
 
 
   return (

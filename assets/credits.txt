@@ -11,4 +11,5 @@ This game uses these sounds from freesound:
 tropical_loop by https://freesound.org/people/dpren/
 loading_loop by https://freesound.org/people/ChrisButler99/
 drum_loop by https://freesound.org/people/Legend1060/
-koto_loop by https://freesound.org/people/zagi2/
+koto_loop by https://freesound.org/people/zagi
+confirm by https://freesound.org/people/Johnny%20Weltraum/

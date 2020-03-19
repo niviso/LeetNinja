@@ -1,16 +1,32 @@
-import React,{useContext,useEffect} from 'react';
+import React,{useContext,useEffect,useState} from 'react';
 import { GameContext } from "../../Contexts/GameContext";
 import {View,Image,Text,TouchableOpacity} from 'react-native';
 import Background from '../../components/background/background';
-import AudioHelper from '../../helpers/AudioHelper'
+import AudioHelper from '../../helpers/AudioHelper';
+import Ripple from '../../assets/test.gif';
 
+import styles from "./style.scss";
+import {start_bgm,confirm} from '../../helpers/sounds';
 export default function Start(props) {
   const {screenHeight,screenWidth,setScreen} = props;
+  const [activateStart,setActivateStart] = useState(false);
   const [state,setState] = useContext(GameContext);
-  AudioHelper.play(require('../../assets/sound/downloaded/tropical_loop.wav'),true);
-
+  AudioHelper.play(start_bgm,true,0.4);
+  useEffect(() => {
+    return () => {
+        AudioHelper.stop(start_bgm);
+    }
+  }, []);
+  Start = () => {
+    AudioHelper.play(confirm,false,1);
+    setActivateStart(true);
+    setTimeout(x=>{
+      setScreen('game')
+      AudioHelper.stop(start_bgm);
+    },2000);
+  }
   return (
-    <TouchableOpacity onPress={() => setScreen('game')}>
+    <TouchableOpacity onPress={() => Start()}>
     <View style={{
       width: screenWidth,
       height: screenHeight,
@@ -23,8 +39,10 @@ export default function Start(props) {
       justifyContent: 'center',
       alignItems: 'center',
     }}>
-    <Text>Start Game</Text>
+    <Text style={styles.name}>Start Game</Text>
     </View>
+    {activateStart && <Image source={Ripple} style={styles.ripple}/> }
+
     </View>
     </TouchableOpacity>
 

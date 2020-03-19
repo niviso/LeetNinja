@@ -55,9 +55,9 @@ const AudioHelper = {
     findIndex: function(file){
       return this.list.findIndex(file);
     },
-    play: async function(file,loop=false){
+    play: async function(file,loop=false,volume=1){
       if(!this.list[file]){
-        this.init(file,null,loop);
+        this.init(file,volume,loop);
       } else {
         await this.list[file].audio.playAsync();
       }
