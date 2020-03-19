@@ -14,6 +14,10 @@ export function NewPlayerObj(){
         x: 66,
         y: 100
       },
+      hitbox: {
+        x: 66,
+        y: 100
+      },
       position: {
         x: 200,
         y: 100
@@ -47,6 +51,10 @@ export function NewPlayerObj(){
         direction: "right"
       },
       size: {
+        x: 85,
+        y: 80
+      },
+      hitbox: {
         x: 85,
         y: 80
       },
@@ -88,6 +96,10 @@ export function NewPlayerObj(){
         x: 85,
         y: 80
       },
+      hitbox: {
+        x: 85,
+        y: 80
+      },
       position: {
         x: x,
         y: 150
@@ -117,6 +129,10 @@ export function NewPlayerObj(){
       size: {
         x: 100,
         y: 100
+      },
+      hitbox: {
+        x: 85,
+        y: 80
       },
       position: position,
       colliding:{

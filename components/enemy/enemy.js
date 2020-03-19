@@ -1,7 +1,6 @@
 import React from 'react';
 import {View,Text,Image,ScrollView } from 'react-native';
 import styles from "./style.scss";
-import Idle from '../../assets/enemies/bee/idle.gif';
 import Knight from '../../assets/enemies/knight.png';
 import Sprite from '../sprite/sprite';
 
