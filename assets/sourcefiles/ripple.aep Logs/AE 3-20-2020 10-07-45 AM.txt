@@ -1,8 +1,0 @@
-  3/20/2020 10:07:45 AM: Starting composition “splash”.
-
-  Output To: C:\Users\Nikki\Desktop\splash.avi    3/20/2020 10:08:14 AM: Finished composition “splash”.
-
-
-  Total Time Elapsed: 19 Seconds
-Log closed on 3/20/2020 at 10:08:14 AM
-
