@@ -12,7 +12,7 @@ export default function GUI() {
   const Jump = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     if(state.isGrounded){
-      tmpState.directionVector.y = -45;
+      tmpState.directionVector.y = -state.forceOnJump;
       tmpState.isGrounded = false;
       setState(tmpState);
       AudioHelper.init(jump);
@@ -20,15 +20,15 @@ export default function GUI() {
 
     } else if(state.isTouchingWall && !tmpState.isGrounded){
       if(tmpState.directionVector.direction == "right"){
-      tmpState.directionVector.y = -45;
-      tmpState.directionVector.x = 1.7;
+      tmpState.directionVector.y = -state.forceOnJump;
+      tmpState.directionVector.x = state.walkingSpeed;
       tmpState.directionVector.direction = "left";
       AudioHelper.init(jump_02,false,0.4);
 
 
     } else {
-      tmpState.directionVector.y = -45;
-      tmpState.directionVector.x = -1.7;
+      tmpState.directionVector.y = -state.forceOnJump;
+      tmpState.directionVector.x = -state.walkingSpeed;
       tmpState.directionVector.direction = "right";
       AudioHelper.init(jump_02,false,0.4);
 
@@ -48,7 +48,7 @@ export default function GUI() {
   const goLeft = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     tmpState.activeDrag = false;
-    tmpState.directionVector.x = 0.6;
+    tmpState.directionVector.x = state.walkingSpeed/2;
     tmpState.directionVector.direction = "left";
     tmpState.isWalking = true;
     setState(tmpState);
@@ -57,7 +57,7 @@ export default function GUI() {
   const goRight = () => {
     var tmpState = JSON.parse(JSON.stringify(state));
     tmpState.activeDrag = false;
-    tmpState.directionVector.x = -0.6;
+    tmpState.directionVector.x = -state.walkingSpeed/2;
     tmpState.directionVector.direction = "right";
     tmpState.isWalking = true;
     setState(tmpState);

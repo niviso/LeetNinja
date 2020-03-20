@@ -34,7 +34,9 @@ export function NewPlayerObj(){
       activeDrag: false,
       isWalking: false,
       drag: 0.2,
-      speed: 20
+      speed: 20,
+      walkingSpeed: 1.7,
+      forceOnJump: 45
     }
   }
 
