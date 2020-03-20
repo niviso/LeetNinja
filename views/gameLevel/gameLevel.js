@@ -47,7 +47,7 @@ export default function GameLevel(props) {
 
  LoadingInterval = setInterval(x=>{
     if(Engine.hasStarted()){
-      //setLevelLoaded(true);
+      setLevelLoaded(true);
       clearInterval(LoadingInterval);
     }
   },2500);
@@ -77,7 +77,7 @@ export default function GameLevel(props) {
   return (
     <View>
 
-    {levelLoaded ? GameView() : <Loading/>}
+    {levelLoaded ? GameView() : <Loading duration={2500}/>}
 
     </View>
 

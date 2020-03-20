@@ -37,9 +37,7 @@ export default function Player() {
     {(playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Run} />)}
     {(!playerState.isWalking && playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Idle} />)}
     {(!playerState.isGrounded && <Image resizeMode="contain" style={CharacterStyle} source={Jumping} />)}
-    <Text style={{position: 'absolute', color: 'white',width: 230, top: -20,backgroundColor: 'black',textAlign: 'left'}}>Colliding with: {JSON.stringify(playerState.colliding)}</Text>
 
-        <Text style={{position: 'absolute', color: 'white',width: 150, top: -40,backgroundColor: 'black',textAlign: 'center'}}>isgounded: {JSON.stringify(playerState.isGrounded)}</Text>
   </View>
   );
 }

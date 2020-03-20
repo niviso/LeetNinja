@@ -4,8 +4,9 @@ import styles from './style.scss';
 import AudioHelper from '../../helpers/AudioHelper';
 import {loading_loop} from '../../helpers/sounds';
 
-export default function Loading() {
+export default function Loading(props) {
   AudioHelper.play(loading_loop,true,1);
+  const {duration} = props;
   useEffect(() => {
     return () => {
         AudioHelper.stop(loading_loop);
@@ -14,7 +15,7 @@ export default function Loading() {
 
 
   return (
-    <View style={styles.loading}>
+    <View style={{...styles.loading}}>
       <Text style={styles.txt}>Loading</Text>
     </View>
   );
