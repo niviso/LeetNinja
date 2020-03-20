@@ -72,9 +72,7 @@ export default function GUI() {
   }
   return (
     <View style={styles.BtnWrapper}>
-
       <View style={styles.moveBtnWrapper}>
-
         <View onTouchStart={()=> goRight() } onTouchEnd={() => stopWalking()}>
           <TouchableOpacity activeOpacity={0.5}>
             <View style={styles.btn}>
@@ -106,8 +104,6 @@ export default function GUI() {
           </View>
         </TouchableOpacity>
       </View>
-
     </View>
-
   );
 }
