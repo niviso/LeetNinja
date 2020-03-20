@@ -41,7 +41,7 @@ export default function Start(props) {
     }}>
     <Image source={Ninja} style={styles.ripple}/>
     </View>
-    {activateStart && <Image source={Ripple} style={styles.ripple2}/> }
+    {activateStart && <Image source={Ripple} resizeMode="contain" style={styles.ripple2}/> }
 
     </View>
     </TouchableOpacity>

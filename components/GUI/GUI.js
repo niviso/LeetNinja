@@ -3,6 +3,7 @@ import {View,Image,TouchableOpacity,Text,NativeModules  } from 'react-native';
 import styles from "./style.scss";
 import AudioHelper from '../../helpers/AudioHelper'
 import { PlayerContext } from "../../Contexts/PlayerContext";
+import {jump,jump_02} from '../../helpers/sounds';
 
 
 export default function GUI() {
@@ -14,7 +15,7 @@ export default function GUI() {
       tmpState.directionVector.y = -45;
       tmpState.isGrounded = false;
       setState(tmpState);
-      AudioHelper.init(require('../..//assets/sound/jump.wav'));
+      AudioHelper.init(jump);
 
 
     } else if(state.isTouchingWall && !tmpState.isGrounded){
@@ -22,14 +23,14 @@ export default function GUI() {
       tmpState.directionVector.y = -45;
       tmpState.directionVector.x = 1.7;
       tmpState.directionVector.direction = "left";
-      AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
+      AudioHelper.init(jump_02,false,0.4);
 
 
     } else {
       tmpState.directionVector.y = -45;
       tmpState.directionVector.x = -1.7;
       tmpState.directionVector.direction = "right";
-      AudioHelper.init(require('../..//assets/sound/jump_02.wav'),0.4);
+      AudioHelper.init(jump_02,false,0.4);
 
 
     }
