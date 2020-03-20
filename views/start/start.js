@@ -3,7 +3,7 @@ import { GameContext } from "../../Contexts/GameContext";
 import {View,Image,Text,TouchableOpacity} from 'react-native';
 import Background from '../../components/background/background';
 import AudioHelper from '../../helpers/AudioHelper';
-import Ripple from '../../assets/test.gif';
+import Ripple from '../../assets/player/run.gif';
 import Ninja from '../../assets/splash.png';
 
 import styles from "./style.scss";
@@ -41,7 +41,7 @@ export default function Start(props) {
     }}>
     <Image source={Ninja} style={styles.ripple}/>
     </View>
-    {activateStart && <Image source={Ripple} style={styles.ripple}/> }
+    {activateStart && <Image source={Ripple} style={styles.ripple2}/> }
 
     </View>
     </TouchableOpacity>
