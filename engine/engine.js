@@ -142,15 +142,15 @@ class Engine extends React.Component {
       from = 0;
     }
 
-    if(this.shards[from] !== 'undefined'){
+    if(typeof this.shards[from] !== 'undefined'){
       WorldShards = this.shards[from];
     }
 
-    if(this.shards[from+100] !== 'undefined'){
+    if(typeof this.shards[from+100] !== 'undefined'){
       WorldShards = WorldShards.concat(this.shards[from+100]);
     }
 
-    if(this.shards[from-100] !== 'undefined'){
+    if(typeof this.shards[from-100] !== 'undefined'){
       WorldShards = WorldShards.concat(this.shards[from-100]);
     }
     if(this.enemies.length > 0){
