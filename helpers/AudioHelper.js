@@ -26,11 +26,10 @@ const AudioHelper = {
       }
       if(pitch){
         this.list[file].audio.setRateAsync(pitch,true,1);
-
       }
 
     } catch(e){
-        console.log("No bueno",file.toString());
+        //console.log("No bueno",file.toString());
     }
 
     },
@@ -56,17 +55,25 @@ const AudioHelper = {
       return this.list.findIndex(file);
     },
     play: async function(file,loop=false,volume=1){
+      try {
       if(!this.list[file]){
         this.init(file,volume,loop);
       } else {
         await this.list[file].audio.playAsync();
+      }
+      } catch(e){
+          //console.log("No bueno",file.toString());
       }
     },
     pause: async function(file){
       await this.list[file].audio.pauseAsync();
     },
     stop: async function(file){
-      await this.list[file].audio.stopAsync();
+      try {
+        await this.list[file].audio.stopAsync();
+      } catch(e){
+          //console.log("No bueno",file.toString());
+      }
     },
     stopAll: async function(){
       this.list.map(index=>{

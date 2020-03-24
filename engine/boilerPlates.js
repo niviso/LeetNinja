@@ -85,22 +85,22 @@ export function NewPlayerObj(){
   export function NewProjectile(id,x){
     return {
       id: id,
-      type: 'enemy',
+      type: 'projectile',
       health: 1,
       invincibilityFrames : 0,
       gravity: false,
       directionVector: {
-        x: 2.2,
+        x: 0.2,
         y: 0,
         direction: "right"
       },
       size: {
-        x: 85,
-        y: 80
+        x: 15,
+        y: 15
       },
       hitbox: {
-        x: 85,
-        y: 80
+        x: 15,
+        y: 15
       },
       position: {
         x: x,

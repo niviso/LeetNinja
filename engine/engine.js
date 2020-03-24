@@ -9,8 +9,8 @@ const gravity = 5;
 class Engine extends React.Component {
   constructor(props) {
     super(props);
-    this.init = false, //if no init it has no pointers to worldstate and setworldstate that hosts all world objects so we can add and remove
-    this.world = World, //Moves over to shards
+    this.init = false,
+    this.world = World,
     this.enemies = [],
     this.projectiles = [],
     this.shards = null;
@@ -29,7 +29,6 @@ class Engine extends React.Component {
   }
 
   DeleteWorldObject = (id) => {
-    //This will go into optimize later?
     var filtered = this.world.filter(function(value, index, arr){
       return value.id !== id;
     });
@@ -87,7 +86,6 @@ class Engine extends React.Component {
         tmpWorld[shard] = new Array();
       }
       tmpWorld[shard].push(this.world[i]);
-
     }
     this.shards = tmpWorld;
     this.init = true;
@@ -96,6 +94,7 @@ class Engine extends React.Component {
   FetchShard = (shard) => {
 
   }
+
   Gravity = (state) => {
     var tmpPositionObj = JSON.parse(JSON.stringify(state));
 
@@ -135,6 +134,7 @@ class Engine extends React.Component {
 
     return tmpPositionObj;
   }
+
   GetShardRange = (from) => {
     let WorldShards = [];
 
@@ -153,6 +153,7 @@ class Engine extends React.Component {
     if(typeof this.shards[from-100] !== 'undefined'){
       WorldShards = WorldShards.concat(this.shards[from-100]);
     }
+
     if(this.enemies.length > 0){
       var arr = [];
       this.enemies.filter((obj,index) => {
@@ -174,8 +175,6 @@ class Engine extends React.Component {
   UpdatePlayer = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
 
-
-
     const PlayerLeft = tmpPositionObj.position.x;
     const PlayerRight = PlayerLeft + tmpPositionObj.size.x;
     const PlayerTop = tmpPositionObj.position.y;
@@ -191,9 +190,6 @@ class Engine extends React.Component {
     } else {
       var WorldShards = this.GetShardRange(shard);
     }
-
-
-
 
     if(WorldShards) {
     for (var i = 0; i != WorldShards.length; i++) {
@@ -213,7 +209,6 @@ class Engine extends React.Component {
 
       const collision = detectX && detectY;
 
-
       const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
       const player_right = PlayerLeft + tmpPositionObj.size.x;
@@ -230,6 +225,11 @@ class Engine extends React.Component {
         tmpPositionObj.colliding.target = WorldShards[i].id;
 
 
+        //In the future there will be a loop for projectiles and what they hit
+        if(WorldShards[i].type == 'projectile'){
+          this.projectiles[WorldShards[i].id].kill = true;
+        }
+
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision
           tmpPositionObj.directionVector.y = 0;
@@ -241,7 +241,6 @@ class Engine extends React.Component {
             this.enemies[tmpPositionObj.colliding.target].kill = true;
             tmpPositionObj.directionVector.y = -30;
             tmpPositionObj.isGrounded = false;
-
           }
         }
         else if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
@@ -254,11 +253,8 @@ class Engine extends React.Component {
         else if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision) {
           //Left collision
           tmpPositionObj.colliding.left = true;
-
           tmpPositionObj.position.x = state.position.x - 1; //ObjLeft - PlayerWidth;
           tmpPositionObj.isTouchingWall = true;
-
-
         }
         else if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision) {
           //Right collision
@@ -267,11 +263,9 @@ class Engine extends React.Component {
           tmpPositionObj.isTouchingWall = true;
         }
         else if(tmpPositionObj.invincibilityFrames <= 0) {
-                tmpPositionObj.health -= 1;
-                tmpPositionObj.invincibilityFrames = settings.invincibilityFramesOnHit;
-            }
-
-
+          tmpPositionObj.health -= 1;
+          tmpPositionObj.invincibilityFrames = settings.invincibilityFramesOnHit;
+        }
     } else {
         //If no collision occours
     }
@@ -289,8 +283,16 @@ class Engine extends React.Component {
      enemy.kill ? null : arr[enemy.id] = enemy;
   });
 
-
   this.enemies = arr;
+}
+
+KillProjectiles = () => {
+let arr = [];
+var filtered = this.projectiles.filter((projectile) => {
+   projectile.kill ? null : arr[projectile.id] = projectile;
+});
+
+this.projectiles = arr;
 }
 
 //In the future i want to bake all of this into one big loop maybe
@@ -315,12 +317,12 @@ UpdateProjectiles = () => {
     this.projectiles[projectile.id]  = this.UpdateEnemy(projectile);
   });
 
-  this.KillEnemeis();
+  this.KillProjectiles();
 
   //Need to do this at the end of the for and render cycle to not freeze the game
 }
 
-  UpdateEnemy = (state) => { //Updates the position of a object
+UpdateEnemy = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
     //console.log(state.position.y,tmpPositionObj.position.y)
 
@@ -363,7 +365,6 @@ UpdateProjectiles = () => {
 
       const collision = detectX && detectY;
 
-
       const player_bottom = PlayerTop + tmpPositionObj.size.y - 10;
       const tiles_bottom = ObjTop + WorldShards[i].size.y;
       const player_right = PlayerLeft + tmpPositionObj.size.x;
@@ -391,7 +392,6 @@ UpdateProjectiles = () => {
           tmpPositionObj.position.y = state.position.y;
           tmpPositionObj.directionVector.y += state.gravity;
           tmpPositionObj.colliding.bottom = true;
-
           //bottom collsion
         }
         if (l_collision < r_collision && l_collision < t_collision && l_collision < b_collision) {
@@ -399,16 +399,12 @@ UpdateProjectiles = () => {
           tmpPositionObj.position.x = state.position.x; //ObjLeft - PlayerWidth;
           tmpPositionObj.isTouchingWall = true;
           tmpPositionObj.colliding.left = true;
-
-
-
         }
         if (r_collision < l_collision && r_collision < t_collision && r_collision < b_collision) {
           //Right collision
           tmpPositionObj.position.x = state.position.x; //ObjRight;
           tmpPositionObj.isTouchingWall = true;
           tmpPositionObj.colliding.right = true;
-
         }
 
         if(tmpPositionObj.colliding.left){
@@ -418,8 +414,6 @@ UpdateProjectiles = () => {
         if(tmpPositionObj.colliding.right){
           tmpPositionObj.directionVector.direction = "left";
           tmpPositionObj.directionVector.x = -tmpPositionObj.directionVector.x;
-
-
         }
 
       }
