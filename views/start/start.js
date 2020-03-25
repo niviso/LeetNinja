@@ -4,7 +4,7 @@ import {View,Image,Text,TouchableOpacity} from 'react-native';
 import Background from '../../components/background/background';
 import AudioHelper from '../../helpers/AudioHelper';
 import Ripple from '../../assets/player/run.gif';
-import Ninja from '../../assets/splash.png';
+import Ninja from '../../assets/start.png';
 
 import styles from "./style.scss";
 import {start_bgm,confirm} from '../../helpers/sounds';
