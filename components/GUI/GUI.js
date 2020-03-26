@@ -44,7 +44,7 @@ export default function GUI() {
       NativeModules.DevSettings.reload();
   }
   const ProjectTile = () => {
-    Engine.AddProjectile(state.position.x+100,state.position.y+50);
+    Engine.AddProjectile(state.position.x+(state.directionVector.direction == 'left' ?  state.size.x : -state.size.x/2),state.position.y + 30,state.directionVector.direction);
 
   }
 

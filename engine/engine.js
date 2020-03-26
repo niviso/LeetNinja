@@ -56,9 +56,9 @@ class Engine extends React.Component {
     this.enemies[id] = NewEnemyObj(id,x);
   }
 
-  AddProjectile = (x,y=200) => {
+  AddProjectile = (x,y=200,direction='left') => {
     const id = Math.floor(Math.random() * 100).toString();
-    this.projectiles[id] = NewProjectile(id,x,y);
+    this.projectiles[id] = NewProjectile(id,x,y,direction);
   }
 
   SetWorld = (world) => {
