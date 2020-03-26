@@ -6,7 +6,7 @@ import Engine from '../../engine/engine';
 import Start from '../start/start';
 export default function Index(props) {
   const {screenHeight,screenWidth} = props;
-  const [screen,setScreen] = useState('start'); //start/game then level/dead/settings et c
+  const [screen,setScreen] = useState('game'); //start/game then level/dead/settings et c
   const [state,setState] = useContext(GameContext);
   return (
     <GameProvider>

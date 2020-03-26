@@ -24,7 +24,6 @@ class Engine extends React.Component {
     this.SetWorld(world);
     this.AddEnemy(400);
     this.AddEnemy(500);
-    this.AddProjectile(500);
     this.Optimize();
   }
 
@@ -57,9 +56,9 @@ class Engine extends React.Component {
     this.enemies[id] = NewEnemyObj(id,x);
   }
 
-  AddProjectile = (x) => {
+  AddProjectile = (x,y=200) => {
     const id = Math.floor(Math.random() * 100).toString();
-    this.projectiles[id] = NewProjectile(id,x);
+    this.projectiles[id] = NewProjectile(id,x,y);
   }
 
   SetWorld = (world) => {
@@ -380,6 +379,14 @@ UpdateEnemy = (state) => { //Updates the position of a object
       if (collision) {
 
         tmpPositionObj.colliding.target = WorldShards[i].id;
+
+        if(tmpPositionObj.type === 'projectile'){
+          tmpPositionObj.kill = true;
+          if(WorldShards[i].type === 'enemy'){
+            WorldShards[i].kill = true;
+          }
+
+        }
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision

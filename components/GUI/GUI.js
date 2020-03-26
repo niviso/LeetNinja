@@ -4,7 +4,7 @@ import styles from "./style.scss";
 import AudioHelper from '../../helpers/AudioHelper'
 import { PlayerContext } from "../../Contexts/PlayerContext";
 import {jump,jump_02} from '../../helpers/sounds';
-
+import Engine from '../../engine/engine';
 
 export default function GUI() {
   const [state,setState] = useContext(PlayerContext);
@@ -42,6 +42,9 @@ export default function GUI() {
 
   const reset = () => {
       NativeModules.DevSettings.reload();
+  }
+  const ProjectTile = () => {
+    Engine.AddProjectile(state.position.x+100,state.position.y+50);
 
   }
 
@@ -98,9 +101,14 @@ export default function GUI() {
           </View>
         </TouchableOpacity>
       </View>
-        <TouchableOpacity activeOpacity={0.5} onPressIn={()=> reset()}>
+        <TouchableOpacity activeOpacity={0.5} onPressIn={()=> ProjectTile()}>
           <View style={styles.btnB}>
             <Text style={styles.playButtons}>B</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity activeOpacity={0.5} onPressIn={()=> reset()}>
+          <View style={styles.btnB}>
+            <Text style={styles.playButtons}>R</Text>
           </View>
         </TouchableOpacity>
       </View>
