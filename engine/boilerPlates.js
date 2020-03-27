@@ -90,7 +90,7 @@ export function NewPlayerObj(){
       invincibilityFrames : 0,
       gravity: false,
       directionVector: {
-        x: direction == 'left' ? 2 : -2,
+        x: direction == 'left' ? 3 : -3,
         y: 0,
         direction: direction
       },
