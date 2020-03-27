@@ -1,8 +1,7 @@
 import World from '../data/world';
 import React from 'react';
-import Enemy from './enemy';
 import settings from '../settings';
-import { NewEnemyObj,NewCollider,NewProjectile } from './boilerPlates';
+import { NewEnemyObj,NewPlayerObj,NewCollider,NewProjectile } from './boilerPlates';
 
 
 class Engine extends React.Component {
@@ -12,6 +11,7 @@ class Engine extends React.Component {
     this.world = World,
     this.enemies = [],
     this.projectiles = [],
+    this.player = null,
     this.shards = null;
   }
 
@@ -130,7 +130,7 @@ class Engine extends React.Component {
     return tmpPositionObj;
   }
 
-  GetShardRange = (from) => {
+  GetShardRange = (from,player=true) => {
     let WorldShards = [];
 
     if(from <= 0){
@@ -155,6 +155,10 @@ class Engine extends React.Component {
         arr.push(obj);
       });
       WorldShards = WorldShards.concat(arr);
+    }
+
+    if(typeof this.player!== 'undefined' && player){
+      //WorldShards = WorldShards.push(this.player);
     }
 
     if(this.projectiles.length > 0){
@@ -194,7 +198,7 @@ UpdateEnemies = () => {
   //Update if in range of camera
   if(this.enemies){
     this.enemies.filter((enemy, index, arr) => {
-      this.enemies[enemy.id]  = this.UpdateEnemy(enemy);
+      this.enemies[enemy.id]  = this.Update(enemy);
     });
 
     this.KillEnemeis();
@@ -207,7 +211,7 @@ UpdateProjectiles = () => {
   //Update if in range of camera
 
   this.projectiles.filter((projectile, index, arr) => {
-    this.projectiles[projectile.id]  = this.UpdateEnemy(projectile);
+    this.projectiles[projectile.id]  = this.Update(projectile);
   });
 
   this.KillProjectiles();
@@ -215,7 +219,7 @@ UpdateProjectiles = () => {
   //Need to do this at the end of the for and render cycle to not freeze the game
 }
 
-UpdateEnemy = (state) => { //Updates the position of a object
+Update = (state) => { //Updates the position of a object
     var tmpPositionObj = this.Gravity(state);
 
     if(tmpPositionObj.position.y > 500){
@@ -232,11 +236,8 @@ UpdateEnemy = (state) => { //Updates the position of a object
     //COLLISION DETECTION World
     const shard = (Math.ceil(tmpPositionObj.position.x / 100) * 100).toString();
 
-    if((Math.ceil(PlayerRight / 100) * 100).toString() >= shard){
-      var WorldShards = this.GetShardRange(shard,shard-100);
-    } else {
-      var WorldShards = this.GetShardRange(shard);
-    }
+    var WorldShards = this.GetShardRange(shard,tmpPositionObj.type =='enemy' ? true : false);
+
 
 
     if(WorldShards) {
@@ -283,15 +284,16 @@ UpdateEnemy = (state) => { //Updates the position of a object
 
         if (t_collision < b_collision && t_collision < l_collision && t_collision < r_collision) {
           //Top collision
-          tmpPositionObj.directionVector.y = 0;
-          tmpPositionObj.position.y = ObjTop - PlayerHeight;
-          tmpPositionObj.isGrounded = true;
-          tmpPositionObj.colliding.top = true;
           if(WorldShards[i].type == "enemy" && this.enemies[tmpPositionObj.colliding.target]){
-
             this.enemies[tmpPositionObj.colliding.target].kill = true;
             tmpPositionObj.directionVector.y = -30;
             tmpPositionObj.isGrounded = false;
+            return tmpPositionObj;
+          } else {
+            tmpPositionObj.directionVector.y = 0;
+            tmpPositionObj.position.y = ObjTop - PlayerHeight;
+            tmpPositionObj.isGrounded = true;
+            tmpPositionObj.colliding.top = true;
           }
         }
         if (b_collision < t_collision && b_collision < l_collision && b_collision < r_collision) {
@@ -330,6 +332,9 @@ UpdateEnemy = (state) => { //Updates the position of a object
     }
 
     }
+    }
+    if(tmpPositionObj.type == 'player'){
+      this.player = tmpPositionObj;
     }
     return tmpPositionObj;
 

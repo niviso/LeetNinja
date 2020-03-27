@@ -53,8 +53,8 @@ export function NewPlayerObj(){
         direction: "right"
       },
       size: {
-        x: 85,
-        y: 80
+        x: 100,
+        y: 100
       },
       hitbox: {
         x: 85,

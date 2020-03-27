@@ -18,7 +18,7 @@ export default function Player() {
      var tmpState = JSON.parse(JSON.stringify(state));
      var tmpPlayerState = JSON.parse(JSON.stringify(playerState));
 
-     tmpPlayerState = Engine.UpdateEnemy(tmpPlayerState);
+     tmpPlayerState = Engine.Update(tmpPlayerState);
      tmpState.camera = tmpPlayerState.position;
     //if(JSON.stringify(tmpPlayerState) !== JSON.stringify(playerState)){
       setPlayerState(tmpPlayerState);
