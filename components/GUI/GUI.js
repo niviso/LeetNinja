@@ -3,7 +3,7 @@ import {View,Image,TouchableOpacity,Text,NativeModules  } from 'react-native';
 import styles from "./style.scss";
 import AudioHelper from '../../helpers/AudioHelper'
 import { PlayerContext } from "../../Contexts/PlayerContext";
-import {jump,jump_02} from '../../helpers/sounds';
+import {jump,jump_02,projectile_01} from '../../helpers/sounds';
 import Engine from '../../engine/engine';
 
 export default function GUI() {
@@ -44,6 +44,8 @@ export default function GUI() {
       NativeModules.DevSettings.reload();
   }
   const ProjectTile = () => {
+    AudioHelper.init(projectile_01);
+
     Engine.AddProjectile(state.position.x+(state.directionVector.direction == 'left' ?  state.size.x : -state.size.x/2),state.position.y + 30,state.directionVector.direction);
 
   }
