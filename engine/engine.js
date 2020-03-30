@@ -1,6 +1,7 @@
 import World from '../data/world';
 import React from 'react';
 import settings from '../settings';
+import PlayableObject from './playableObject';
 import { NewEnemyObj,NewPlayerObj,NewCollider,NewProjectile } from './boilerPlates';
 
 
@@ -11,7 +12,7 @@ class Engine extends React.Component {
     this.world = World,
     this.enemies = [],
     this.projectiles = [],
-    this.player = null,
+    this.player = new PlayableObject(),
     this.shards = null;
   }
 
@@ -25,7 +26,9 @@ class Engine extends React.Component {
     this.AddEnemy(500);
     this.Optimize();
   }
-
+  getPlayer = () => {
+    return this.player;
+  }
   DeleteWorldObject = (id) => {
     var filtered = this.world.filter(function(value, index, arr){
       return value.id !== id;
